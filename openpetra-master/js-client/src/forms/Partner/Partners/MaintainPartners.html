@@ -1,0 +1,939 @@
+<h2>{caption}</h2>
+
+<!-- Phantom Storage -->
+<div phantom hidden>
+
+	<div class="tpl_row" id="partner{val_p_partner_key_n}">
+		<div class="row">
+			<div class="col-2">{val_p_partner_key_n}</div>
+			<div class="col-2">{val_p_status_code_c}</div>
+			<div class="col-6">{val_p_partner_short_name_c}</div>
+			<div class="col-2" style="margin-top:0.3em;">
+				<button id="btnDetailPartner{val_p_partner_key_n}" type="button" class="btn btn-primary">
+					<i class="fas fa-folder-open"></i>
+				</button>
+				<button id="btnEditPartner{val_p_partner_key_n}" type="button" class="btn btn-primary" title="{forms.edit}">
+					<i class="fas fa-wrench"></i>
+				</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="collapse_col"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="collapse tpl_view">
+		<div class="container group-container">
+			<div class="row" style="margin-top:0.5em;">
+				<div class="col">
+				</div>
+				<div class="col-1">
+					<button type="button" class="btn btn-light" onclick="$('.tpl_row .collapse').collapse('hide');" title="{forms.close}">
+						<i class="fas fa-times"></i>
+					</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col">{partnerkey}</div><div class="col">{val_p_partner_key_n}</div>
+			</div>
+			<div class="row">
+				<div class="col">{partnername}</div><div class="col">{val_p_partner_short_name_c}</div>
+			</div>
+			<div class="row">
+				<div class="col">{partnerclass}</div><div class="col">{val_p_partner_class_c}</div>
+			</div>
+			<div class="row">
+				<div class="col">{streetname}</div><div class="col">{val_p_street_name_c}</div>
+			</div>
+			<div class="row">
+				<div class="col">{city}</div><div class="col">{val_p_postal_code_c} {val_p_city_c}</div>
+			</div>
+			<div class="row">
+				<div class="col">{lastdonation}</div><div class="col">{val_LastGiftDate}</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="tpl_check">
+		<div class="row">
+			<div class="col-1">
+				<input type="checkbox">
+			</div>
+			<div class="col">
+				<span></span>
+			</div>
+			<data value=""></data>
+		</div>
+	</div>
+
+	<div class="tpl_empty_types">
+		<div class="row">
+			<div class="col">
+				{empty_types}
+			</div>
+		</div>
+	</div>
+
+	<div class="tpl_empty_subscriptions">
+		<div class="row">
+			<div class="col">
+				{empty_subscriptions}
+			</div>
+		</div>
+	</div>
+
+	<div class="tpl_account_detail">
+		<div class="row">
+			<div class="col">{val_p_account_name_c}</div>
+			<div class="col">{val_p_iban_c}</div>
+			<div class="col">{val_p_bic_c}</div>
+			<div class="col">{val_p_branch_name_c}</div>
+			<div class="col-1">
+				<button id="btnEditBankAccount{val_p_banking_details_key_i}" type="button" class="btn btn-primary" name="button">
+					<i class="fas fa-wrench"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="tpl_membership">
+		<div class="row">
+			<div class="col">{val_p_membership_code_c}</div>
+			<div class="col">{val_p_start_date_d}</div>
+			<div class="col">{val_p_expiry_date_d}</div>
+			<div class="col-1">
+				<button id="btnEditMembership{val_p_partner_membership_key_i}" type="button" class="btn btn-primary" name="button">
+					<i class="fas fa-wrench"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="tpl_contribution_detail">
+		<div class="row">
+			<div class="col">{val_a_date_entered_d}</div>
+			<div class="col">{val_a_motivation_detail_code_c}</div>
+			<div class="col">{val_a_gift_transaction_amount_n}</div>
+			<div class="col-1">
+				<button id="btnShowGiftBatch{val_a_ledger_number_i}_{val_a_batch_number_i}_{val_a_gift_transaction_number_i}" type="button" class="btn btn-primary" name="button">
+					<i class="fas fa-folder-open"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="tpl_recurr_contribution_detail">
+		<div class="row">
+			<div class="col">{val_a_start_donations_d}</div>
+			<div class="col">{val_a_end_donations_d}</div>
+			<div class="col">{val_a_motivation_detail_code_c}</div>
+			<div class="col">{val_a_gift_amount_n}</div>
+			<div class="col-1">
+				<button id="btnShowRecurringGiftBatch{val_a_ledger_number_i}_{val_a_batch_number_i}_{val_a_gift_transaction_number_i}" type="button" class="btn btn-primary" name="button">
+					<i class="fas fa-folder-open"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal-wide fade tpl_edit" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h3>{edittitle}</h3>
+			<button id="btnOpenHistory" type="button" class="btn btn-primary">{manage_consent}</button>
+		</div>
+		<div class="modal-body">
+		<div class="container">
+
+			<div class="row">
+				<div class="col-3">
+					<span>{partnerkey}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="p_partner_key_n" readonly/>
+				</div>
+				<div class="col-3">
+					<span>{partnerclass}</span>
+				</div>
+				<div class="col-3">
+					<select id="PartnerClass" disabled>
+					</select>
+					<input name="p_partner_class_c" type="hidden" value="p_partner_class_c">
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-3">
+					<span>{forms.status}</span>
+				</div>
+				<div class="col-3">
+					<select name="p_status_code_c">
+						<option value="ACTIVE">{ACTIVE}</option>
+						<option value="INACTIVE">{NOT ACTIVE}</option>
+					</select>
+				</div>
+
+				<div class="col-3">
+					<span>{nosolicitations1}</span>
+				</div>
+				<div class="col-3">
+					<label class="form-check-label"><input class="form-check-input" type="checkbox" value="1" id="chkNoSolicitations" name="p_no_solicitations_l"> {nosolicitations2}</label>
+				</div>
+			</div>
+			<hr>
+
+			<div class="row FAMILY select_case">
+				<div class="col-3">
+					<span>{title}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="PFamily_p_title_c"/>
+				</div>
+			</div>
+
+			<div class="row FAMILY select_case">
+				<div class="col-3">
+					<span>{firstname}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="PFamily_p_first_name_c"/>
+				</div>
+				<div class="col-3">
+					<span>{familyname}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="PFamily_p_family_name_c"/>
+				</div>
+			</div>
+
+			<div class="row PERSON select_case">
+				<div class="col-3">
+					<span>{title}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="PPerson_p_title_c"/>
+				</div>
+			</div>
+
+			<div class="row PERSON select_case">
+				<div class="col-3">
+					<span>{firstname}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="PPerson_p_first_name_c"/>
+				</div>
+				<div class="col-3">
+					<span>{familyname}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="PPerson_p_family_name_c"/>
+				</div>
+			</div>
+
+			<div class="row ORGANISATION select_case">
+				<div class="col-3">
+					<span>{forms.name}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="p_organisation_name_c"/>
+				</div>
+			</div>
+
+			<div class="row UNIT select_case">
+				<div class="col-3">
+					<span>{forms.name}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="p_unit_name_c"/>
+				</div>
+			</div>
+
+			<div class="row UNIT select_case">
+				<div class="col-3">
+					<span>{forms.description}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="PUnit_p_description_c"/>
+				</div>
+			</div>
+
+			<div class="row BANK select_case">
+				<div class="col-3">
+					<span>{forms.name}</span>
+				</div>
+				<div class="col-3">
+					<input type="text" name="p_branch_name_c"/>
+				</div>
+			</div>
+
+			<ul class="nav nav-tabs" id="detailTab" role="tablist">
+				<li class="nav-item">
+					<div class="nav-link active" style="cursor:pointer;" href="#addresses" aria-controls="addresses" onclick="show_tab(this)">{address}</div>
+				</li>
+				<li class="nav-item">
+					<div class="nav-link" style="cursor:pointer;" href="#contactdetails" aria-controls="contactdetails" onclick="show_tab(this)">{contactdetails}</div>
+				</li>
+				<li class="nav-item" id="nav-item-memberships">
+					<div class="nav-link" style="cursor:pointer;" href="#memberships" aria-controls="memberships" onclick="show_tab(this)">{memberships}</div>
+				</li>
+				<li class="nav-item">
+					<div class="nav-link" style="cursor:pointer;" href="#subscriptions" aria-controls="subscriptions" onclick="show_tab(this)">{subscriptions}</div>
+				</li>
+				<li class="nav-item">
+					<div class="nav-link" style="cursor:pointer;" href="#types" aria-controls="types" onclick="show_tab(this)">{types}</div>
+				</li>
+				<li class="nav-item">
+					<div class="nav-link" style="cursor:pointer;" href="#financial" aria-controls="financial" onclick="show_tab(this)">{financedetails}</div>
+				</li>
+				<li class="nav-item">
+					<div class="nav-link" style="cursor:pointer;" href="#bankaccounts" aria-controls="bankaccounts" onclick="show_tab(this)">{bankaccounts}</div>
+				</li>
+				<li class="nav-item">
+					<div class="nav-link" style="cursor:pointer;" href="#contributions" aria-controls="contributions" onclick="show_tab(this)">{contributions}</div>
+				</li>
+				<li class="nav-item">
+					<div class="nav-link" style="cursor:pointer;" href="#comment" aria-controls="comment" onclick="show_tab(this)">{comment}</div>
+				</li>
+			</ul>
+
+			<div class="tab-content" id="edit_modal_tabs">
+				<div class="tab-pane active" id="addresses">
+					<div class="container">
+
+						<div class="row">
+							<div class="col-3">
+								<span>{streetname}</span>
+							</div>
+							<div class="col-3">
+								<input id="street_name" type="text" name="p_street_name_c"/>
+							</div>
+
+							<div class="col-3">
+								<span>{mailingaddress}</span>
+							</div>
+							<div class="col-3">
+								<label class="form-check-label"><input class="form-check-input" type="checkbox" value="1" id="chkSendMail" name="p_send_mail_l"> {mailingaddress}</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-3">
+								<span>{city}</span>
+							</div>
+							<div class="col-3">
+								<input type="text" name="p_city_c"/>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-3">
+								<span>{postalcode}</span>
+							</div>
+							<div class="col-3">
+								<input type="text" name="p_postal_code_c"/>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-3">
+								<span>{countrycode}</span>
+							</div>
+							<div class="col-3">
+								<select name="p_country_code_c" id="CountryCode">
+								</select>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="tab-pane" id="contactdetails">
+					<div class="container">
+
+						<div class="row">
+							<div class="col">
+								<span>{email address}</span>
+							</div>
+							<div class="col">
+								<input id="email_address" type="text" name="p_default_email_address_c" size="25"/>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{phone landline}</span>
+							</div>
+							<div class="col">
+								<input id="phone_landline" type="text" name="p_default_phone_landline_c" size="25"/>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{phone mobile}</span>
+							</div>
+							<div class="col">
+								<input id="phone_mobile" type="text" name="p_default_phone_mobile_c" size="25"/>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="tab-pane" id="memberships">
+					<div class="container">
+
+						<div class="row" edit-only>
+							<div class="col" id="Membership{val_p_partner_key_n}{val_p_partner_membership_key_i}">
+								<button id="btnAddMembership" type="button" class="btn btn-primary">
+									<span>{forms.new}</span>
+									<i class="fas fa-plus"></i>
+								</button>
+
+								<div class="row">
+									<div class="col">{membership_name}</div>
+									<div class="col">{membership_startdate}</div>
+									<div class="col">{membership_enddate}</div>
+									<div class="col-1"></div>
+								</div>
+
+								<div class="membership_detail_col"></div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<div class="tab-pane" id="subscriptions" style="border-style: ridge;overflow-y:auto;max-height: 14em;"></div>
+				<div class="tab-pane" id="types" style="border-style: ridge;overflow-y:auto;max-height: 14em;"></div>
+				<div class="tab-pane" id="financial">
+					<div class="container">
+
+						<div class="row">
+							<div class="col">
+								<span>{receiptletterfrequency}</span>
+							</div>
+							<div class="col">
+								<select name="p_receipt_letter_frequency_c">
+									<option value="">{no_receiptletters}</option>
+									<option value="Annual">{annual_receiptletters}</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{receiptforeachgift}</span>
+							</div>
+							<div class="col">
+								<label class="form-check-label"><input class="form-check-input" type="checkbox" value="1" id="chkReceiptEachGift" name="p_receipt_each_gift_l"> {eachgift}</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{anonymousdonor}</span>
+							</div>
+							<div class="col">
+								<label class="form-check-label"><input class="form-check-input" type="checkbox" value="1" id="chkAnonymousDonor" name="p_anonymous_donor_l"> {anonymous}</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{financecomment}</span>
+							</div>
+							<div class="col">
+								<textarea name="p_finance_comment_c" style="width:90%;height:7em;"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="bankaccounts">
+					<div class="container">
+
+						<div class="row" edit-only>
+							<div class="col" id="Account{val_p_partner_key_n}{val_p_banking_details_key_i}">
+								<button id="btnAddBankAccount" type="button" class="btn btn-primary">
+									<span>{forms.new}</span>
+									<i class="fas fa-plus"></i>
+								</button>
+
+								<div class="row">
+									<div class="col">{accountname}</div>
+									<div class="col">{iban}</div>
+									<div class="col">{bic}</div>
+									<div class="col">{bankname}</div>
+									<div class="col-1"></div>
+								</div>
+
+								<div class="bank_account_detail_col"></div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<div class="tab-pane" id="contributions">
+					<div class="container">
+						<h2>{recurring payments}</h2>
+						<div class="row">
+							<div class="col">
+								<div class="row">
+									<div class="col">{donationsstart}</div>
+									<div class="col">{donationsend}</div>
+									<div class="col">{motivationdetail}</div>
+									<div class="col">{amount}</div>
+									<div class="col-1"></div>
+								</div>
+
+								<div class="recurring_contribution_col scroll40vh"></div>
+							</div>
+
+						</div>
+
+						<h2>{actual payments}</h2>
+						<div class="row">
+							<div class="col">
+								<div class="row">
+									<div class="col">{donationdate}</div>
+									<div class="col">{motivationdetail}</div>
+									<div class="col">{amount}</div>
+									<div class="col-1"></div>
+								</div>
+
+								<div class="contribution_detail_col scroll40vh"></div>
+							</div>
+
+						</div>
+
+					</div>
+				</div>
+				<div class="tab-pane text-center" id="comment">
+					<textarea name="PPartner_p_comment_c" style="width:90%;height:7em;" placeholder="{comment}"></textarea>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div class="modal-footer">
+			<button id="btnDeletePartner" class="btn btn-danger">{forms.delete}</button>
+			<button id="btnSavePartner" class="btn btn-primary">{forms.save}</button>
+			<button id="btnClosePartner" class="btn btn-light">{forms.close}</button>
+		</div>
+		</div>
+		</div>
+	</div>
+
+	<div class="modal modal-wide fade tpl_edit_bank_account" tabindex="-1" role="dialog">
+		<input type="hidden" action value="create">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>{edittitle_bank_account}</h3>
+				</div>
+				<div class="modal-body">
+
+					<div class="container">
+
+						<input type="hidden" name="p_partner_key_n" value="">
+						<input type="hidden" name="p_banking_details_key_i" value="">
+
+						<div class="row">
+							<div class="col">
+								<span>{accountname}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="p_account_name_c" value="" size="30">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{iban}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="p_iban_c" value="" size="30">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{bic}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="p_bic_c" value="" size="30" readonly>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{bankname}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="p_branch_name_c" value="" size="30" readonly>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button id="btnDeleteBankAccount{val_p_banking_details_key_i}" edit-only class="btn btn-danger">{forms.delete}</button>
+					<button id="btnSaveBankAccount{val_p_banking_details_key_i}" class="btn btn-primary">{forms.save}</button>
+					<button id="btnCloseBankAccount{val_p_banking_details_key_i}" class="btn btn-light">{forms.close}</button>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal-wide fade tpl_edit_membership" tabindex="-1" role="dialog">
+		<input type="hidden" action value="create">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>{edittitle_membership}</h3>
+				</div>
+				<div class="modal-body">
+
+					<div class="container">
+
+						<input type="hidden" name="p_partner_key_n" value="">
+						<input type="hidden" name="p_partner_membership_key_i" value="">
+
+						<div class="row">
+							<div class="col">
+								<span>{membership_code}</span>
+							</div>
+							<div class="col">
+								<select name="p_membership_code_c" id="MembershipCode">
+								</select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{membership_startdate}</span>
+							</div>
+							<div class="col">
+								<input type="date" name="p_start_date_d" required>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{membership_enddate}</span>
+							</div>
+							<div class="col">
+								<input type="date" name="p_expiry_date_d">
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button id="btnDeleteMembership{val_p_partner_membership_key_i}" edit-only class="btn btn-danger">{forms.delete}</button>
+					<button id="btnSaveMembership{val_p_partner_membership_key_i}" class="btn btn-primary">{forms.save}</button>
+					<button id="btnCloseMembership{val_p_partner_membership_key_i}" class="btn btn-light">{forms.close}</button>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal-wide fade tpl_history" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+		<div class="modal-content">
+		<div class="modal-header">
+			<h3>{edittitle_history}</h3>
+		</div>
+		<div class="modal-body">
+			<div class="container">
+				<div class="row">
+
+					<div class="col-4">
+						<h4>{data_type}</h4>
+						<hr>
+						<div data-types></div>
+					</div>
+
+					<div class="col-8">
+						<div>
+							<h4>{consent permissions}: <span class="selected-type">-</span></h4>
+							<hr>
+							<div permissions style="overflow-y:auto;overflow-x:hidden;max-height:20vh;"></div>
+							<button id="btnSubmitConsentEditHistory" type="button" class="btn btn-primary">{forms.save}</button>
+							<hr>
+						</div>
+
+						<div>
+							<h4>{history}: <span class="selected-type">-</span></h4>
+							<hr>
+							<div class="row">
+								<div class="col">{consent_date}</div>
+								<div class="col">{history}</div>
+								<div class="col">{consent_permissions_question}</div>
+							</div>
+							<div history style="overflow-y:auto;overflow-x:hidden;max-height:50vh;"></div>
+						</div>
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+		<div class="modal-footer">
+			<button class="btn btn-primary" onclick="CloseModal(this)">{forms.close}</button>
+		</div>
+		</div>
+		</div>
+	</div>
+
+	<div class="modal fade tpl_consent" tabindex="-1" role="dialog" style="margin-top: 2em;">
+		<data name="field" value=""></data>
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" style="border: 2px solid black;">
+				<div class="modal-header">
+					<h3>{edittitle_consent}</h3>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+
+						<div class="row">
+							<p>{consent_description}</p>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								{changed value}
+							</div>
+							<div class="col">
+								<span name="changed_value"></span>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								{consent channel}
+							</div>
+							<div class="col">
+								<select name="consent_channel"></select>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								{consent_date}
+							</div>
+							<div class="col">
+								<input type="date" name="consent_date"></select>
+							</div>
+						</div>
+
+						<div class="row" mode="partner_edit">
+							<div class="col">
+								{consent_permissions_question}
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">&nbsp;</div>
+							<div class="col">
+								<!-- gets filled with copys of: [phantom] .permission-option -->
+								<div class="permissions" mode="partner_edit"></div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-light" onclick="CloseModal(this)" mode="consent_edit">{forms.close}</button>
+					<!-- tocheck -->
+					<button id="btnSubmitConsentEdit" class="btn btn-primary" mode="consent_edit">{forms.save}</button>
+					<button id="btnSubmitChangesConsent" class="btn btn-primary" mode="partner_edit">{forms.save}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<label class="row permission-option">
+		<div class="col-2">
+			<input type="checkbox" purposecode>
+		</div>
+		<div class="col-2">
+			<span name></span>
+		</div>
+	</label>
+
+	<div class="row history-entry" onclick="$(this).find('.detail.collapse').collapse('toggle')">
+		<div class="col">
+			<div class="row preview" style="cursor: pointer;">
+				<div class="col"><span name="EventDate"></span></div>
+				<div class="col"><span name="Value"></span></div>
+				<div class="col"><span name="Permissions"></span></div>
+			</div>
+			<div class="row detail collapse">
+				<div class="col">
+
+					<hr>
+					<div class="">
+						<span>{editor}: </span><span name="Editor"></span>
+					</div><br>
+					<div class="">
+						<span>{consent channel}: </span><span name="Channel"></span>
+					</div><br>
+					<div class="">
+						<span>{consent_permissions_question}: </span><span name="Consent"></span>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<table id="toolbar">
+	<tr>
+		<td>
+			<div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{forms.new}
+				</button>
+				<div class="dropdown-menu">
+					<a id="btnNewFamily" class="dropdown-item">{newfamily}</a>
+					<a id="btnNewOrganisation" class="dropdown-item">{neworganisation}</a>
+				</div>
+			</div>
+			<button id="btnFilter" class="btn btn-primary" onclick="$('#tabfilter').collapse('toggle')">{forms.filter}</button>
+		</td>
+	</tr>
+</table>
+
+<div id="modal_space"></div>
+
+<div class="container collapse" id="tabfilter">
+	<div class="container group-container">
+	<div class="row">
+		<div class="col">
+			<span>{partnername}:</span>
+		</div>
+		<div class="col">
+			<input type="text" name="AFamilyNameOrOrganisation"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{partnerkey}:</span>
+		</div>
+		<div class="col">
+			<input type="text" name="APartnerKey"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{iban}:</span>
+		</div>
+		<div class="col">
+			<input type="text" name="AIban"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{city}:</span>
+		</div>
+		<div class="col">
+			<input type="text" name="ACity"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{postalcode}:</span>
+		</div>
+		<div class="col">
+			<input type="text" name="APostCode"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{email}:</span>
+		</div>
+		<div class="col">
+			<input type="text" name="AEmailAddress"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{partnerclass}:</span>
+		</div>
+		<div class="col">
+			<select name="APartnerClass">
+				<option value="" selected>{forms.any}</option>
+				<option value="FAMILY">{constants.FAMILY}</option>
+				<option value="ORGANISATION">{constants.ORGANISATION}</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<span>{forms.maxresults}:</span>
+		</div>
+		<div class="col">
+			<select name="AMaxRecords">
+				<option value="25" selected>25</option>
+				<option value="100">100</option>
+				<option value="250">250</option>
+				<option value="-1">{forms.show_all_records}</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<span>{name_format}:</span>
+		</div>
+		<div class="col">
+			<select name="ANameFormat">
+				<option value="WithoutTitle">{display_firstname_lastname}</option>
+				<option value="ReverseShortName">{display_title_firstname_lastname}</option>
+				<option value="ShortName" selected>{display_lastname_firstname_title}</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="row">
+		<div class="col">
+			<span>{forms.sortby}:</span>
+		</div>
+		<div class="col">
+			<select name="ASortBy">
+				<option value="Created" selected>{sort_by_date_created}</option>
+				<option value="PartnerName">{sort_by_name}</option>
+				<option value="PartnerKey">{sort_by_partnerkey}</option>
+			</select>
+		</div>
+	</div>
+
+	</div>
+
+	<button type="button" class="btn btn-light" onclick="save_preset('MaintainPartners')">{forms.save_preset}</button>
+	<button type="button" class="btn btn-light" onclick="$('#tabfilter').collapse('toggle')">{forms.cancel}</button>
+	<button id="btnSearch" type="button" class="btn btn-primary">{forms.search}</button>
+</div>
+
+<div class="container" id="browse">
+	<div class="row">
+		<div class="col-2"><b>{partnerkey}</b></div>
+		<div class="col-2"><b>{partnerstatus}</b></div>
+		<div class="col-8"><b>{partnername}</b></div>
+	</div>
+
+	<div id="browse_container" class="container-list">
+
+	</div>
+
+</div>
+
+<script src="/src/lib/utils.js" charset="utf-8"></script>
+<script src="/src/lib/tpl.js" charset="utf-8"></script>
+<script src="/src/lib/modal.js" charset="utf-8"></script>

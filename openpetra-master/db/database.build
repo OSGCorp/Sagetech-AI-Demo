@@ -1,0 +1,534 @@
+<?xml version="1.0"?>
+<!-- this contains the targets for creating databases and resetting database content;
+     this build file is included by the main OpenPetra.build file -->
+<project name="OpenPetra" default="help">
+
+    <property name="DBMS.DBName" value="openpetra" overwrite="false"/>
+    <property name="psqlversion" value="9" overwrite="false"/>
+    <!-- CreateDBForPublicInstaller Property gets set to true when the standalone Windows Installer is built! -->
+    <property name="CreateDBForPublicInstaller" value="false"/>
+
+    <mkdir dir="${DeliveryDB.dir}" failonerror="false"/>
+    <property name="CleanDatabaseScript" value="${DeliveryDB.dir}/petra_clean.sql"/>
+
+    <target name="patchDatabase" depends="init, prepareDeliveryContent" description="Update the development database to the latest database version">
+        <property name="Command" value="UpgradeDatabase"/>
+        <call target="startAdmin"/>
+    </target>
+
+    <target name="createSQLStatements" depends="init" description="Create the SQL files.">
+        <ExecDotNet program="${BuildToolsExe.dir}/Ict.Tools.GenerateSQL.exe" commandline="-do:sql -dbms:${DBMS.Type} -petraxml:${PetraXML.file} -outputFile:${DeliveryDB.dir}/petra.sql" failonerror="true"/>
+        <if test="${DBMS.Type=='mysql'}">
+            <copy file="${DeliveryDB.dir}/petra.sql" tofile="${DeliveryDB.dir}/createdb-MySQL.sql"/>
+        </if>
+    </target>
+
+<script language="C#" prefix="OP" >
+  <references>
+    <include name="System.Xml.dll" />
+    <include name="System.Web.dll" />
+  </references>
+  <imports>
+    <import namespace="System.Collections.Generic" />
+    <import namespace="System.Text" />
+    <import namespace="System.Xml" />
+    <import namespace="System.IO" />
+    <import namespace="System.Web.Security" />
+    <import namespace="System.Security.Cryptography" />
+  </imports>
+  <code>
+    <![CDATA[
+    [Function("CreateMetaXMLForSchemaSpy")]
+        public static void CreateMetaXMLForSchemaSpy(string APetraXml, string AMetaFile)
+        {
+            XmlDocument doc = new XmlDocument();
+
+            doc.Load(APetraXml);
+            using (StreamWriter sw = new StreamWriter(AMetaFile))
+            {
+                sw.WriteLine("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                sw.WriteLine("<schemaMeta>");
+                sw.WriteLine("  <comments>OpenPetra Version 3 Database</comments>");
+                sw.WriteLine("  <tables>");
+                XmlNodeList tables = doc.DocumentElement.SelectNodes("table");
+                foreach (XmlNode t in tables)
+                {
+                    XmlAttribute attName = t.Attributes["name"];
+                    XmlAttribute attDescr = t.Attributes["descr"];
+                    if (attName != null && attDescr != null)
+                    {
+                        string s = attDescr.Value;
+                        s = s.Replace("<br/>", " ");
+                        s = s.Replace("\"\"", "");
+                        s = s.Replace("\r\n", "");
+                        s = s.Replace("&", "and");
+                        s = s.Replace("<=", "less than or equal to");
+                        sw.WriteLine(String.Format("    <table name=\"{0}\" comments=\"{1}\">", attName.Value, s));
+                    }
+                    XmlNodeList fields = t.SelectNodes("tablefield");
+                    foreach (XmlNode f in fields)
+                    {
+                        attName = f.Attributes["name"];
+                        attDescr = f.Attributes["descr"];
+                        if (attName != null && attDescr != null)
+                        {
+                            string s = attDescr.Value;
+                            s = s.Replace("<br/>", " ");
+                            s = s.Replace("\"\"", "");
+                            s = s.Replace("\r\n", "");
+                            s = s.Replace("&", "and");
+                            s = s.Replace("<=", "less than or equal to");
+                            sw.WriteLine(String.Format("      <column name=\"{0}\" comments=\"{1}\" />", attName.Value, s));
+                        }
+                    }
+                    sw.WriteLine("    </table>");
+                }
+                sw.WriteLine("  </tables>");
+                sw.WriteLine("</schemaMeta>");
+                sw.Close();
+            }
+        }
+    [Function("GetPasswordSalt")]
+    public static string GetPasswordSalt() {
+	  //Generate a cryptographic random number.
+	  RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+	  byte[] buff = new byte[32];
+	  rng.GetBytes(buff);
+
+	  // Return a Base64 string representation of the random number.
+	  return Convert.ToBase64String(buff);
+    }
+    [Function("GetPasswordHash")]
+    public static string GetPasswordHash(string APassword, string ASalt) {
+	SHA1 algorithm = SHA1.Create();
+	byte[] data = algorithm.ComputeHash(Encoding.UTF8.GetBytes(String.Concat(APassword, ASalt)));
+	string sh1 = "";
+
+	for (int i = 0; i < data.Length; i++)
+	{
+	    sh1 += data[i].ToString("x2").ToUpperInvariant();
+	}
+
+	return sh1;
+    }
+]]>
+        </code>
+    </script>
+    
+    <target name="schemaSpy" depends="init">
+        <property name="createMetaFile" value="${OP::CreateMetaXMLForSchemaSpy(PetraXML.file, tempdir + '/petra.metadata.xml')}"/>
+
+        <echo message="This requires that Graphviz has been installed, and that schemaSpy_5.0.0.jar and postgresql-9.1-901.jdbc4.jar from http://jdbc.postgresql.org/ are placed in the delivery directory"/>
+        <echo message="Note: this process might take over 8000 seconds (ie. 133 minutes)"/>
+        
+        <exec program="${external.Java}" workingdir="${dir.delivery}" commandline="-jar schemaSpy_5.0.0.jar -t pgsql -dp postgresql-9.1-901.jdbc4.jar -host localhost:5432 -db ${DBMS.DBName} -u ${DBMS.UserName} -p ${DBMS.Password} -s public -o schemaSpyOutput -meta &quot;${tempdir}/petra.metadata.xml&quot; -noimplied -lq -gv &quot;${OP::GetDirInProgramDirectory('/Graphviz 2.28')}&quot;"/>
+        <!-- -i &quot;(a_ap_.*)&quot; -x &quot;(.*.s_date_created_d)|(.*.s_created_by_c)|(.*.s_date_modified_d)|(.*.s_modified_by_c)|(.*.s_modification_id_c)&quot; -->
+        
+        <delete>
+            <fileset>
+                <include name="${dir.delivery}/schemaSpyOutput/diagrams/*.dot" />
+                <include name="${dir.delivery}/schemaSpyOutput/diagrams/*.2degrees.png" />
+            </fileset>
+        </delete>        
+    </target>
+
+    <target name="dbdoc" depends="init">
+        <mkdir dir="${DBDoc.Output.dir}" failonerror="false"/>    
+        <mkdir dir="${DBDoc.Output.dir}/tables" failonerror="false"/>    
+        <mkdir dir="${DBDoc.Output.dir}/img" failonerror="false"/>    
+
+        <ExecDotNet program="${BuildToolsExe.dir}/Ict.Tools.GenerateSQL.exe" commandline="-do:sql -dbms:postgresql -petraxml:${PetraXML.file} -outputFile:${DeliveryDB.dir}/petra.sql" failonerror="true"/>
+        
+        <copy todir="${DBDoc.Output.dir}" overwrite="true">
+            <fileset basedir="${OpenPetraRoot.dir}/db/html/">
+                <include name="*.html" />
+                <include name="*.css" />
+                <include name="*.js" />
+            </fileset>
+        </copy>        
+
+        <!-- create project files -->
+        <exec program="${external.sql2dia}" workingdir="${DBDoc.Output.dir}" 
+            output="${OpenPetraRoot.dir}/db/doc/master_alltables.prj">
+            <arg value="-d &quot;${DeliveryDB.dir}/petra.sql&quot;"/>
+        </exec>
+        <exec program="${external.sql2dia}" workingdir="${DBDoc.Output.dir}" 
+            output="${OpenPetraRoot.dir}/db/doc/master_alltables_bygroup.prj">
+            <arg value="-g -f &quot;${DeliveryDB.dir}/petra.sql&quot;"/>
+        </exec>
+    
+        <!-- create or update diagrams -->
+        <exec program="${external.sql2dia}" workingdir="${DBDoc.Output.dir}">
+            <arg value="-f &quot;${DeliveryDB.dir}/petra.sql&quot; -p &quot;${OpenPetraRoot.dir}/db/doc/themed.prj&quot; --diaoutputpath &quot;${OpenPetraRoot.dir}/db/doc&quot;"/>
+        </exec>
+
+        <!-- create png files from diagrams -->
+        <foreach item="File" property="filename">
+            <in>
+                <items>
+                    <include name="${OpenPetraRoot.dir}/db/doc/*.dia" />
+                </items>
+            </in>
+            <do>
+                <exec program="dia" workingdir="${DBDoc.Output.dir}" commandline="--export=img/${path::get-file-name-without-extension(filename)}.png --filter=png-libart &quot;${filename}&quot;"/>
+            </do>
+        </foreach>
+    </target>
+
+    <target name="createDatabaseUser" depends="init">
+        <if test="${DBMS.Type=='postgresql'}">
+            <!-- To allow mixed-case database names (e.g. nantTest) we must quote DBMS.DBName in a way that the command line will pass into psql -->
+            <if test="${platform::is-unix()}">
+                <psql exe="${PostgreSQL.exe}" sqlcommand="CREATE USER ${DBMS.UserName} WITH CREATEDB PASSWORD '${DBMS.Password}';" database="template1" failonerror="false" username="postgres"/>
+                <psql exe="${PostgreSQL.exe}" sqlcommand="CREATE DATABASE &#92;&quot;${DBMS.DBName}&#92;&quot; WITH OWNER=${DBMS.UserName};" host="${DBMS.DBHostOrFile}"  port="${DBMS.DBPort}" database="template1" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            </if>
+            <if test="${platform::is-windows()}">
+                <echo message="If this fails, make sure you have already manually created a database user in pgAdmin, username ${DBMS.UserName} and password ${DBMS.Password}, that has permissions to create databases."/>
+                <psql exe="${PostgreSQL.exe}" sqlcommand="CREATE DATABASE &quot;&quot;${DBMS.DBName}&quot;&quot; WITH OWNER=${DBMS.UserName};" host="${DBMS.DBHostOrFile}"  port="${DBMS.DBPort}" database="template1" username="${DBMS.UserName}" password="${DBMS.Password}"/>               
+            </if>
+        </if>
+    </target>
+
+    <target name="recreateDatabase" depends="init,createSQLStatements">
+        <if test="${DBMS.Type=='postgresql'}">
+            <if test="${platform::is-unix()}">
+                <echo message="If this fails, make sure you have already called nant createDatabaseUser"/>
+                <echo message="you need to add the following line at the top of your pg_hba.conf file (eg. /etc/postgresql/9.1/main/pg_hba.conf) and restart postgresql: "/>
+                <echo message="local   all             ${DBMS.UserName}     md5"/>
+            </if>
+            <if test="${platform::is-windows()}">
+                <echo message="If this fails, make sure you have already called nant createDatabaseUser"/>
+            </if>
+
+            <property name="file" value="nothing"/>
+            <call target="loadDatabase"/>
+        </if>
+        <if test="${DBMS.Type=='mysql'}">
+             <echo message="this will now take a while..."/>
+             <if test="${property::exists('DBMS.RootPassword')}">
+               <mysql exe="${MySQL.exe}" sqlcommand="drop database if exists ${DBMS.DBName};" user="root" password="${DBMS.RootPassword}"/>
+               <mysql exe="${MySQL.exe}" sqlcommand="create database if not exists ${DBMS.DBName};" user="root" password="${DBMS.RootPassword}"/>
+               <mysql exe="${MySQL.exe}" sqlcommand="GRANT ALL ON ${DBMS.DBName}.* TO ${DBMS.UserName}@localhost IDENTIFIED BY '${DBMS.Password}';" database="${DBMS.DBName}" user="root" password="${DBMS.RootPassword}"/>
+             </if>
+             <if test="${not property::exists('DBMS.RootPassword')}">
+               <mysql exe="${MySQL.exe}"  sqlfile="${DeliveryDB.dir}/petra_remove.sql" host="${DBMS.DBHostOrFile}" database="${DBMS.DBName}" user="${DBMS.UserName}" password="${DBMS.Password}"/>
+             </if>
+
+             <mysql exe="${MySQL.exe}" sqlfile="${DeliveryDB.dir}/createdb-MySQL.sql" host="${DBMS.DBHostOrFile}" database="${DBMS.DBName}" user="${DBMS.UserName}" password="${DBMS.Password}"/>
+        </if>
+    </target>
+
+    <target name="resetDatabaseClean" depends="init" description="this is a fresh database without the demo user and without a ledger">
+        <property name="WithDemoDataGermany" value="false" overwrite="true"/>
+        <call target="resetDatabase"/>
+    </target>
+
+    <target name="resetDatabase" depends="init" description="useful for debugging the creation of fresh database"> <!-- depends: recreateDatabase --> 
+         <property name="WithDemoDataGermany" value="true" overwrite="false"/>
+         <if test="${not platform::is-windows()}" >
+             <property name="OpenPetraRoot.dir" value="${path::get-full-path(OpenPetraRoot.dir)}"/>
+         </if>
+         <if test="${platform::is-windows()}" >
+            <!-- GetRealPath resolves problems with substed path for psql to load from; cannot find such file or path -->
+            <property name="OpenPetraRoot.dir" value="${string::replace(script::GetRealPath(OpenPetraRoot.dir), '\', '/')}"/>
+         </if>
+         <property name="BaseData.Dir" value="${OpenPetraRoot.dir}/db/basedata"/>
+         <property name="DemoData.Dir" value="${OpenPetraRoot.dir}/db/${SelectedDemo}"/>
+         <property name="PublicInstallerDemoData.Dir" value="${OpenPetraRoot.dir}/db/${PublicInstallerDemo}"/>
+
+         <!-- delete all local files. to avoid issues when running resetDatabase multiple times for different dbms -->
+         <delete>
+           <fileset>
+             <include name="${DemoData.Dir}/*.local" />
+             <include name="${BaseData.Dir}/*.local" />
+           </fileset>
+         </delete>
+
+         <copy file="${DemoData.Dir}/a_accounting_period.csv"
+            tofile="${DemoData.Dir}/a_accounting_period.csv.local" overwrite="true" outputencoding="latin1">
+            <filterchain>
+              <expandproperties />
+            </filterchain>
+         </copy>
+         <copy file="${DemoData.Dir}/a_corporate_exchange_rate.csv"
+            tofile="${DemoData.Dir}/a_corporate_exchange_rate.csv.local" overwrite="true" outputencoding="latin1">
+            <filterchain>
+              <expandproperties />
+            </filterchain>
+         </copy>
+         
+         <copy file="${BaseData.Dir}/init.sql"
+            tofile="${BaseData.Dir}/init.sql.local" overwrite="true"/>
+         <property name="Current.File" value="${BaseData.Dir}/init.sql.local"/>
+         <property name="toReplace" value="{#ABSOLUTEBASEDATAPATH}"/>
+         <echo message='${script::ReplaceInFile(Current.File, toReplace, BaseData.Dir)}'/>
+         <property name="toReplace" value="{#RELEASEVERSION}"/>
+         <echo message='${script::ReplaceInFile(Current.File, toReplace, ReleaseVersion)}'/>
+
+         <copy file="${DemoData.Dir}/init.sql"
+            tofile="${DemoData.Dir}/init.sql.local" overwrite="true"/>
+         <property name="Current.File" value="${DemoData.Dir}/init.sql.local"/>
+         <property name="toReplace" value="{#ABSOLUTEBASEDATAPATH}"/>
+         <echo message='${script::ReplaceInFile(Current.File, toReplace, DemoData.Dir)}'/>
+
+         <if test="${DBMS.Type=='mysql'}">
+             <property name="toReplace" value="SELECT nextval('seq_bank_details');"/>
+             <property name="Replacement" value="INSERT INTO seq_bank_details VALUES(NULL, -1);"/>
+             <echo message='${script::ReplaceInFile(Current.File, toReplace, Replacement)}'/>
+
+             <property name="toReplace" value="SELECT nextval('seq_location_number');"/>
+             <property name="Replacement" value="INSERT INTO seq_location_number VALUES(NULL, -1);"/>
+             <echo message='${script::ReplaceInFile(Current.File, toReplace, Replacement)}'/>
+         </if>
+
+         <property name="passwordChangeme" value="CHANGEME"/>
+         <property name="passwordsalt" value="${OP::GetPasswordSalt()}"/>
+         <property name="passwordhash" value="${OP::GetPasswordHash(passwordChangeme, passwordsalt)}"/>
+         <property name="Current.File" value="${BaseData.Dir}/init.sql.local"/>
+         <property name="toReplace" value="{#PASSWORDHASHSYSADMIN}"/>
+         <echo message='${script::ReplaceInFile(Current.File, toReplace, passwordhash)}'/>
+         <property name="toReplace" value="{#PASSWORDSALTSYSADMIN}"/>
+         <echo message='${script::ReplaceInFile(Current.File, toReplace, passwordsalt)}'/>
+
+         <property name="passwordChangeme" value="demo"/>
+         <property name="passwordsalt" value="${OP::GetPasswordSalt()}"/>
+         <property name="passwordhash" value="${OP::GetPasswordHash(passwordChangeme, passwordsalt)}"/>
+         <property name="Current.File" value="${DemoData.Dir}/init.sql.local"/>
+         <property name="toReplace" value="{#PASSWORDHASHDEMO}"/>
+         <echo message='${script::ReplaceInFile(Current.File, toReplace, passwordhash)}'/>
+         <property name="toReplace" value="{#PASSWORDSALTDEMO}"/>
+         <echo message='${script::ReplaceInFile(Current.File, toReplace, passwordsalt)}'/>
+
+         <property name="passwordChangeme" value="TOBESETBYINSTALLER2"/>
+         <property name="passwordsalt" value="${OP::GetPasswordSalt()}"/>
+         <property name="passwordhash" value="${OP::GetPasswordHash(passwordChangeme, passwordsalt)}"/>
+         <property name="Current.File" value="${DemoData.Dir}/init.sql.local"/>
+         <property name="toReplace" value="{#PASSWORDHASHANONYMOUS}"/>
+         <echo message='${script::ReplaceInFile(Current.File, toReplace, passwordhash)}'/>
+         <property name="toReplace" value="{#PASSWORDSALTANONYMOUS}"/>
+         <echo message='${script::ReplaceInFile(Current.File, toReplace, passwordsalt)}'/>
+
+        <if test="${DBMS.Type=='postgresql'}">
+             <if test="${psqlversion=='9'}">
+                 <!-- Postgresql 9: requires to use \COPY which works for any user, rather than COPY which only works for superuser.
+                      But Debian with Postgresql 8 only works with COPY -->
+                 <property name="toReplace" value="COPY"/>
+                 <property name="newValue" value="\COPY"/>
+                 <property name="Current.File" value="${DemoData.Dir}/init.sql.local"/>
+                 <echo message='${script::ReplaceInFile(Current.File, toReplace, newValue)}'/>         
+                 <property name="Current.File" value="${BaseData.Dir}/init.sql.local"/>
+                 <echo message='${script::ReplaceInFile(Current.File, toReplace, newValue)}'/>
+             </if>
+             <psql exe="${PostgreSQL.exe}" sqlfile="${CleanDatabaseScript}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+             <psql exe="${PostgreSQL.exe}" sqlfile="${BaseData.Dir}/init.sql.local" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+             <if test="${WithDemoDataGermany=='true'}">
+                 <psql exe="${PostgreSQL.exe}" sqlfile="${DemoData.Dir}/init.sql.local" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+             </if>
+        </if>
+        <if test="${DBMS.Type=='mysql'}">
+             <mysql exe="${MySQL.exe}" sqlfile="${CleanDatabaseScript}" host="${DBMS.DBHostOrFile}" database="${DBMS.DBName}" user="${DBMS.UserName}" password="${DBMS.Password}"/>
+             <ExecDotNet program="${BuildToolsExe.dir}/Ict.Tools.GenerateSQL.exe" commandline="-do:load -dbms:${DBMS.Type} -petraxml:${PetraXML.file} -outputFile:empty  -sqlfile:${BaseData.Dir}/init.sql.local -host:${DBMS.DBHostOrFile} -database:${DBMS.DBName} -username:${DBMS.UserName} -password:${DBMS.Password}" failonerror="true"/>
+             <if test="${WithDemoDataGermany=='true'}">
+                 <ExecDotNet program="${BuildToolsExe.dir}/Ict.Tools.GenerateSQL.exe" commandline="-do:load -dbms:${DBMS.Type} -petraxml:${PetraXML.file} -outputFile:empty  -sqlfile:${DemoData.Dir}/init.sql.local -host:${DBMS.DBHostOrFile} -database:${DBMS.DBName} -username:${DBMS.UserName} -password:${DBMS.Password}" failonerror="true"/>
+             </if>
+        </if>
+    </target>
+
+    <target name="dumpDatabase" depends="init" description="dump the database to a DBMS specific file, eg. nant dumpDatabase -D:file=testmysql.sql">
+        <if test="${DBMS.Type=='postgresql'}">
+            <exec program="${pgdump.exe}" commandline="--data-only --username=${DBMS.UserName} --file=&quot;${file}&quot; -h ${DBMS.DBHostOrFile} -p ${DBMS.DBPort} ${DBMS.DBName}">
+                <environment>
+                    <variable name="PGPASSWORD" value="${DBMS.Password}"/>
+                </environment>
+            </exec>
+        </if>
+        <if test="${DBMS.Type=='mysql'}">
+            <if test="${not platform::is-windows()}" >
+                <exec program="mysqldump" commandline="${DBMS.DBName} --no-create-info --user=root --password=${DBMS.Password} --result-file=${file}" />
+            </if>
+            <if test="${platform::is-windows()}" >
+                <exec program="${MySQLDump.exe}" commandline="${DBMS.DBName} --no-create-info --user=root --password=${DBMS.RootPassword} --result-file=&quot;${file}&quot;"/>
+            </if>
+
+            <property name="temp" value="${script::ReplaceInFile(file,'RegEx:^^','SET AUTOCOMMIT=0;SET FOREIGN_KEY_CHECKS=0;')}"/>
+            <property name="temp" value="${script::ReplaceInFile(file,'RegEx:$$','SET FOREIGN_KEY_CHECKS=1;COMMIT;SET AUTOCOMMIT=1;')}"/>
+            <property name="temp" value="${script::ReplaceInFile(file,'RegEx:INSERT INTO `seq_(?&lt;seq_name&gt;.*)`','DELETE FROM `seq_${seq_name}`; INSERT INTO `seq_${seq_name}`')}"/>
+        </if>
+    </target>
+
+    <target name="loadDatabase" depends="init" description="load the database from a DBMS specific file, eg. nant loadDatabase -D:file=testmysql.sql">
+        <call target="createSQLStatements" unless="${target::has-executed('createSQLStatements')}"/>
+        <property name="BaseData.Dir" value="${OpenPetraRoot.dir}/db/basedata"/>
+    
+        <if test="${DBMS.Type=='postgresql'}">
+            <psql exe="${PostgreSQL.exe}" sqlfile="${DeliveryDB.dir}/petra_remove.sql" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <!-- drop all tables that are not part of the current revision anymore. they are missed by petra_remove.sql -->
+            <property name="tempfile" value="${path::get-temp-path()}/delAllTables.sql"/>
+            <psql exe="${PostgreSQL.exe}" 
+                     sqlcommand="SELECT 'DROP TABLE ' || n.nspname || '.' || c.relname || ' CASCADE;' FROM pg_catalog.pg_class AS c LEFT JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace WHERE relkind = 'r' AND n.nspname NOT IN ('pg_catalog', 'pg_toast') AND pg_catalog.pg_table_is_visible(c.oid)" 
+                     outputfile="${tempfile}"
+                     host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <psql exe="${PostgreSQL.exe}" sqlfile="${tempfile}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <delete file="${tempfile}" if="${file::exists(tempfile)}"/>
+
+            <!-- drop all sequences as well -->
+            <property name="tempfile" value="${path::get-temp-path()}/delAllSequences.sql"/>
+            <psql exe="${PostgreSQL.exe}" 
+                     sqlcommand="SELECT 'DROP SEQUENCE ' || n.nspname || '.' || c.relname || ';' FROM pg_catalog.pg_class AS c LEFT JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace WHERE relkind = 'S' AND n.nspname NOT IN ('pg_catalog', 'pg_toast') AND pg_catalog.pg_table_is_visible(c.oid)" 
+                     outputfile="${tempfile}"
+                     host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <psql exe="${PostgreSQL.exe}" sqlfile="${tempfile}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <delete file="${tempfile}" if="${file::exists(tempfile)}"/>
+
+            <if test="${file=='nothing'}">
+                <psql exe="${PostgreSQL.exe}" sqlfile="${DeliveryDB.dir}/petra.sql" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            </if>
+            <if test="${file!='nothing'}">
+                <psql exe="${PostgreSQL.exe}" sqlfile="${DeliveryDB.dir}/petra_withoutConstraints.sql" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+                <if test="${string::ends-with(file, '.gz')}">
+                    <gunzip src="${file}" dest="${tempdir + '/load.sql'}" />
+                    <psql exe="${PostgreSQL.exe}" sqlfile="${tempdir + '/load.sql'}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+                    <delete file="${tempdir + '/load.sql'}"/>
+                </if>
+                <if test="${not string::ends-with(file, '.gz')}">
+                    <psql exe="${PostgreSQL.exe}" sqlfile="${file}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}" />
+                </if>
+                <ExecDotNet program="${BuildToolsExe.dir}/Ict.Tools.DataMigrateStatistics.exe" commandline="-petraxml:${PetraXML.file} -type:${DBMS.Type} -host:${DBMS.DBHostOrFile} -port:${DBMS.DBPort} -database:${DBMS.DBName} -username:${DBMS.UserName} -password:${DBMS.Password}"/>
+                <psql exe="${PostgreSQL.exe}" sqlfile="${DeliveryDB.dir}/createconstraints-PostgreSQL.sql" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            </if>
+        </if>
+        <if test="${DBMS.Type=='mysql'}">
+            <mysql exe="${MySQL.exe}" sqlfile="${CleanDatabaseScript}" database="${DBMS.DBName}" user="root" password="${DBMS.RootPassword}"/>
+            <mysql exe="${MySQL.exe}" sqlfile="${file}" database="${DBMS.DBName}" user="root" password="${DBMS.RootPassword}"/>
+        </if>
+    </target>
+
+    <target name="loadTestDatabase" depends="init" description="load the database from a DBMS specific file, eg. nant loadDatabase -D:file=testmysql.sql">
+        <call target="createSQLStatements" unless="${target::has-executed('createSQLStatements')}"/>
+        <property name="BaseData.Dir" value="${OpenPetraRoot.dir}/db/basedata"/>
+    
+        <if test="${DBMS.Type=='postgresql'}">
+            <psql exe="${PostgreSQL.exe}" sqlfile="${DeliveryDB.dir}/petra_remove.sql" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <!-- drop all tables that are not part of the current revision anymore. they are missed by petra_remove.sql -->
+            <property name="tempfile" value="${path::get-temp-path()}/delAllTables.sql"/>
+            <psql exe="${PostgreSQL.exe}" 
+                     sqlcommand="SELECT 'DROP TABLE ' || n.nspname || '.' || c.relname || ' CASCADE;' FROM pg_catalog.pg_class AS c LEFT JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace WHERE relkind = 'r' AND n.nspname NOT IN ('pg_catalog', 'pg_toast') AND pg_catalog.pg_table_is_visible(c.oid)" 
+                     outputfile="${tempfile}"
+                     host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <psql exe="${PostgreSQL.exe}" sqlfile="${tempfile}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <delete file="${tempfile}" if="${file::exists(tempfile)}"/>
+
+            <!-- drop all sequences as well -->
+            <property name="tempfile" value="${path::get-temp-path()}/delAllSequences.sql"/>
+            <psql exe="${PostgreSQL.exe}" 
+                     sqlcommand="SELECT 'DROP SEQUENCE ' || n.nspname || '.' || c.relname || ';' FROM pg_catalog.pg_class AS c LEFT JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace WHERE relkind = 'S' AND n.nspname NOT IN ('pg_catalog', 'pg_toast') AND pg_catalog.pg_table_is_visible(c.oid)" 
+                     outputfile="${tempfile}"
+                     host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <psql exe="${PostgreSQL.exe}" sqlfile="${tempfile}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <delete file="${tempfile}" if="${file::exists(tempfile)}"/>
+
+            <psql exe="${PostgreSQL.exe}" sqlfile="${DeliveryDB.dir}/petra_withoutConstraints.sql" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <if test="${file!='nothing'}">
+                <if test="${string::ends-with(file, '.gz')}">
+                    <gunzip src="${file}" dest="${tempdir + '/load.sql'}" />
+                    <psql exe="${PostgreSQL.exe}" sqlfile="${tempdir + '/load.sql'}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+                    <delete file="${tempdir + '/load.sql'}"/>
+                </if>
+                <if test="${not string::ends-with(file, '.gz')}">
+                    <psql exe="${PostgreSQL.exe}" sqlfile="${file}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}" />
+                </if>
+            </if>
+        </if>
+        <if test="${DBMS.Type=='mysql'}">
+            <mysql exe="${MySQL.exe}" sqlfile="${CleanDatabaseScript}" database="${DBMS.DBName}" user="root" password="${DBMS.RootPassword}"/>
+            <mysql exe="${MySQL.exe}" sqlfile="${file}" database="${DBMS.DBName}" user="root" password="${DBMS.RootPassword}"/>
+        </if>
+    </target>
+
+    <target name="loadDatabaseFromBackup" depends="init" description="load the database from a DBMS specific file with the db structure">
+        <call target="createSQLStatements" unless="${target::has-executed('createSQLStatements')}"/>
+        <property name="BaseData.Dir" value="${OpenPetraRoot.dir}/db/basedata"/>
+    
+        <if test="${DBMS.Type=='postgresql'}">
+            <psql exe="${PostgreSQL.exe}" sqlfile="${DeliveryDB.dir}/petra_remove.sql" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <!-- drop all tables that are not part of the current revision anymore. they are missed by petra_remove.sql -->
+            <property name="tempfile" value="${path::get-temp-path()}/delAllTables.sql"/>
+            <psql exe="${PostgreSQL.exe}" 
+                     sqlcommand="SELECT 'DROP TABLE ' || n.nspname || '.' || c.relname || ' CASCADE;' FROM pg_catalog.pg_class AS c LEFT JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace WHERE relkind = 'r' AND n.nspname NOT IN ('pg_catalog', 'pg_toast') AND pg_catalog.pg_table_is_visible(c.oid)" 
+                     outputfile="${tempfile}"
+                     host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <psql exe="${PostgreSQL.exe}" sqlfile="${tempfile}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <delete file="${tempfile}" if="${file::exists(tempfile)}"/>
+
+            <!-- drop all sequences as well -->
+            <property name="tempfile" value="${path::get-temp-path()}/delAllSequences.sql"/>
+            <psql exe="${PostgreSQL.exe}" 
+                     sqlcommand="SELECT 'DROP SEQUENCE ' || n.nspname || '.' || c.relname || ';' FROM pg_catalog.pg_class AS c LEFT JOIN pg_catalog.pg_namespace AS n ON n.oid = c.relnamespace WHERE relkind = 'S' AND n.nspname NOT IN ('pg_catalog', 'pg_toast') AND pg_catalog.pg_table_is_visible(c.oid)" 
+                     outputfile="${tempfile}"
+                     host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <psql exe="${PostgreSQL.exe}" sqlfile="${tempfile}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            <delete file="${tempfile}" if="${file::exists(tempfile)}"/>
+
+            <if test="${file!='nothing'}">
+                <if test="${string::ends-with(file, '.gz')}">
+                    <gunzip src="${file}" dest="${tempdir + '/load.sql'}" />
+                    <psql exe="${PostgreSQL.exe}" sqlfile="${tempdir + '/load.sql'}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+                    <delete file="${tempdir + '/load.sql'}"/>
+                </if>
+                <if test="${not string::ends-with(file, '.gz')}">
+                    <psql exe="${PostgreSQL.exe}" sqlfile="${file}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+                </if>
+            </if>
+        </if>
+        <if test="${DBMS.Type=='mysql'}">
+            <mysql exe="${MySQL.exe}" sqlfile="${CleanDatabaseScript}" database="${DBMS.DBName}" user="root" password="${DBMS.RootPassword}"/>
+            <mysql exe="${MySQL.exe}" sqlfile="${file}" database="${DBMS.DBName}" user="root" password="${DBMS.RootPassword}"/>
+        </if>
+    </target>
+
+    <target name="loadDatabaseIncrement" depends="init" description="load a test increment for the database from a DBMS specific file, eg. nant loadDatabaseIncrement -D:file=testmysql.sql">
+        <property name="BaseData.Dir" value="${OpenPetraRoot.dir}/db/basedata"/>
+    
+        <if test="${DBMS.Type=='postgresql'}">
+            <if test="${string::ends-with(file, '.gz')}">
+                <gunzip src="${file}" dest="${tempdir + '/load.sql'}" />
+                <psql exe="${PostgreSQL.exe}" sqlfile="${tempdir + '/load.sql'}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+                <delete file="${tempdir + '/load.sql'}"/>
+            </if>
+            <if test="${not string::ends-with(file, '.gz')}">
+                <psql exe="${PostgreSQL.exe}" sqlfile="${file}" host="${DBMS.DBHostOrFile}" port="${DBMS.DBPort}" database="${DBMS.DBName}" username="${DBMS.UserName}" password="${DBMS.Password}"/>
+            </if>
+        </if>
+        <if test="${DBMS.Type=='mysql'}">
+            <mysql exe="${MySQL.exe}" sqlfile="${file}" database="${DBMS.DBName}" user="root" password="${DBMS.RootPassword}"/>
+        </if>
+    </target>
+
+    <target name="createPostgreSQLDB" depends="init">
+        <property name="DBMS.Type.Orig" value="${DBMS.Type}"/>
+        <property name="DBMS.DBName.Orig" value="${DBMS.DBName}"/>
+        <property name="DBMS.Type" value="postgresql"/>
+        <property name="DBMS.DBName" value="${DBMS.Setup.DBName}"/>
+        <call target="recreateDatabase"/>
+        <call target="resetDatabase"/>
+        <property name="file" value="${DeliveryDB.dir}/demodata-PostgreSQL.sql"/>
+        <call target="dumpDatabase"/>
+        <property name="DBMS.Type" value="${DBMS.Type.Orig}"/>
+        <property name="DBMS.DBName" value="${DBMS.DBName.Orig}"/>
+    </target>
+
+    <target name="createMySQLDB" depends="init">
+        <property name="DBMS.Type.Orig" value="${DBMS.Type}"/>
+        <property name="DBMS.Type" value="mysql"/>
+        <if test="${not property::exists('DBMS.RootPassword')}">
+          <fail message="Please add property DBMS.RootPassword to your OpenPetra.build.config file!"/>
+        </if>
+        <property name="DBMS.DBName" value="openpetra_basedb"/>
+        <call target="recreateDatabase"/>
+        <call target="resetDatabase"/>
+        <property name="file" value="${DeliveryDB.dir}/demodata-MySQL.sql"/>
+        <call target="dumpDatabase"/>
+        <property name="DBMS.Type" value="${DBMS.Type.Orig}"/>
+    </target>
+
+</project>

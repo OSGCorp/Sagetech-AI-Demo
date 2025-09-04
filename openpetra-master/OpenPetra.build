@@ -1,0 +1,490 @@
+<?xml version="1.0"?>
+<project name="OpenPetra" default="help">
+
+<echo>operating system=${operating-system::to-string(environment::get-operating-system())}</echo>
+<echo>platform=${platform::get-name()}</echo>
+
+<include buildfile="inc/nant/OpenPetra.common.xml"/>
+
+<!-- nant -projecthelp does not show imported targets-->
+<target name="help" depends="" description="Displays the available targets and parameters.">
+    <echo>
+list of available commands:
+  quickClean: cleans all generated files and the delivery directory
+  generateSolution: compiles OpenPetra and generates the project and solution files
+  generateTools: build the basic tools only
+  minimalGenerateSolution: generates the project and solution files. compiles what it needs, but does not compile all code
+  generateSolutionNoCompile: generates the project and solution files. minimalGenerateSolution should already be executed
+  quickCompile: will just compile the solution file, with msbuild (Windows) or our own builder (Linux)
+      nant quickCompile                    will compile the OpenPetra.sln
+      nant quickCompile -D:onlyonce=true   will compile the OpenPetra.sln but only the dlls that have not been compiled yet
+      nant quickCompile -D:solution=Tools  will compile the OpenPetra.Tools.sln
+                                           other solutions are: Client, Server, Testing
+  generateProjectFiles: after creating a new cs file, this will add the file to the project,
+      and a new directory will be picked up and a project will be created.
+  compileProject: compile a single project file
+      nant compileProject -D:file=csharp/ICT/Common/Ict.Common.csproj
+      nant compileProject -D:name=Ict.Common
+  prepareDeliveryContent: make sure all the sql files are in the right place on devenv
+  install: install the current development binaries to this machine (requires the rpm already to be installed)
+  startAdmin: not possible via nant, run this: /home/op_dev/openpetra-server.sh menu
+  deleteBakFiles: delete all backup files
+  initConfigFiles: write and overwrite the config files for server and testing, and the version.txt
+  initPlugins: install some default plugins
+  test-all: will run the NUnit tests (smaller tests: test-without-display, test-main-navigation-screens)
+      nant test-without-display             runs all basic tests
+  test: will test a specific DLL
+      nant test -D:file=Ict.Testing.lib.Common.IO.dll -D:testcase=Ict.Common.IO.Testing.TTestSmtpSender.TestSendMail
+
+compat:
+  createSQLStatements: generates the sql create table statements etc from the petra.xml
+  dbdoc: generates database design documentation using sql2diagram
+  apiDoc: generates doxygen doc
+  errorCodeDoc: generates doc for used error codes
+  schemaSpy: generates database documentation using schemaSpy
+  recreateDatabase: needed after changes in table structure in petra.xml
+  resetDatabase: just resets the data, resets the permissions; with DEMO user and a german ledger
+  resetDatabaseClean: resets the data, resets the permissions; only SYSADMIN user, no ledger
+  patchDatabase: update the database to the latest development version
+  dumpDatabase: dump the database to a db specific format.
+        nant dumpDatabase -D:file=test.sql
+  loadDatabase: load the database from a db specific dump
+        nant loadDatabase -D:file=test.sql
+  loadTestDatabase: test load the database from a db specific dump
+        nant loadTestDatabase -D:file=test.sql
+  loadDatabaseFromBackup: load the database from a backup
+        (includes table specification)
+  generateORM: generates Object Relational Mapping routines from petra.xml
+    sub items: generateORMCachedTables, generateORMData, generateORMAccess
+  generateGlue: generates the interfaces and instantiators, which is the glue between client and server
+  cleanPetra: prepare for a clean build
+  compilePetra: build all Petra C# code
+  translation: download new language files, and create the dlls required to be delivered with a new release
+  buildTranslationTemplate: extracts string in winforms, creates and updates the .po files
+  generateGuidedTranslations: Simplifies the translation of the .po files
+  checkHtml: check the HTML files if certain rules are put into practise
+  checkCode: check the C# code for certain rules
+
+releases:
+  buildRPM: will build the linux files that can be used for RPM. creates tar files for local server
+
+demodata:
+  generateDemodata: create demo data
+  importDemodata: imports demo data into the database
+
+list of commands, which works in the specific csharp directories:
+  indent: beautify the code according to coding style guide
+  uncrustify: calls indent
+
+useful parameters
+  -logfile:test.log
+</echo>
+</target>
+
+<target name="apiDoc" description="Generates API documentation. nant depend should have been run" >
+  <echo message="Target apiDoc started at: ${datetime::now()}" /> 
+  
+  <exec program="${external.doxygen}">
+    <arg value="&quot;${external.doxygen.configfile}&quot;" />
+  </exec>  
+  
+  <echo message="Target apiDoc finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="errorCodeDoc" description="Generates documentation of the error codes" >
+  <echo message="Target errorCodeDoc started at: ${datetime::now()}" /> 
+  
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('ExecDotNet')}"/> 
+  <ExecDotNet program="${dir.bin}/Ict.Tools.GenerateI18N.exe" 
+    commandline="&quot;-csharppath:${dir.csharp}&quot; &quot;-templatefilepath:${dir.incdir.template}/doc/errorcodes.html&quot; &quot;-outfilepath:${dir.delivery}/errorcodes.html&quot; -do:errorcodedoc" />
+    
+  <echo message="Target errorCodeDoc finished at: ${datetime::now()}" />     
+</target>
+
+<target name="translation" description="create the dlls with the i18n messages" >
+  <echo message="Target translation started at: ${datetime::now()}" /> 
+  
+  <property name="target" value="compile" overwrite="false" />
+  <nant inheritall="true" target="${target}" 
+        buildfile="i18n/i18n.build" />
+        
+  <echo message="Target translation finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="buildTranslationTemplate" description="extracts string in winforms, creates and updates the .po files" >
+  <echo message="Target buildTranslationTemplate started at: ${datetime::now()}" /> 
+  
+  <property name="target" value="compile" overwrite="false" />
+  <nant inheritall="false" target="extractMsgs" 
+        buildfile="i18n/i18n.build" />
+        
+  <echo message="Target buildTranslationTemplate finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="generateGuidedTranslations" description="simplifies the translation of the .po files" >
+  <echo message="Target generateGuidedTranslations started at: ${datetime::now()}" /> 
+  
+  <property name="target" value="compile" overwrite="false" />
+  <nant inheritall="false" target="guidedTrans" 
+        buildfile="i18n/i18n.build" />
+        
+  <echo message="Target generateGuidedTranslations finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="createI18NYamlFiles" description="create localised yaml files" >
+  <echo message="Target createI18NYamlFiles started at: ${datetime::now()}" /> 
+  
+  <nant inheritall="true" target="createI18NYamlFiles" 
+        buildfile="i18n/i18n.build" />
+        
+  <echo message="Target createI18NYamlFiles finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="custclean" description="Cleans the solution and project files">
+  <echo message="Target custclean started at: ${datetime::now()}" /> 
+  
+  <foreach item="String" property="devenv-name" delim="," in="${projectfiles.templates-list}" >
+    <delete>
+      <fileset basedir="${path::combine(dir.projectfiles,devenv-name)}">
+        <include name="OpenPetra*.sln" />
+        <include name="*.csproj" />
+      </fileset>
+    </delete>
+  </foreach>
+  <delete> 
+    <fileset basedir="${dir.delivery}" >  
+      <include name="OpenPetraSetup-*.exe" />
+    </fileset>
+  </delete>
+  <property name="target" value="clean" />
+  
+  <echo message="Target custclean finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="quickClean" description="cleans all generated files and the delivery directory">    
+  <echo message="Target quickClean started at: ${datetime::now()}" /> 
+  
+  <!-- Do not remove dir.bin, because this fails on Windows Jenkins server for NUnit tests -->
+  <delete>
+    <fileset basedir="${dir.bin}">
+      <include name="**" />
+      <exclude name="."/>
+    </fileset>
+  </delete>
+  <delete>
+    <fileset basedir="${dir.obj}">
+      <include name="**" />
+      <exclude name="."/>
+    </fileset>
+  </delete>
+  <delete file="${uuidFile}"/>
+  <delete file="${namespaceFile}"/>
+  <delete file="${projectDependenciesFile}"/>
+  <foreach item="String" property="devenv-name" delim="," in="${projectfiles.templates-list}" >
+    <delete dir="${path::combine(dir.projectfiles,devenv-name)}" />
+  </foreach>
+  <delete>
+    <fileset basedir="${dir.root}">
+      <include name="**/*-generated.build" />
+      <include name="**/*-generated.cs" />
+      <include name="**/*-generated.resx" />
+      <include name="**/*-generated.Designer.cs" />
+      <include name="**/*.generated.refs" />
+      <include name="**/*.dll.xml" />
+      <include name="tmp/**/AssemblyInfo.cs" />
+      <include name="csharp/*.sln" />
+      <include name="csharp/ICT/**/AssemblyInfo.cs" />
+      <include name="csharp/ICT/**/*.csproj" />
+      <exclude name="**/test*-generated.*cs" />
+    </fileset>
+  </delete>
+  <echo message="Target quickClean finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="nanttasks" description="goes into the directory inc/nanttasks">
+  <echo message="Target nanttasks started at: ${datetime::now()}" /> 
+  
+  <property name="target" value="compile" overwrite="false" />
+  <nant inheritall="false" target="${target}" 
+        buildfile="inc/nanttasks/nanttasks.build" />
+        
+  <echo message="Target nanttasks finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="csharp" depends="nanttasks" description="goes into the directory csharp">
+  <echo message="Target csharp started at: ${datetime::now()}" /> 
+  
+  <property name="target" value="compile" overwrite="false" />
+  <nant inheritall="false" target="${target}" 
+        buildfile="csharp/csharp.build" />
+        
+  <echo message="Target csharp finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="internal-subdirs" description="Goes into all necessary subdirectories" 
+        depends="csharp,nanttasks" />
+
+<target name="generateSolutionNoCompile" description="generates the project and solution files. minimalGenerateSolution should already be executed"
+        depends="generateProjectFiles"/>
+
+<target name="minimalGenerateSolution" description="compile minimal code for generating source code and the project and solution files">
+    <echo message="Target minimalGenerateSolution started at: ${datetime::now()}" /> 
+    
+    <call target="generateTools"/>
+    <call target="generateORM"/>
+    <call target="generateGlue"/>
+    <!-- need to call generateNamespaceMap again, even though it was called in generateTools already. but now the winforms and ORM have been generated -->
+    <call target="generateNamespaceMap"/>
+    <call target="generateProjectFiles"/>
+    <call target="prepareDeliveryContent"/>
+    
+    <echo message="Target minimalGenerateSolution finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="generateSolution" description="compiles OpenPetra and generates the project and solution files"
+        depends="minimalGenerateSolution">
+    <echo message="Target generateSolution started at: ${datetime::now()}" />         
+    
+    <call target="quickCompile"/>
+    <call target="pullVCSVersionInfo"/>
+    
+    <echo message="Target generateSolution finished at: ${datetime::now()}" />         
+</target>
+
+<target name="generateNamespaceMap">
+  <echo message="Target generateNamespaceMap started at: ${datetime::now()}" />         
+  
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('GenerateNamespaceMap')}"/>
+  <GenerateNamespaceMap
+    CodeRootDir="${dir.csharp}"
+    NamespaceMapFilename="${namespaceFile}"
+    NamespaceMap3rdParty="${namespaceFile3rdParty}"
+    CompilingForStandalone="${compileForStandalone}"
+    DependencyMapFilename="${projectDependenciesFile}"/>
+    
+  <echo message="Target generateNamespaceMap finished at: ${datetime::now()}" />         
+</target>
+
+<target name="generateTools">
+  <echo message="Target generateTools started at: ${datetime::now()}" />         
+  
+  <call target="nanttasks"/>
+  <nant inheritall="false" target="compile"
+        buildfile="csharp/ThirdParty/ThirdParty.build" />
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('GenerateNamespaceMap')}"/>
+  <property name="solution" value="Tools" overwrite="true"/>
+  <GenerateNamespaceMap
+    CodeRootDir="${dir.csharp}"
+    NamespaceMapFilename="${namespaceFile}"
+    NamespaceMap3rdParty="${namespaceFile3rdParty}"
+    DependencyMapFilename="${projectDependenciesFile}"
+    ShowWarnings="false"
+    LimitToNamespaces="Ict.Common,Ict.Common.IO,Ict.Common.DB,Ict.Tools.DBXML,Ict.Tools.CodeGeneration,Ict.Tools.GenerateGlue,Ict.Tools.GenerateI18N,Ict.Tools.GenerateORM,Ict.Tools.GenerateSQL,Ict.Tools.CheckHtml,Ict.Tools.CodeChecker"/>
+  <call target="generateProjectFilesInternal"/>
+  <call target="quickCompile"/>
+  <property name="solution" value="OpenPetra" overwrite="true"/>
+  
+  <echo message="Target generateTools finished at: ${datetime::now()}" />         
+</target>
+
+<target name="generateProjectFiles" depends="nanttasks,generateNamespaceMap,generateProjectFilesInternal"/>
+
+<target name="generateProjectFilesInternal">
+  <echo message="Target generateProjectFilesInternal started at: ${datetime::now()}" />         
+  
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('GenerateProjectFiles')}"/>
+  <GenerateProjectFiles 
+    CodeRootDir="${dir.csharp}"
+    DependencyMapFilename="${projectDependenciesFile}"
+    GUIDMapFilename="${uuidFile}"
+    TemplateDir="${dir.incdir.template}"
+    DevEnvironments="${devenv-msbuild},${projectfiles.templates-list}"
+    DirBin="${dir.bin}"
+    NetFrameworkVersion="${Target-NETframework-version}"
+    ProjectVersion="${ReleaseID}"
+    DebugParameters="PetraClient,-C:${ClientConfigFile},PetraServerConsole,-C:${ServerConfigFile}"
+    />
+    
+  <echo message="Target generateProjectFilesInternal finished at: ${datetime::now()}" />
+</target>
+
+<!-- Include default implementation -->
+<include buildfile="inc/nant/OpenPetra.subdirs.xml"/> 
+
+<!-- Compat targets -->
+<include buildfile="inc/nant/OpenPetra.tobe.migrated.xml"/>
+
+<!-- tasks for building releases -->
+<include buildfile="setup/setup.build"/>
+
+<!-- tasks for creating demodata -->
+<include buildfile="demodata/demodata.build"/>
+
+<target name="MsBuildTarget">
+    <echo message="Target MsBuildTarget started at: ${datetime::now()}" />         
+    
+    <msbuild project="${solution.file}" verbosity="Minimal">
+        <property name="Configuration" value="${Configuration}"/>
+    </msbuild>
+    
+    <echo message="Target MsBuildTarget finished at: ${datetime::now()}" />         
+</target>
+
+<target name="quickCompile">
+  <!-- this is very different from the compile target. quickCompile does not generate any code. 
+       quickCompile uses the solution and csproj files and msbuild.
+       quickCompile is intended as an alternative to compile in SharpDevelop directly.
+  -->
+  
+  <echo message="Target quickCompile started at: ${datetime::now()}" />         
+  
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('CompileSolution')}"/>
+  <property name="solution" value="OpenPetra" overwrite="false"/>
+  <property name="onlyonce" value="false" overwrite="false"/>
+  <property name="solution.file" value="${path::combine(dir.csharp,
+                              'OpenPetra.'+solution+'.sln')}"/>
+  <property name="solution.file" value="${string::replace(solution.file, 'OpenPetra.OpenPetra.sln', 'OpenPetra.sln')}"/>
+
+  <CompileSolution SolutionFile="${solution.file}" OnlyOnce="${onlyonce == 'true'}"/>
+  
+  <echo message="Target quickCompile finished at: ${datetime::now()}" />         
+</target>
+
+<target name="compileProject">
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('GenerateNamespaceMap')}"/>
+  <if test="${not property::exists('name')}">
+    <CompileProject CSProjFile="${path::get-full-path(file)}" CodeRootDir="${dir.csharp}"/>
+  </if>
+  <if test="${property::exists('name')}">
+    <CompileProject ProjectName="${name}" CodeRootDir="${dir.csharp}"/>
+  </if>
+</target>
+
+<target name="generateORM" depends="generateORMCachedTables,generateORMData,generateORMAccess">
+  <echo message="Target generateORM started at: ${datetime::now()}" />         
+  
+  <echo message="please compile the code after the files have been regenerated"/>
+  
+  <echo message="Target generateORM finished at: ${datetime::now()}" />         
+</target>
+
+<target name="generateORMData">
+  <echo message="Target generateORMData started at: ${datetime::now()}" />
+
+  <!-- generate the files for Ict.Petra.Shared.lib.data, ie. the tables and datasets -->
+  <nant inheritall="false" target="custdepend" buildfile="${path::combine(dir.csharp, 'ICT/Petra/Shared/Ict.Petra.Shared.build')}" verbose="${verbose}"/>
+  <nant inheritall="false" target="custdependORM" buildfile="${path::combine(dir.csharp, 'ICT/Petra/Plugins/Plugins.build')}" verbose="${verbose}"/>
+
+  <delete file="${dir.bin}/Ict.Petra.Shared.lib.data.dll" />
+  <echo message="now run: nant quickCompile -D:onlyonce=true"/>
+
+  <echo message="Target generateORMData finished at: ${datetime::now()}" />
+</target>
+
+<target name="generateORMAccess">
+  <echo message="Target generateORMAccess started at: ${datetime::now()}" />         
+
+  <!-- generate the files for Ict.Petra.Server.lib.data, ie. the access files for reading from and writing to the database -->
+  <nant inheritall="false" target="custdepend" buildfile="${path::combine(dir.csharp, 'ICT/Petra/Server/Ict.Petra.Server.build')}" verbose="${verbose}"/>
+
+  <delete file="${dir.bin}/Ict.Petra.Server.lib.data.dll" />
+  <echo message="now run: nant quickCompile -D:onlyonce=true"/>
+
+  <echo message="Target generateORMAccess finished at: ${datetime::now()}" />         
+</target>
+
+<target name="test-all" depends="initConfigFiles, copySQLFiles">
+  <echo message="Target test-all started at: ${datetime::now()}" />
+  
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('GenerateNamespaceMap')}"/>
+  <nant inheritall="false" target="test-all" buildfile="${path::combine(dir.csharp, 'ICT/Testing/ICT.Testing.build')}" verbose="${verbose}"/>
+  
+  <echo message="Target test-all finished at: ${datetime::now()}" />
+</target>
+
+<target name="test" depends="initConfigFiles">
+  <echo message="Target test started at: ${datetime::now()}" />
+  
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('GenerateNamespaceMap')}"/>
+  <nant inheritall="true" target="test" buildfile="${path::combine(dir.csharp, 'ICT/Testing/ICT.Testing.build')}" verbose="${verbose}"/>
+  
+  <echo message="Target test finished at: ${datetime::now()}" />
+</target>
+
+<target name="test-without-display" depends="initConfigFiles, copySQLFiles">
+  <echo message="Target test-without-display (outer) started at: ${datetime::now()}" />
+  
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('GenerateNamespaceMap')}"/>
+  <nant inheritall="false" target="test-without-display" buildfile="${path::combine(dir.csharp, 'ICT/Testing/ICT.Testing.build')}" verbose="${verbose}"/>
+  
+  <echo message="Target test-without-display (outer) finished at: ${datetime::now()}" />
+</target>
+
+<target name="test-client" depends="initConfigFiles, copySQLFiles">
+  <echo message="Target test-client (outer) started at: ${datetime::now()}" />
+  
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('GenerateNamespaceMap')}"/>
+
+  <!-- to avoid timeout, need to make sure everything gets compiled on the web request -->
+  <echo message="try: curl --silent --retry 5 http://localhost:${Http.Port}/api/serverSessionManager.asmx/IsUserLoggedIn"/>
+  <exec program="bash"
+        workingdir="${dir.root}/js-client"
+        commandline="-c &quot;curl --silent --retry 5 http://localhost:${Http.Port}/api/serverSessionManager.asmx/IsUserLoggedIn || exit -1&quot;" />
+
+  <exec program="bash"
+        workingdir="${dir.root}/js-client"
+        commandline="-c &quot;./node_modules/.bin/cypress run --config video=false&quot;">
+        <environment>
+          <variable name="LANG" value="en_US.utf8"/>
+          <variable name="CYPRESS_baseUrl" value="http://localhost:${Http.Port}"/>
+        </environment>
+  </exec>
+  
+  <echo message="Target test-client (outer) finished at: ${datetime::now()}" />
+</target>
+
+<target name="test-main-navigation-screens-core" depends="initConfigFiles, copySQLFiles">
+  <echo message="Target test-main-navigation-screens-core (outer) started at: ${datetime::now()}" />
+  
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('GenerateNamespaceMap')}"/>
+  <nant inheritall="false" target="test-main-navigation-screens-core" buildfile="${path::combine(dir.csharp, 'ICT/Testing/ICT.Testing.build')}" verbose="${verbose}"/>
+  
+  <echo message="Target test-main-navigation-screens-core (outer) finished at: ${datetime::now()}" />
+</target>
+
+<target name="test-main-navigation-screens" depends="initConfigFiles, copySQLFiles">
+  <echo message="Target test-main-navigation-screens (outer) started at: ${datetime::now()}" />
+  
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('GenerateNamespaceMap')}"/>
+  <nant inheritall="false" target="test-main-navigation-screens" buildfile="${path::combine(dir.csharp, 'ICT/Testing/ICT.Testing.build')}" verbose="${verbose}"/>
+  
+  <echo message="Target test-main-navigation-screens (outer) finished at: ${datetime::now()}" />
+</target>
+
+<target name="checkHtml">
+    <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('ExecDotNet')}"/> 
+    <ExecDotNet program="${dir.bin}/Ict.Tools.CheckHtml.exe" 
+        commandline="-formsdir:js-client/src/forms/"/>
+</target>
+
+<target name="checkCode">
+    <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('ExecDotNet')}"/> 
+    <ExecDotNet program="${dir.bin}/Ict.Tools.CodeChecker.exe" 
+        commandline="-Action:static"/>
+</target>
+
+<target name="pullVCSVersionInfo">
+<!-- TODO should we have this for git? but how to define where git.exe lives?
+    eg C:\Users\tpokorra\AppData\Local\Programs\Git\bin\git.exe
+    and it is not on the path
+    <exec program="bzr" commandline="version-info" output="${dir.delivery}/bin/vcs-revision.txt" failonerror="false"/>
+    <echo message="Version Control System version updated in file ${dir.delivery}/bin/vcs-revision.txt" />
+-->
+</target>
+
+<target name="initPlugins">
+    <nant inheritall="false" target="initPlugins" buildfile="${path::combine(dir.csharp, 'ICT/Petra/Plugins/Plugins.build')}" verbose="${verbose}"/>
+</target>
+
+</project>
+

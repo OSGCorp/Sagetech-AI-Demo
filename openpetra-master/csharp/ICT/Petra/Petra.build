@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<project name="Petra-Build">
+
+<!-- Include default implementation -->
+<include buildfile="../../../inc/nant/OpenPetra.subdirs.xml"/> 
+
+</project>

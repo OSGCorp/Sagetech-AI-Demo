@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<project name="Ict.Petra.Server-Build">
+
+<!-- Include default implementation -->
+<include buildfile="../../../../inc/nant/OpenPetra.csharp.xml"/> 
+ 
+</project>

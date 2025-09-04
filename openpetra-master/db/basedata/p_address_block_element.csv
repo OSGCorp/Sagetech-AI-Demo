@@ -1,0 +1,30 @@
+AcademicTitle,Academic Title,false,?,?,?,?,?
+Address1,Address 1,false,?,?,?,?,?
+Address3,Address 3 (For example city district),false,?,?,?,?,?
+AddressStreet2,Address 2 (Street name),false,?,?,?,?,?
+AddresseeType,Addressee Type,false,?,?,?,?,?
+CapsOff,Set caps off,true,?,?,?,?,?
+CapsOn,Set caps on (uppercase),true,?,?,?,?,?
+City,City name,false,?,?,?,?,?
+CountryInLocalLanguage,Country in local language,false,?,?,?,?,?
+CountryName,Country name,false,?,?,?,?,?
+County,County name,false,?,?,?,?,?
+CountryCode,Country code,false,?,?,?,?,?
+Decorations,Decorations,false,?,?,?,?,?
+FirstInitial,Initial of first name,false,?,?,?,?,?
+FirstInitialAndSpace,Initial of first name (add space if not empty),false,?,?,?,?,?
+FirstName,First name,false,?,?,?,?,?
+FirstNameAndSpace,First name (add space if not empty),false,?,?,?,?,?
+LastName,Last name (Family/Person) or name (other Partner Classes),false,?,?,?,?,?
+LastNameAndSpace,Last name (Family/Person) or name (add space if not empty),false,?,?,?,?,?
+LocalName,Name in local language,false,?,?,?,?,?
+LocationKey,Location Key,false,?,?,?,?,?
+MiddleName,Middle name,false,?,?,?,?,?
+NoSuppress,Print line even if it is empty,true,?,?,?,?,?
+Org/Church,The Organisation or Church name if [[UseContact]] is used,false,?,?,?,?,?
+PartnerKey,Partner Key,false,?,?,?,?,?
+PostalCode,Postal code,false,?,?,?,?,?
+ShortName,Short name,false,?,?,?,?,?
+Title,Title,false,?,?,?,?,?
+TitleAndSpace,Title (add space if not empty),false,?,?,?,?,?
+UseContact,Use contact Person/Family for name (if Org/Church),true,?,?,?,?,?

@@ -1,0 +1,80 @@
+<PetraDataSets>
+  <ImportUnit name="Ict.Petra.Shared.MFinance.Gift.Data"/>
+  <ImportUnit name="Ict.Petra.Shared.MFinance.Account.Data"/>
+  <ImportUnit name="Ict.Petra.Shared.MPartner.Partner.Data"/>
+  
+    <DataSet name="GiftBatchTDS">
+        <Table sqltable="a_ledger"/>
+        <Table sqltable="a_gift_batch">
+            <CustomField name="GiftBatchTotal" type="Decimal"/>
+        </Table>
+        <Table sqltable="a_gift">
+            <CustomField name="DonorName" type="String"/>
+            <CustomField name="GiftTotal" type="Decimal"/>
+        </Table>
+        <Table sqltable="a_gift_detail">
+            <CustomField name="DonorKey" type="Int64"/>
+            <CustomField name="DonorName" type="String"/>
+            <CustomField name="DonorClass" type="String"/>
+            <CustomField name="DateEntered" type="DateTime"/>
+            <CustomField name="RecipientDescription" type="String"/>
+            <CustomField name="RecipientField" type="Int64"/>
+            <CustomField name="RecipientKeyMinistry" type="String"/>
+            <CustomField name="RecipientClass" type="String"/>
+            <CustomField name="ReceiptNumber" type="Int32"/>
+            <CustomField name="ReceiptPrinted" type="Boolean"/>
+            <CustomField name="MethodOfGivingCode" type="String"/>
+            <CustomField name="MethodOfPaymentCode" type="String"/>
+            <CustomField name="Reference" type="String"/>
+            <Field sqltable="a_motivation_detail" sqlfield="a_membership_l"/>
+            <Field sqltable="a_motivation_detail" sqlfield="a_sponsorship_l"/>
+            <Field sqltable="a_motivation_detail" sqlfield="a_worker_support_l"/>
+        </Table>
+
+        <Table sqltable="a_recurring_gift_batch"/>
+        <Table sqltable="a_recurring_gift">
+            <CustomField name="DonorName" type="String"/>
+            <CustomField name="GiftTotal" type="Decimal"/>
+        </Table>
+
+        <Table sqltable="a_recurring_gift_detail">
+            <CustomField name="DonorKey" type="Int64"/>
+            <CustomField name="DonorName" type="String"/>
+            <CustomField name="DonorClass" type="String"/>
+            <CustomField name="DateEntered" type="DateTime"/>
+            <CustomField name="Active" type="Boolean"/>
+            <CustomField name="RecipientDescription" type="String"/>
+            <CustomField name="RecipientField" type="Int64"/>
+            <CustomField name="RecipientKeyMinistry" type="String"/>
+            <CustomField name="RecipientClass" type="String"/>
+            <CustomField name="ReceiptNumber" type="Int32"/>
+            <CustomField name="ReceiptPrinted" type="Boolean"/>
+            <CustomField name="MethodOfGivingCode" type="String"/>
+            <CustomField name="MethodOfPaymentCode" type="String"/>
+            <CustomField name="AccountCode" type="String"/>
+            <CustomField name="CostCentreCode" type="String"/>
+            <Field sqltable="a_motivation_detail" sqlfield="a_membership_l"/>
+            <Field sqltable="a_motivation_detail" sqlfield="a_sponsorship_l"/>
+            <Field sqltable="a_motivation_detail" sqlfield="a_worker_support_l"/>
+        </Table>
+
+        <Table sqltable="p_partner_banking_details">
+            <CustomField name="Iban" type="String"/>
+        </Table>
+
+        <Table sqltable="a_motivation_group"/>
+        <Table sqltable="a_motivation_detail"/>
+        <Table sqltable="a_motivation_detail_fee"/>
+        <Table sqltable="a_fees_payable"/>
+        <Table sqltable="a_fees_receivable"/>
+        <Table sqltable="a_processed_fee"/>
+        <Table sqltable="p_partner" name="RecipientPartners"/>
+        <Table sqltable="p_partner" name="DonorPartners"/>
+        <Table sqltable="p_family" name="RecipientFamily"/>
+        <Table sqltable="p_person" name="RecipientPerson"/>
+        <Table sqltable="p_unit" name="RecipientUnit"/>
+        <Table sqltable="p_partner_type" name="LedgerPartnerTypes"/>
+        <Table sqltable="p_partner_tax_deductible_pct"/>
+        <Table sqltable="p_tax"/>
+    </DataSet>
+</PetraDataSets>

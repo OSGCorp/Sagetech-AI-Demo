@@ -1,0 +1,273 @@
+<h2>{caption}</h2>
+<link rel="stylesheet" href="/css/autocomplete.css">
+<!-- Phantom Storage -->
+<div phantom hidden>
+
+	<div class="tpl_row" id="group{val_a_motivation_group_code_c}">
+		<div class="row">
+			<div class="col">{val_a_motivation_group_code_c}</div>
+			<div class="col">{val_a_motivation_group_description_c}</div>
+			<div class="col-2" style="margin-top:0.3em;">
+				<button type="button" class="btn btn-primary" onclick="open_motivations(this, '{val_a_motivation_group_code_c}')">
+					<i class="fas fa-folder-open"></i>
+				</button>
+				<button id="btnEdit" type="button" class="btn btn-primary" onclick="edit_group('{val_a_motivation_group_code_c}')" title="{forms.edit}">
+					<i class="fas fa-wrench"></i>
+				</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="collapse col" style="margin-left:1em;background:rgba(0,0,0,0.15);">
+				<div class="row">
+					<div class="col">
+						<button type="button" class="btn btn-primary" style="margin-top:0.5em;" onclick="new_motivation('{val_a_motivation_group_code_c}')">
+							<span>{forms.new}&nbsp;</span><i class="fas fa-plus"></i>
+						</button>
+					</div>
+					<div class="col"></div>
+				</div>
+				<div class="row">
+					<div class="col"><b>
+						<div class ="row">
+							<div class="col">{motivation_group_code}</div>
+							<div class="col">{motivation_detail_code}</div>
+							<div class="col">{motivation_account_c}</div>
+							<div class="col">{motivation_center_c}</div>
+							<div class="col">{motivation_desc}</div>
+							<div class="col-1">
+								<button type="button" class="btn btn-light" onclick="$('.tpl_row .collapse').collapse('hide');">
+									<i class="fas fa-times"></i>
+								</button>
+							</div>
+						</div>
+					</div></b>
+				</div>
+				<div class="row">
+					<div class="col content_col"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="tpl_motivation">
+		<div class="row">
+			<div class="col">{val_a_motivation_group_code_c}</div>
+			<div class="col">{val_a_motivation_detail_code_c}</div>
+			<div class="col" title="{val_account_name}">{val_a_account_code_c}</div>
+			<div class="col" title="{val_costcentre_name}">{val_a_cost_centre_code_c}</div>
+			<div class="col">{val_a_motivation_detail_desc_c}</div>
+			<div class="col-1">
+				<button type="button" class="btn btn-primary" name="button" onclick="edit_motivation('{val_a_motivation_group_code_c}', '{val_a_motivation_detail_code_c}')">
+					<i class="fas fa-wrench"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal-wide fade tpl_edit_group" tabindex="-1" role="dialog">
+		<input type="hidden" action value="create">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>{edittitle}</h3>
+				</div>
+				<div class="modal-body">
+
+					<div class="container">
+
+						<input type="hidden" name="a_ledger_number_i" value="">
+
+						<div class="row">
+							<div class="col">
+								<span>{motivation_group_code}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="a_motivation_group_code_c" value="" readonly>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{motivation_desc}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="a_motivation_group_description_c" value="">
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button edit-only class="btn btn-danger" onclick="delete_group(this)">{forms.delete}</button>
+					<button class="btn btn-primary" onclick="save_edit_group(this)">{forms.save}</button>
+					<button class="btn btn-light" onclick="CloseModal(this)">{forms.close}</button>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal-wide fade tpl_edit_motivation" tabindex="-1" role="dialog">
+		<input type="hidden" action value="create">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>{edittitle_moti}</h3>
+				</div>
+				<div class="modal-body">
+
+					<div class="container">
+
+						<input type="hidden" name="a_ledger_number_i" value="">
+
+						<div class="row">
+							<div class="col">
+								<span>{motivation_group_code}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="a_motivation_group_code_c" value="" readonly>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{motivation_detail_code}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="a_motivation_detail_code_c" value="" readonly>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{motivation_desc}</span>
+							</div>
+							<div class="col">
+								<input class="" type="text" name="a_motivation_detail_desc_c" value="">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{motivation_account_c}</span>
+							</div>
+							<div class="col">
+								<div class="autocomplete">
+									<input class="" type="text" name="a_account_name_c" key-name="a_account_code_c" value="" oninput="autocomplete_a(this)">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{motivation_center_c}</span>
+							</div>
+							<div class="col">
+								<div class="autocomplete">
+									<input class="" type="text" name="a_cost_center_name_c" key-name="a_cost_centre_code_c" value="" oninput="autocomplete_cc(this)">
+								</div>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{sponsorship}</span>
+							</div>
+							<div class="col">
+								<label class="form-check-label"><input class="form-check-input" type="checkbox" value="1" id="a_sponsorship_l" name="a_sponsorship_l">{for_sponsorship}</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{membership}</span>
+							</div>
+							<div class="col">
+								<label class="form-check-label"><input class="form-check-input" type="checkbox" value="1" id="a_membership_l" name="a_membership_l">{for_membership}</label>
+							</div>
+						</div>
+
+						<!--
+						<div class="row">
+							<div class="col">
+								<span>{worker_support}</span>
+							</div>
+							<div class="col">
+								<label class="form-check-label"><input class="form-check-input" type="checkbox" value="1" id="a_worker_support_l" name="a_worker_support_l">{for_worker_support}</label>
+							</div>
+						</div>
+						-->
+						<input type="hidden" value="false" name="a_worker_support_l">
+
+						<div class="row">
+							<div class="col">
+								<span>{tax_deductible}</span>
+							</div>
+							<div class="col">
+								<label class="form-check-label"><input class="form-check-input" type="checkbox" value="1" id="a_tax_decuctible_l" name="a_tax_deductible_l">{is_tax_deductible}</label>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{active}</span>
+							</div>
+							<div class="col">
+								<label class="form-check-label"><input class="form-check-input" type="checkbox" value="1" id="a_motivation_status_l" name="a_motivation_status_l">{is_active}</label>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button edit-only class="btn btn-danger" onclick="delete_motivation(this)">{forms.delete}</button>
+					<button class="btn btn-primary" onclick="save_edit_detail(this)">{forms.save}</button>
+					<button class="btn btn-light" onclick="CloseModal(this)">{forms.close}</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<table id="toolbar">
+	<tr>
+		<td>{default_motivation_detail}:</td>
+		<td>
+			<input type="hidden" name="a_motivation_group_code_c" value=""/>
+			<div class="autocomplete">
+				<input class="posted_readonly" type="text" name="a_motivation_detail_code_c" key-name="a_motivation_detail_code_c" value="" oninput="autocomplete_motivation_detail(this)">
+			</div>
+		</td>
+		<td><button class="btn btn-primary" onclick="save_default_detail(this)">{forms.save}</button>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<button id="new" class="btn btn-primary" onclick="new_group()">{forms.new}</button>
+		</td>
+	</tr>
+</table>
+
+<div id="modal_space"></div>
+
+<div class="container" id="browse">
+	<div class="row">
+		<div class="col"><b>{motivation_group_code}</b></div>
+		<div class="col"><b>{motivation_desc}</b></div>
+	<div class="col-1"></div>
+	</div>
+
+	<div id="browse_container" class="container-list">
+
+	</div>
+
+</div>
+
+<script src="/src/lib/autocomplete.js" charset="utf-8"></script>
+<script src="/src/lib/autocomplete_posting_acc_cc.js" charset="utf-8"></script>
+<script src="/src/lib/autocomplete_motivation.js" charset="utf-8"></script>
+<script src="/src/lib/utils.js" charset="utf-8"></script>
+<script src="/src/lib/tpl.js" charset="utf-8"></script>
+<script src="/src/lib/modal.js" charset="utf-8"></script>

@@ -1,0 +1,24 @@
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now())}-01-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now())}-02-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now())}-03-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now())}-04-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now())}-05-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now())}-06-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now())}-07-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now())}-08-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now())}-09-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now())}-10-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now())}-11-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now())}-12-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now()) + 1}-01-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now()) + 1}-02-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now()) + 1}-03-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now()) + 1}-04-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now()) + 1}-05-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now()) + 1}-06-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now()) + 1}-07-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now()) + 1}-08-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now()) + 1}-09-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now()) + 1}-10-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.2000000000,${datetime::get-year(datetime::now()) + 1}-11-01,0,2014-05-21,DEMO,?,?,?
+EUR,USD,1.3500000000,${datetime::get-year(datetime::now()) + 1}-12-01,0,2014-05-21,DEMO,?,?,?

@@ -1,0 +1,272 @@
+<?xml version="1.0"?>
+<project name="OpenPetra-setup">
+
+<include buildfile="../inc/nant/OpenPetra.common.xml" />
+
+<property name="BuildClientArchive" value="false" overwrite="false" />
+<property name="LinuxTargetDistribution-list" value="debian-postgresql,centos-postgresql" overwrite="false" />
+
+<target name="buildRelease">
+  <property name="OpenBuildService" value="true"/>
+  <property name="OnlyTarball" value="false" overwrite="false"/>
+
+  <if test="${OnlyTarball == 'false'}">
+    <call target="nanttasks"/>
+    <call target="minimalGenerateSolution"/>
+    <property name="solution" value="Server"/>
+    <property name="onlyonce" value="true"/>
+    <call target="quickCompile"/>
+    <property name="solution" value="YmlGzImportExport"/>
+    <call target="quickCompile"/>
+    <call target="createSQLStatements"/>
+    <call target="translation"/>
+  </if>
+
+  <property name="dir.setup" value="${dir.delivery}/openpetra-${ReleaseID}"/>
+  <property name="tarfile" value="${dir.delivery}/openpetra-${ReleaseID}-bin.tar.gz" overwrite="false"/>
+  <call target="prepareSetupDirForTarFile"/>
+  <exec program="bash"
+      workingdir="${dir.delivery}"
+      commandline="-c &quot;tar czf ${tarfile} openpetra-${ReleaseID}&quot;"/>
+
+  <!-- result is in dir.setup for building the rpm package -->
+  <echo message="check the resulting tarball at ${tarfile}"/>
+</target>
+
+<target name="install" depends="install.net, install.js"/>
+
+<target name="install.net">
+  <!-- drop non-linux dlls from bin -->
+  <delete file="${dir.bin}/Mono.Security.dll" failonerror="false"/>
+  <delete file="${dir.bin}/libsodium.dll" failonerror="false"/>
+  <delete file="${dir.bin}/libsodium-64.dll" failonerror="false"/>
+
+  <!-- set symbolic link for libsodium -->
+  <if test="${not file::exists(dir.bin + '/libsodium.so')}">
+    <exec program="bash"
+        workingdir="${dir.bin}"
+        commandline="-c &quot;ln -s ${libsodium.so} libsodium.so&quot;"/>
+  </if>
+  
+  <!-- when running from Dockerfile, we cannot restart since systemd is not running yet -->
+  <property name="with-restart" value="true" overwrite="false"/>
+  <if test="${with-restart}">
+    <echo message="Restarting the OpenPetra server..."/>
+    <exec program="bash"
+      commandline="-c &quot;sudo systemctl restart openpetra;&quot;"/>
+  </if>
+</target>
+
+<target name="install.js">
+  <if test="${not directory::exists(dir.root + '/js-client/node-modules')}">
+    <exec program="bash"
+          workingdir="${dir.root}/js-client"
+          commandline="-c &quot;npm set progress=false&quot;" />
+    <!-- set CI=1 to avoid too much output from installing cypress. see https://github.com/cypress-io/cypress/issues/1243#issuecomment-365560861 -->
+    <exec program="bash"
+          workingdir="${dir.root}/js-client"
+          commandline="-c &quot;( CI=1 npm install --quiet )&quot;" />
+  </if>
+
+  <exec program="bash"
+        workingdir="${dir.root}/js-client"
+        commandline="-c &quot;npm run build&quot;" />
+</target>
+
+<!-- Linux -->
+<target name="prepareSetupDirForTarFile">
+<!-- for the moment, just create a tar.gz file, with sub directories manuals containing the release notes, 
+     bin with just the server binaries, db with the scripts to setup the database,
+     reports, sql with the sql scripts, etc with the 2 config files; start and maintain script in the root
+     LICENSE file in the root, INSTALL file with instructions, required packages, firewall etc? 
+-->
+  <delete dir="${dir.setup}"/>
+  <mkdir dir="${dir.setup}"/>
+  
+  <mkdir dir="${dir.setup}/db"/>
+  <mkdir dir="${dir.setup}/reports"/>
+  <mkdir dir="${dir.setup}/manuals"/>
+  <mkdir dir="${dir.setup}/sql"/>
+  <mkdir dir="${dir.setup}/emails"/>
+  <mkdir dir="${dir.setup}/formletters"/>
+  <mkdir dir="${dir.setup}/server"/>
+  <mkdir dir="${dir.setup}/server/bin"/>
+  <mkdir dir="${dir.setup}/server/api"/>
+  <mkdir dir="${dir.setup}/client"/>
+  <mkdir dir="${dir.setup}/client/etc"/>
+  <mkdir dir="${dir.setup}/templates"/>
+  <mkdir dir="${dir.setup}/bootstrap-4.0"/>
+
+  <echo file="${dir.setup}/server/bin/version.txt">${ReleaseVersion}</echo>
+  <copy file="${dir.root}/db/pkg_version.txt" todir="${dir.setup}/server/bin"/>
+  <copy todir="${dir.setup}/server/bin">
+    <fileset basedir="${dir.bin}">
+      <include name="*.dll" />
+      <include name="*.exe" />
+      <exclude name="Ict.Testing.*" />
+      <exclude name="Ict.Tools.*" />
+      <exclude name="ICT.Tools.*" />
+      <exclude name="Ict.Petra.Tools.*" />
+      <exclude name="Ict.Petra.Plugins.*.Testing*dll" />
+      <exclude name="Ict.Petra.Plugins.*.exe" />
+      <exclude name="ICSharpCode.NRefactory*" />
+      <exclude name="Ionic.Zip*" />
+      <exclude name="WebDriver*" />
+      <exclude name="NUnitForms*" />
+      <exclude name="Mono.*" />
+      <include name="*/*.dll" /> <!-- i18n DLLs-->
+    </fileset>
+  </copy>
+  <copy file="${dir.bin}/Ict.Petra.Tools.MSysMan.YmlGzImportExport.exe" todir="${dir.setup}/server/bin" overwrite="true"/>
+
+  <copy todir="${dir.setup}/manuals">
+    <fileset basedir="${dir.root}/setup/releasenotes/">
+      <include name="*.html" />
+    </fileset>
+  </copy>
+  <copy todir="${dir.setup}/reports">
+    <fileset basedir="${dir.root}/XmlReports/">
+      <include name="*.dtd" />
+      <include name="**/*.xml" />
+      <include name="**/*.html" />
+    </fileset>
+  </copy>
+  <copy file="${dir.root}/LICENSE" tofile="${dir.setup}/LICENSE"/>
+  
+  <copy todir="${dir.setup}/server/api">
+    <fileset basedir="${dir.root}/csharp/ICT/Petra/Server/app/WebService">
+       <include name="*.asmx" />
+       <include name="*.aspx" />
+    </fileset>
+  </copy>
+  <copy todir="${dir.setup}/server/api" flatten="true">
+    <fileset basedir="${dir.root}/csharp/ICT/Petra/Plugins">
+       <include name="**/*.asmx" />
+    </fileset>
+  </copy>
+
+  <copy file="${dir.root}/setup/linuxserver/openpetra-server.sh"
+    tofile="${dir.setup}/openpetra-server.sh" overwrite="true"/>
+
+  <copy todir="${dir.setup}/templates">
+    <fileset basedir="${dir.root}/setup/linuxserver/">
+        <include name="*.config" />
+        <exclude name="web.config" />
+    </fileset>
+    <filterchain>
+        <expandproperties />
+    </filterchain>
+  </copy>
+  <!-- don't modify the file, issues with line endings cause nginx to fail to start -->
+  <copy file="${dir.root}/setup/linuxserver/nginx.conf"
+        tofile="${dir.setup}/templates/nginx.conf"/>
+  <copy file="${dir.root}/setup/linuxserver/web.config"
+    tofile="${dir.setup}/server/web.config"/>
+
+  <copy todir="${dir.setup}/formletters">
+    <fileset basedir="${dir.root}/demodata/formletters/">
+        <include name="*.html" />
+        <include name="*.png" />
+    </fileset>
+  </copy>
+
+  <!-- need Bootstrap 4.0 for the wkhtmltopdf reports -->
+  <exec program="bash"
+        workingdir="${dir.setup}/bootstrap-4.0"
+        commandline="-c &quot;mkdir tmp; cd tmp; curl --silent --location https://github.com/twbs/bootstrap/releases/download/v4.0.0/bootstrap-4.0.0-dist.zip > bootstrap-4.0.0-dist.zip; unzip bootstrap-4.0.0-dist.zip; mv js/bootstrap.bundle.min.js ..; mv css/bootstrap.min.css .. ; cd .. ; rm -Rf tmp&quot;"/>
+
+  <exec program="bash"
+        workingdir="${dir.setup}/db"
+        commandline="-c &quot;curl --silent --location https://github.com/openpetra/demo-databases/raw/master/base.yml.gz > base.yml.gz&quot;" />
+
+  <exec program="bash"
+        workingdir="${dir.setup}/db"
+        commandline="-c &quot;curl --silent --location https://github.com/openpetra/demo-databases/raw/master/clean.yml.gz > clean.yml.gz&quot;" />
+
+  <if test="${string::contains(DBMS.Type, 'postgresql') and file::exists(DeliveryDB.dir+'/createtables-PostgreSQL.sql')}">
+    <copy file="${dir.root}/setup/linuxserver/postgresql/openpetra.service"
+              tofile="${dir.setup}/templates/openpetra.service"/>
+    <copy file="${DeliveryDB.dir}/createtables-PostgreSQL.sql"
+              tofile="${dir.setup}/db/createtables-PostgreSQL.sql"/>
+    <copy file="${DeliveryDB.dir}/createconstraints-PostgreSQL.sql"
+              tofile="${dir.setup}/db/createconstraints-PostgreSQL.sql"/>
+    <if test="${file::exists(DeliveryDB.dir + '/demodata-PostgreSQL.sql')}">
+       <copy file="${DeliveryDB.dir}/demodata-PostgreSQL.sql"
+              tofile="${dir.setup}/db/demodata-PostgreSQL.sql"/>
+    </if>
+  </if>
+  <if test="${string::contains(DBMS.Type, 'mysql') and file::exists(DeliveryDB.dir+'/createtables-MySQL.sql')}">
+    <copy file="${dir.root}/setup/linuxserver/mysql/openpetra.service"
+              tofile="${dir.setup}/templates/openpetra.service"/>
+    <copy file="${DeliveryDB.dir}/createtables-MySQL.sql"
+              tofile="${dir.setup}/db/createtables-MySQL.sql"/>
+    <copy file="${DeliveryDB.dir}/createconstraints-MySQL.sql"
+              tofile="${dir.setup}/db/createconstraints-MySQL.sql"/>
+    <copy file="${DeliveryDB.dir}/petra.sql"
+              tofile="${dir.setup}/db/createdb-MySQL.sql"/>
+    <if test="${file::exists(DeliveryDB.dir + '/demodata-MySQL.sql')}">
+        <copy file="${DeliveryDB.dir}/demodata-MySQL.sql"
+              tofile="${dir.setup}/db/demodata-MySQL.sql"/>
+    </if>
+  </if>
+  <copy file="${dir.root}/setup/linuxserver/INSTALL"
+              tofile="${dir.setup}/INSTALL"/>
+  <copy todir="${dir.setup}/sql">
+    <fileset basedir="${dir.root}/csharp/ICT/Petra/Server/sql/">
+        <include name="*.sql" />
+        <include name="*.yml" />
+    </fileset>
+  </copy>
+  <foreach item="File" property="filename">
+      <in>
+          <items>
+              <include name="${dir.root}/csharp/ICT/Petra/Plugins/**/sql/*.sql" />
+          </items>
+      </in>
+      <do>
+          <copy file="${filename}" tofile="${dir.setup}/sql/${path::get-file-name(filename)}"/>
+      </do>
+  </foreach>
+  <copy todir="${dir.setup}/sql">
+    <fileset basedir="${dir.root}/csharp/ICT/Petra/Server/lib/MSysMan/DBUpgrades/">
+        <include name="*.sql" />
+    </fileset>
+  </copy>
+  <copy todir="${dir.setup}/emails">
+    <fileset basedir="${dir.root}/inc/template/email/">
+        <include name="*.txt" />
+        <include name="*.html" />
+    </fileset>
+  </copy>
+
+  <copy file="${dir.root}/js-client/etc/UINavigation.yml"
+        tofile="${dir.setup}/client/etc/UINavigation.yml"/>
+
+  <copy todir="${dir.setup}/client" inputencoding="utf-8" outputencoding="utf-8">
+    <fileset basedir="${dir.root}/js-client/">
+        <include name="**/*.js" />
+        <include name="**/*.json" />
+        <include name="**/*.css" />
+        <include name="**/*.html" />
+        <exclude name="**/node_modules/**" />
+        <exclude name="**/cypress/**" />
+        <exclude name="cypress.json" />
+        <exclude name="package*json" />
+    </fileset>
+    <filterchain>
+        <replacestring from="CURRENTRELEASE" to="${ReleaseVersion}"/>
+        <replacestring from="develop = 1;" to="develop = 0;"/>
+        <replacestring from="debug = 1;" to="debug = 0;"/>
+    </filterchain>
+  </copy>
+  <copy todir="${dir.setup}/client">
+    <fileset basedir="${dir.root}/js-client/">
+        <include name="webfonts/**" />
+        <include name="img/**" />
+        <include name="etc/**" />
+    </fileset>
+  </copy>
+
+</target> 
+
+</project>

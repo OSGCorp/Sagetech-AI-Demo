@@ -1,0 +1,514 @@
+<h2>{caption}</h2>
+<link rel="stylesheet" href="/css/autocomplete.css">
+<!-- Phantom Storage -->
+<div phantom hidden>
+
+	<div class="tpl_row">
+		<div class="row">
+			<div class="col">{val_a_order_i}</div>
+			<div class="col format_date">{val_a_date_effective_d}</div>
+			<div class="col format_currency">{val_a_transaction_amount_n}</div>
+			<div class="col-6">{val_a_description_c}</div>
+			<div class="col-1">
+				<button type="button" class="btn btn-primary" onclick="edit_gift_trans({val_a_statement_key_i},{val_a_order_i})">
+					<i class="fas fa-wrench"></i>
+				</button>
+			</div>
+		</div>
+		<div class="row" hidden>
+			<div class="collapse col" style="margin-left:1em;background:rgba(0,0,0,0.15);">
+				<div class="row">
+					<div class="col"><b>
+						<div class ="row">
+							<div class="col">{trans_number}</div>
+							<div class="col">{trans_date}</div>
+							<div class="col">{trans_donor}</div>
+							<div class="col-1">
+								<button type="button" class="btn btn-light" onclick="$('.tpl_row .collapse').collapse('hide');">
+									<i class="fas fa-close"></i>
+								</button>
+							</div>
+						</div>
+					</div></b>
+				</div>
+				<div class="row">
+					<div class="col content_col"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="tpl_trans_detail_row">
+		<div class="row">
+			<div class="col">
+					<span>{val_a_detail_i}</span>
+			</div>
+			<div class="col">
+					<span>{val_a_gift_transaction_amount_n}</span>
+			</div>
+			<div class="col MATCHED-GL" requireClass>
+					<span>{val_a_account_code_c}</span>
+			</div>
+			<div class="col MATCHED-GL" requireClass>
+					<span>{val_a_cost_centre_code_c}</span>
+			</div>
+			<div class="col MATCHED-GIFT" requireClass>
+					<span>{val_a_motivation_group_code_c}</span>
+			</div>
+			<div class="col MATCHED-GIFT" requireClass>
+					<span>{val_a_motivation_detail_code_c}</span>
+			</div>
+			<div class="col-1">
+				<button type="button" class="btn btn-primary" onclick="edit_gift_trans_detail({val_a_statement_key_i},{val_a_order_i},{val_a_detail_i})">
+					<i class="fas fa-wrench"></i>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal-wide fade tpl_edit_trans" tabindex="-1" role="dialog">
+		<input type="hidden" action value="create">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>{edittitle_trans}</h3>
+				</div>
+				<div class="modal-body">
+
+					<div class="container">
+
+						<div class="row">
+							<div class="col">
+								<span>{order_id}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="a_order_i" value="" readonly>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{accountname}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="a_account_name_c" value="" size="40" readonly>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{description}</span>
+							</div>
+							<div class="col">
+								<textarea name="a_description_c" cols="40" rows="5" readonly></textarea>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{transaction_amount}</span>
+							</div>
+							<div class="col">
+								<input class="" type="number" name="a_transaction_amount_n" value="" readonly>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{action}</span>
+							</div>
+							<div class="col">
+								<fieldset onchange="update_requireClass($(this).closest('.modal'), $(this).find('[type=radio]:checked').val())">
+									<label><input type="radio" name="MatchAction" value="UNMATCHED">
+									{unmatched}</label><br/>
+									<label><input type="radio" name="MatchAction" value="MATCHED-GIFT">
+									{matchedgift}</label><br/>
+									<label><input type="radio" name="MatchAction" value="MATCHED-GL">
+									{matchedgl}</label><br/>
+									<label><input type="radio" name="MatchAction" value="DONT-MATCH">
+									{ignored}</label><br/>
+								</fieldset>
+							</div>
+						</div>
+
+
+						<!-- details -->
+
+						<div requireClass class="UNMATCHED">
+							<h4>{detail}</h4>
+							<p>{not_av}</p>
+						</div>
+
+						<div requireClass class="DONT-MATCH">
+							<h4>{detail}</h4>
+							<p>{not_av}</p>
+						</div>
+
+						<div requireClass class="row MATCHED-GIFT">
+							<div class="col">
+								<span>{donor}</span>
+							</div>
+							<div class="col">
+								<div class="autocomplete">
+									<input class="" type="text" name="p_donor_name_c" placeholder="{EnterDonorName}" key-name="p_donor_key_n" value="" size="40" oninput="autocomplete_donor(this)">
+									<button class="btn btn-danger" onclick="clear_donor(this)">{clear_donor}</button>
+								</div>
+							</div>
+						</div>
+
+						<div requireClass class="row MATCHED-GIFT MATCHED-GL">
+							<div class="col">
+								<h4>{detail}</h4>
+								<div class="row MATCHED-GIFT" requireClass>
+									<div class="col">{detail_id}</div>
+									<div class="col">{transaction_amount}</div>
+									<div class="col">{motivation_group_code}</div>
+									<div class="col">{motivation_detail_code}</div>
+									<div class="col-1">
+									</div>
+								</div>
+								<div class="row MATCHED-GL" requireClass>
+									<div class="col">{detail_id}</div>
+									<div class="col">{transaction_amount}</div>
+									<div class="col">{account_code}</div>
+									<div class="col">{cost_center_code}</div>
+									<div class="col-1">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col detail_col">
+
+									</div>
+								</div>
+								<button type="button" class="btn btn-primary" onclick="new_trans_detail({val_a_order_i})">
+									<span>{forms.new}</span>
+									<i class="fas fa-plus"></i>
+								</button>
+							</div>
+
+						</div>
+
+						<!-- /details -->
+
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" onclick="save_edit_trans(this)">{forms.save}</button>
+					<button class="btn btn-light" onclick="CloseModal(this)">{forms.close}</button>
+			</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal modal-wide fade tpl_edit_trans_detail" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<input type="hidden" action value="create">
+				<input type="hidden" name="p_donor_key_n" value="{val_p_donor_key_n}">
+				<input type="hidden" name="p_donor_short_name_c" value="{val_p_donor_short_name_c}">
+				<div class="modal-header">
+					<h3>{edittitle_trans_detail}</h3>
+				</div>
+				<div class="modal-body">
+
+					<div class="container">
+
+						<div class="row">
+							<div class="col">
+								<span>{order_id}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="a_order_i" value="" readonly>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{detail_id}</span>
+							</div>
+							<div class="col">
+								<input type="text" name="a_detail_i" value="" readonly>
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col">
+								<span>{transaction_amount}</span>
+							</div>
+							<div class="col">
+								<input type="number" name="a_gift_transaction_amount_n" value="">
+							</div>
+						</div>
+
+						<div class="row MATCHED-GIFT" requireClass>
+							<div class="col">
+								<span>{motivation_detail_code}</span>
+							</div>
+							<div class="col">
+								<input type="hidden" name="a_motivation_group_code_c" value=""/>
+								<div class="autocomplete">
+									<input class="" type="text" name="a_motivation_detail_code_c" key-name="a_motivation_detail_code_c" value="" oninput="autocomplete_motivation_detail(this, update_motivation_group)" >
+								</div>
+							</div>
+						</div>
+
+						<div class="row MEMBERFEE" requireClass>
+							<div class="col">
+								<span>{membership_recipient}</span>
+							</div>
+							<div class="col">
+								<div class="autocomplete">
+									<input class="" type="text" name="p_member_name_c" placeholder="{EnterMemberName}" key-name="p_recipient_key_n" value="" size="40" oninput="autocomplete_member(this)">
+									<button class="btn btn-danger" onclick="clear_member(this)">{clear_member}</button>
+								</div>
+							</div>
+						</div>
+
+						<div class="row MATCHED-GL" requireClass>
+							<div class="col">
+								<span>{account_code}</span>
+							</div>
+							<div class="col">
+								<div class="autocomplete">
+									<input class="" type="text" name="a_account_code_c" key-name="a_account_code_c" value="" oninput="autocomplete_a(this)">
+								</div>
+							</div>
+						</div>
+
+						<div class="row MATCHED-GL" requireClass>
+							<div class="col">
+								<span>{cost_center_code}</span>
+							</div>
+							<div class="col">
+								<div class="autocomplete">
+									<input class="" type="text" name="a_cost_centre_code_c" key-name="a_cost_centre_code_c" value="" oninput="autocomplete_cc(this)">
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+				<div class="modal-footer">
+					<button edit-only class="btn btn-danger" onclick="delete_trans_detail(this)">{forms.delete}</button>
+					<button class="btn btn-primary" onclick="save_edit_trans_detail(this)">{forms.save}</button>
+					<button class="btn btn-light" onclick="CloseModal(this)">{forms.close}</button>
+			</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<table id="toolbar">
+	<tr>
+		<td>
+			<button id="settings" class="btn btn-light" onclick="$('#tabsettings').collapse('toggle')">{PresetsCSV}</button>
+		</td>
+		<td>
+			<span>{bankaccount}:</span>
+			<div class="autocomplete">
+				<input type="text" name="a_bank_account_name_c" key-name="ABankAccountCode" value="" oninput="autocomplete_a(this)">
+			</div>
+		</td>
+		<td>
+			<div class="btn-group">
+				<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					{forms.import}
+				</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" onclick="$('#import_csv_file').click()">{import_csv}</a>
+					<a class="dropdown-item" onclick="$('#import_camt_file').click()">{import_camt}</a>
+					<a class="dropdown-item" onclick="$('#import_mt940_file').click()">{import_mt940}</a>
+				</div>
+			</div>
+			<input type="file" hidden id="import_csv_file" onchange="import_csv_file(this)" accept=".csv,.txt">
+			<input type="file" hidden id="import_camt_file" onchange="import_camt_file(this)" accept=".xml,.zip">
+			<input type="file" hidden id="import_mt940_file" onchange="import_mt940_file(this)" accept=".sta,.mt940">
+		</td>
+	</tr>
+</table>
+
+<div id="modal_space"></div>
+
+<div class="container collapse" id="tabsettings">
+	<div class="container group-container">
+	<div class="row">
+		<div class="col">
+			<span>{startAfterLine}:</span>
+		</div>
+	</div>
+	<div>
+		<div class="col">
+			<input name="AStartAfterLine" type="text" size="80"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{columnMeaning}:</span>
+		</div>
+	</div>
+	<div>
+		<div class="col">
+			<input name="AColumnMeaning" type="text" size="80"/>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{numberFormat}:</span>
+		</div>
+		<div class="col">
+			<select name="ANumberFormat">
+				<option value="European">{europeanNumberFormat}</option>
+				<option value="American">{americanNumberFormat}</option>
+			</select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{dateFormat}:</span>
+		</div>
+		<div class="col">
+			<select name="ADateFormat">
+				<option value="DMY">{dmy}</option>
+				<option value="MDY">{mdy}</option>
+			</select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{separator}:</span>
+		</div>
+		<div class="col">
+			<select name="ASeparator">
+				<option value=";">{semicolon}</option>
+				<option value=",">{comma}</option>
+				<option value="TAB">{tabulator}</option>
+			</select>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<span>{encoding}:</span>
+		</div>
+		<div class="col">
+			<select name="AFileEncoding">
+				<option value="ISO-8859-1">{Latin-1}</option>
+				<option value="UTF-8">{UTF-8}</option>
+			</select>
+		</div>
+	</div>
+
+	<div class="row">
+{examplefile}<br/><br/>
+	</div>
+	<div class="row">
+<pre>
+"Kontoumsätze Geschäfts- und Vereinskonto"
+
+"Kontoinhaber:";"Mein Verein e.V."
+"Kundennummer:";"1234567"
+
+"Umsätze ab";"Enddatum";"Kontonummer";"Saldo";"Währung"
+"01.07.2019";"31.07.2019";"1234567";"1.234,56";"EUR"
+"Weitere gewählte Suchoptionen:";"keine"
+
+
+"Buchungstag";"Wertstellungstag";"Verwendungszweck";"Umsatz";"Währung"
+"31.07.2019";"31.07.2019";"Heinrich Arndt SEPA-ÜBERWEISUNG SVWZ+ RINP Dauerauftrag Grundpatenschaft mein Patenkind";"30,00";"EUR";""
+"31.07.2019";"31.07.2019";"Werner Bastian SEPA-ÜBERWEISUNG SVWZ+ RINP Daue rauftrag Patenschaft";"30,00";"EUR";""
+"30.07.2019";"30.07.2019";"Arno Grosse SEPA-ÜBERWEISUNG SVWZ+ RINP Dauerauftrag S pende EREF+ 000000000000000 00002";"10,00";"EUR";""
+"* noch nicht ausgeführte Umsätze"
+</pre>
+	</div>
+	</div>
+	<button type="button" class="btn btn-light" onclick="save_preset('BankImport')">{forms.save_preset}</button>
+	<button type="button" class="btn btn-light" onclick="$('#tabsettings').collapse('toggle')">{forms.close}</button>
+</div>
+
+<div class="row">
+<div class="container collapse show" id="tabfilter">
+	<div class="container group-container">
+    <div class="row">
+      <div class="col-4">
+        <span>{bankimport_name}</span>
+      </div>
+      <div class="col-6">
+        <select class="dropdown" name="ABankNumber" id="bank_number_id">
+
+        </select>
+
+        <div class="btn-group">
+            <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {forms.delete}
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" onclick="delete_current_statement()">{delete_stmt}</a>
+                <a class="dropdown-item" onclick="delete_old_statements()">{delete_old_stmt_1_year}</a>
+                <a class="dropdown-item" onclick="delete_all_statements()">{delete_all_stmts}</a>
+            </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <span>{bankimport_status}</span>
+      </div>
+      <div class="col-6">
+        <select class="dropdown" name="AStatus" id="match_status_id">
+          <option value="" selected>{all}</option>
+          <option value="UNMATCHED">{unmatched}</option>
+          <option value="MATCHED-GL">{matchedgl}</option>
+          <option value="MATCHED-GIFT">{matchedgift}</option>
+          <option value="DONT-MATCH">{ignored}</option>
+        </select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-3">
+        <button type="button" class="btn btn-primary" style="margin:2px;" onclick="display_list();">{display}</button>
+      </div>
+    </div>
+</div>
+    <button type="button" class="btn btn-primary" style="float:right; margin:2px;" onclick="transform_to_gl();">{transform_to_gl}</button>
+    <button type="button" class="btn btn-primary" style="float:right; margin:2px;" onclick="transform_to_gift();">{transform_to_gift}</button>
+    <!-- TODO disable this button if no permissions for reading sponsorships -->
+    <button type="button" class="btn btn-light" onclick="check_for_sponsorship();">
+            <span>{check_sponsorship}&nbsp;</span><i class="fas fa-question"></i>
+    </button>
+</div>
+</div>
+
+<div class="row">
+<div class="container" id="browse">
+	<div class="row">
+		<div class="col">
+			<span>{total_debit}: <span id="trans_total_debit" class="debit"></span></span>
+		</div>
+		<div class="col">
+			<span>{total_credit}: <span id="trans_total_credit"></span></span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col"><b>{order_id}</b></div>
+		<div class="col"><b>{transaction_date}</b></div>
+		<div class="col"><b>{transaction_amount}</b></div>
+		<div class="col-6"><b>{description}</b></div>
+	<div class="col-1"></div>
+	</div>
+
+	<div id="browse_container" class="container-list">
+
+	</div>
+
+</div>
+</div>
+
+<script src="/src/lib/utils.js" charset="utf-8"></script>
+<script src="/src/lib/tpl.js" charset="utf-8"></script>
+<script src="/src/lib/autocomplete.js" charset="utf-8"></script>
+<script src="/src/lib/autocomplete_partner.js" charset="utf-8"></script>
+<script src="/src/lib/autocomplete_motivation.js" charset="utf-8"></script>
+<script src="/src/lib/autocomplete_posting_acc_cc.js" charset="utf-8"></script>
+<script src="/src/lib/modal.js" charset="utf-8"></script>

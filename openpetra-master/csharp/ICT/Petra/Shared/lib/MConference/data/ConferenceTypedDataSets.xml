@@ -1,0 +1,34 @@
+<PetraDataSets>
+  <ImportUnit name="Ict.Petra.Shared.MConference.Data"/>
+  <ImportUnit name="Ict.Petra.Shared.MPersonnel.Personnel.Data"/>
+  <ImportUnit name="Ict.Petra.Shared.MPartner.Partner.Data"/>
+  
+    <DataSet name="SelectConferenceTDS">
+        <Table sqltable="p_partner" sqlfield="p_partner_short_name_c"/>
+        <Table sqltable="pc_conference"/>
+    </DataSet>
+    
+    <DataSet name="ConferenceSetupTDS">
+        <Table sqltable="p_partner" sqlfield="p_partner_short_name_c"/>
+        <Table sqltable="p_partner_location"/>
+        <Table sqltable="pc_conference"/>
+        <Table sqltable="pc_conference_option"/>
+        <Table sqltable="pc_conference_venue">
+          <Field name="VenueName" sqltable="p_venue" sqlfield="p_venue_name_c"/>
+        </Table>
+        <Table sqltable="pc_discount"/>
+        <Table sqltable="p_unit"/>
+    </DataSet>
+
+    <DataSet name="ConferenceApplicationTDS">
+        <Table sqltable="p_partner"/>
+        <Table sqltable="p_person"/>
+        <Table sqltable="pm_general_application"/>
+        <Table sqltable="pm_short_term_application"/>
+        <Table sqltable="pc_conference"/>
+        <Table sqltable="pc_attendee"/>
+        <Table sqltable="p_data_label_value_partner"/>
+        <Table sqltable="p_data_label"/>
+    </DataSet>
+
+</PetraDataSets>

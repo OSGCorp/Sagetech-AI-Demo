@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<project name="OpenPetra-tobe-migrated">
+<!-- All targets in this file should go away when the new buildfiles are ready -->
+
+<include buildfile="OpenPetra.common.xml"/>
+
+<script language="C#">
+<references>
+  <include name="System.dll" />
+</references>
+<imports>
+  <import namespace="System.Text.RegularExpressions" />
+</imports>    
+<code><![CDATA[
+[Function("ReplaceInFile")]
+public static bool ReplaceInFile(string filename, string oldValue, string newValue)
+{
+  String line = "start";
+  StreamReader sr = new StreamReader(filename);
+  StreamWriter sw = new StreamWriter(filename + ".new");
+  bool attachToEnd = false;
+  bool doRegExpr = false;
+  if (oldValue.StartsWith("RegEx:"))
+  {
+    doRegExpr = true;
+    oldValue = oldValue.Substring("RegEx:".Length);
+    if (oldValue=="^^")
+    {
+        // prepend to beginning of file
+        sw.WriteLine(newValue);
+        oldValue = "";
+        doRegExpr = false;
+    }
+    else if (oldValue=="$$")
+    {
+        // attach to end of file
+        oldValue = "";
+        doRegExpr = false;
+        attachToEnd = true;
+    }
+  }
+  bool firstLine = true;
+  while (line != null)
+  {
+    line = sr.ReadLine();
+    if (line != null)
+    {
+        if (!firstLine)
+        {
+            // for uncrustify we have no linebreak on the last line
+            sw.WriteLine();
+        }
+        firstLine = false;
+        if (doRegExpr)
+        {
+            Regex reg=new Regex(oldValue);
+            line=reg.Replace(line,newValue);
+        }
+        else if (oldValue.Length > 0)
+        {
+            line = line.Replace(oldValue, newValue);
+        }
+        
+        sw.Write(line);
+    }
+  }
+  if (attachToEnd)
+  {
+    sw.WriteLine();
+    sw.Write(newValue);
+  }
+  sr.Close();
+  sw.Close();
+  File.Delete(filename);
+  File.Move(filename + ".new", filename);
+  return true;
+}
+
+  ]]>
+  </code>
+</script>
+
+<target name="compilePetra" depends="compile" />
+
+<target name="generateORMCachedTables" depends="" description="Generates the cached tables">
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('ExecDotNet')}"/> 
+  <property name="CachedTableParameters" value="-petraxml:${PetraXML.file} -outputshared:${dir.root}/csharp/ICT/Petra/Shared -TemplateDir:${dir.incdir.template.src}"/>
+  <ExecDotNet program="${tool-generateORM}" commandline="-do:cachedtables ${CachedTableParameters} -cachedef:${dir.root}/csharp/ICT/Petra/Definitions/CacheableTablesAndLists.yaml"/>
+  <delete file="${dir.bin}/Ict.Petra.Shared.dll" />
+  <delete file="${dir.bin}/Ict.Petra.Server.lib.MPartner.data.dll" />
+  <delete file="${dir.bin}/Ict.Petra.Server.lib.MPersonnel.dll" />
+  <delete file="${dir.bin}/Ict.Petra.Server.lib.MFinance.data.dll" />
+  <delete file="${dir.bin}/Ict.Petra.Server.lib.MConference.dll" />
+  <delete file="${dir.bin}/Ict.Petra.Server.lib.MCommon.dll" />
+  <delete file="${dir.bin}/Ict.Petra.Server.lib.MSysMan.dll" />
+  <echo message="now run: nant quickCompile -D:onlyonce=true"/>
+</target>
+
+<target name="generateGlue" depends="" description="Generate the glue between client and server, ie. interfaces and instantiators">
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('ExecDotNet')}"/>
+  <property name="module" value="all" overwrite="false"/>
+  <property name="compileForStandalone" value="false" overwrite="false"/>
+  <nant inheritall="true" target="custdependGlue" buildfile="${path::combine(dir.csharp, 'ICT/Petra/Plugins/Plugins.build')}" verbose="${verbose}"/>
+  <ExecDotNet program="${dir.bin}/Ict.Tools.GenerateGlue.exe" commandline="-ymlfile:${dir.root}/csharp/ICT/Petra/Definitions/NamespaceHierarchy.yml -outputdir:${dir.root}/csharp/ICT/Petra -TemplateDir:${dir.incdir.template.src} -module:${module} -compileForStandalone:${compileForStandalone}"/>
+  <delete file="${dir.bin}/Ict.Petra.Server.app.WebService.dll" />
+  <echo message="now run: nant quickCompile -D:onlyonce=true"/>
+</target>
+
+<!-- Some database settings -->
+<property name="DBDoc.Output.dir" value="${dir.delivery}/dbdoc" overwrite="false" />
+<property name="SelectedDemo" value="demodataGermany" overwrite="false"/>
+<property name="PublicInstallerDemo" value="demodataPublicInstaller" overwrite="false"/>
+
+<!-- set platform specific variables -->
+<if test="${'win32'==platform::get-name()}" >
+  <echo>Running on MS Windows</echo>
+  <property name="PostgreSQL.Version" value="9.3" overwrite="false"/>
+  <property name="MySQL.Version" value="5.1" overwrite="false"/>
+  <property name="PostgreSQL.exe" value="${OP::GetFileInProgramDirectory('/PostgreSQL/' + PostgreSQL.Version + '/bin/psql.exe')}" overwrite="false" />
+  <property name="pgdump.exe" value="${OP::GetFileInProgramDirectory('/PostgreSQL/' + PostgreSQL.Version + '/bin/pg_dump.exe')}" overwrite="false"/>
+  <property name="MySQL.exe" value="${OP::GetFileInProgramDirectory('\mysql\mysql server ' + MySQL.Version + '/bin/mysql.exe')}" overwrite="false" />
+  <property name="MySQLDump.exe" value="${OP::GetFileInProgramDirectory('\mysql\mysql server ' + MySQL.Version + '/bin/mysqldump.exe')}" 
+            overwrite="false"/> 
+  <property name="Innosetup.ISCC" value="${OP::GetFileInProgramDirectory('/Inno Setup 5/ISCC.exe')}" overwrite="false"/>
+  <property name="makensis.exe" value="${OP::GetFileInProgramDirectory('/NSIS/makensis.exe')}" overwrite="false"/>
+  <property name="git" value="${environment::get-variable('AppData')}\..\Local\Programs\Git\bin\git" overwrite="false"/>
+  <if test="${not file::exists(git) and not file::exists(git + '.exe')}">
+     <property name="git" value="${OP::GetFileInProgramDirectory('\Git\bin\git.exe')}" overwrite="true"/>
+  </if>
+  <if test="${not file::exists(git) and not file::exists(git + '.exe')}">
+     <!-- hopefully git exists somewhere on the path. eg C:\Program Files (x86)\Git\cmd -->
+     <property name="git" value="git" overwrite="true"/>
+  </if>
+
+  <!-- For Windows, we do not need the XSP server anymore, but use the SimpleASPHost -->
+  <property name="MonoBinPath" value="" overwrite="false"/>
+</if>
+<if test="${'win32'!=platform::get-name()}">
+  <if test="${'unix'==platform::get-name()}">
+    <echo>Running on Unix</echo>
+    <property name="PostgreSQL.Version" value="9.1" overwrite="false"/>
+    <property name="PostgreSQL.exe" value="psql" overwrite="false"/>
+    <property name="pgdump.exe" value="pg_dump" overwrite="false"/>
+    <property name="MySQL.exe" value="mysql" overwrite="false"/>
+    <property name="makensis.exe" value="makensis" overwrite="false"/>
+    <property name="git" value="git" overwrite="false"/>
+    <property name="MonoExecutable.file" value="${framework::get-runtime-engine(framework::get-target-framework())}" overwrite="true"/>
+  </if>
+  <if test="${'unix'!=platform::get-name()}">
+    <echo>Unknown platform!</echo>
+    <fail>Platform={$platform::get-name()} not supported! Expand the properties here!!</fail>
+    <property name="PostgreSQL.exe" value="/Library/PostgreSQL/8.3/bin/psql" overwrite="true"/> 
+  </if>
+</if>        
+<!-- Add the database as is add properties for compat, which will be removed -->
+<property name="OpenPetraRoot.dir" value="${dir.root}" overwrite="true" />
+<property name="PetraRelease" value="0300" overwrite="false" />
+<property name="BuildToolsExe.dir" value="${dir.bin}" overwrite="true" />
+<property name="DBDoc.Output.dir" value="${dir.delivery}/dbdoc" overwrite="false" />
+<property name="ThirdParty.dir" value="${dir.3rdParty}" overwrite="false" />
+<property name="Tmp.dir" value="${tempdir}"/>
+<property name="ReleaseVersion" value="${ReleaseID}" />
+
+
+<target name="init">
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('ExecDotNet')}"/>  
+  <if test="${'win32'==platform::get-name()}" > <!-- This hack only works on windows -->
+    <script language="C#">
+      <references>
+        <include name="System.dll" />
+      </references>
+      <code><![CDATA[ 
+    // this will reverse the effect of the MSDOS subst command, ie a locally mapped network drive will be mapped back to the real path behind it
+    // see also http://bloggingabout.net/blogs/ramon/archive/2007/04/05/get-the-physical-path-of-a-path-that-uses-a-subst-drive.aspx
+      [System.Runtime.InteropServices.DllImport("kernel32.dll")]
+      static extern uint QueryDosDevice(string lpDeviceName, StringBuilder lpTargetPath, int ucc);
+        
+      [Function("GetRealPath")]
+    public static string GetRealPath(string path)
+      {
+          const int BUFFER_LENGTH = 1024;
+
+          if (Directory.Exists(path))
+          {
+              path = new DirectoryInfo(path).FullName;
+          }
+          else if (File.Exists(path))
+          {
+              path = new FileInfo(path).FullName;
+          }
+
+          StringBuilder pathInformation = new StringBuilder(BUFFER_LENGTH);
+          QueryDosDevice(path.Substring(0,2), pathInformation, BUFFER_LENGTH);
+
+          // If drive is substed, the result will be in the format of "\??\C:\RealPath\".
+          // after that strip the \??\ prefix and combine the paths.
+          if (pathInformation.ToString().Contains(@"\??\"))
+          {
+              return pathInformation.ToString(4, pathInformation.Length-4) + path.Substring(2); // Remove the drive letter
+          }
+
+          return path;
+      }
+      ]]>
+      </code>
+    </script>         
+  </if>
+ </target>
+  
+<include buildfile="../../db/database.build" />
+
+</project>

@@ -1,0 +1,1208 @@
+<html>
+<head>
+<title>OpenPetra.org Bemerkungen</title>
+
+<style>
+#main {max-width: 800px; margin-left: auto; margin-right: auto}
+</style>
+
+</head>
+<body>
+<div id="main">
+
+<h2>Bemerkungen zu den monatlichen Veröffentlichungen von OpenPetra</h2>
+
+<h3>Version 2023.02 vom 27. Februar 2023</h3>
+
+<p>In dieser Version steckt die Arbeit seit Juli 2022.<br/>
+Am wichtigsten sind neue Funktionen im Verarbeiten von Kontakten, Spenden und für die Verwaltung von Mitgliedern, und Mitgliedsbeiträgen.
+</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+
+Kontaktmodul:
+<ul>
+<li>Die Kontaktklassen wurden übersetzt.</li>
+<li>Kontaktsuche: Die Auswahl der Suchkriterien kann mit der Enter Taste bestätigt werden.</li>
+<li>Kontaktsuche: Kontakte per IBAN finden</li>
+<li>Neuer Kontakt: Der Haken für "gültige Adresse" wurde nach der Bestätigung nicht gespeichert.</li>
+<li>Kontakt bearbeiten: die Reiter werden farblich besser dargestellt.</li>
+<li>Kontakt bearbeiten: die Spenden und Beiträge der Kontakte werden in einem eigenen Reiter aufgelistet.</li>
+<li>Die E-Mail Adressen werden nun mit einem Komma nach Excel exportiert, damit sie leichter in die E-Mail-Programme oder Webmailer zum Versand kopiert werden können.</li>
+<li>Export der Adresslisten nach Excel: Spalten- und Zeilen-Positionen wurden angepasst, damit die Serienbrieffunktion funktionieren kann.</li>
+<li>Abonnierte Zusendungen oder Kanal-Codes werden korrekt angezeigt, wenn es keine Übersetzung gibt.</li>
+</ul>
+
+
+Spendenmodul:
+<ul>
+<li>Jahreszuwendungsbestätigungen können nun optional auch per E-Mail verschickt werden.</li>
+<li>Auf der Jahreszuwendungsbestätigung kann eine Markierung gedruckt werden, falls dieser Bescheinigung ein Jahresrückblick beigelegt werden soll.</li>
+<li>Fehler behoben: Jahreszuwendungsbestätigungen hatten kein Logo und Unterschrift mehr.</li>
+<li>Verwendungszwecke bearbeiten: In der Liste der Verwendungszwecke wird nun die Bezeichnung der Kostenstelle und des Kontos angezeigt, wenn man mit dem Mauszeiger über dem entsprechenden Code schwebt.</li>
+<li>Bankimport: Zeige die Transaktionen direkt nach dem Import</li>
+<li>Bankimport: Beim Import aus CSV Dateien werden nun auch Spalten für IBAN und BIC verarbeitet.</li>
+</ul>
+
+
+Patenschaftsmodul:
+<ul>
+<li>Prüfe importierte und zugeordnete Spenden gegen die eingetragenen Patenschaften.</li>
+<li>Fehler behoben: bisher konnte man nicht mehrmals hintereinander das Patenschaftsfenster öffnen und schließen</li>
+</ul>
+
+
+Mitglieder:
+<ul>
+<li>Es können nun Mitgliedschaften verwaltet werden.</li>
+</ul>
+
+System:
+<ul>
+<li>Das Backup einer Mysql Datenbank hat bisher den ganzen Mysql Server blockiert.</li>
+</ul>
+
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem
+<a href="https://github.com/openpetra/openpetra/milestone/19?closed=1" rel=" nofollow ugc" target="_blank">Meilenstein auf Github für die Version 2023.02</a> zu finden!</p>
+
+
+<h3>Version 2022.07 vom 29. Juli 2022</h3>
+
+<p>In dieser Version steckt die Arbeit seit Oktober 2021.<br/>
+Es wurde viel Zeit in verschiedene Verbesserungen investiert.<br/>
+Am wichtigsten sind Verbesserungen im Bereich der Sicherheit, und die neuen Funktionen für die Verwaltung von Lastschriften für Spenden und Mitgliedsbeiträge, inkl. Export einer SEPA Lastschrift Datei.
+</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+
+Bereich der Sicherheit:
+<ul>
+    <li>Verhinderung von Attacken durch Überprüfung aller Benutzereingaben, die aus dem Webbrowser kommen.</li>
+    <li>Falls der Benutzer sein Passwort ändert, werden alle anderen Sitzungen des Benutzers beendet.</li>
+    <li>In einer neuen Instanz wird der Benutzer SYSADMIN dazu aufgefordert, das Passwort zu ändern.</li>
+</ul>
+
+Spendenmodul:
+<ul>
+    <li>Daueraufträge für Lastschriften, für wiederkehrende Spenden oder Mitgliedsbeiträge, mit Erzeugung einer SEPA Lastschriftdatei für die Bank und die Übertragung in einen Spendenstapel im aktuellen Monat.</li>
+    <li>Es ist nun möglich, die Erstellung von Spendenbescheinigungen für andere Vereine zu verhindern, die an unseren Verein gespendet haben, denen wir aber keine Zuwendungsbestätigung ausstellen dürfen.</li>
+    <li>Am Ende der Spendenbescheinigungen wurde immer eine leere Seite gedruckt.</li>
+</ul>
+
+Finanzmodul:
+<ul>
+    <li>Das Löschen eines Hauptbuches funktioniert nun wieder.</li>
+    <li>Der Import von einem SKR-49 Kontorahmen hat vorübergehend nicht funktioniert, weil die Sicherheitsprüfung zu vorsichtig war.</li>
+</ul>
+
+Allgemeine Benutzeroberfläche:
+<ul>
+    <li>Bei Fehlermeldungen oder Warnungen hat das Meldungsfenster den Mausfokus über die ganze Breite des Browsers in Anspruch genommen, obwohl das Fenster kleiner angezeigt wurde.</li>
+    <li>Der Wechsel zwischen verschiedenen Formularen hat nicht richtig funktioniert.</li>
+    <li>Nach dem Export der Daten als yml.gz Datei wird nun die Meldung über das Warten auf den Abschluss am Ende geschlossen.</li>
+    <li>Es gibt nun eine direkte URL für das Zurücksetzen des Passworts.</li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem
+    <a href="https://github.com/openpetra/openpetra/milestone/18?closed=1" rel=" nofollow ugc" target="_blank">Meilenstein auf Github für die Version 2022.07</a> zu finden!</p>
+
+<h3>Version 2021.10 vom 26. Oktober 2021</h3>
+
+<p>In dieser Version steckt die Arbeit seit Mai.<br/>
+Es wurde viel Zeit in Arbeit gesteckt, die nicht sichtbar ist: So wurde das Hosting von OpenPetra.com von virtuellen Maschinen auf das Shared Hosting bei https://hostsharing.net umgestellt.<br/>
+Weitere Änderungen wurden bei der Einrichtung des Finanzmoduls vorgenommen, um unterschiedliche Szenarien zu unterstützen.</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+
+Kontaktmodul:
+<ul>
+<li>Kontaktsuche funktioniert nun mit mehreren Teilen des Namens</li>
+</ul>
+
+Finanzmodul:
+<ul>
+<li>Anlegen eines Hauptbuches: die internationale Währung soll richtig gesetzt werden (nicht nur EUR)</li>
+<li>Importiere den SKR-49 Kontenrahmen von DATEV für Vereine und Stiftungen.</li>
+<li>Import von Kostenstellen: Löscht nun ungenutzte Kostenstellen, die im Import fehlen.</li>
+<li>Buchungstapel: Wenn man einen Stapel ohne Haben oder Soll anlegt, soll ein ordentlicher Hinweis als Fehlermeldung gezeigt werden.</li>
+<li>Haben und Soll sollen immer in der richtigen Reihenfolge erscheinen.</li>
+<li>Buchungsstapel: Buchungen importieren und exportieren</li>
+<li>Export von Buchungsstapel nach xlsx: Dezimalzahlen wurden als Zeichenkette exportiert.</li>
+</ul>
+
+Spendenmodul:
+<ul>
+<li>Zeige eine Fehlermeldung, falls ein Spendenstapel nicht geöffnet werden kann, weil es noch keine Verwendungszwecke gibt.</li>
+</ul>
+
+Patenschaften:
+<ul>
+<li>Beim Bearbeiten der Patenschaft wurde nur ein Pate gezeigt, auch wenn mehrere Paten für das Kind eingetragen waren</li>
+</ul>
+
+Hosting von OpenPetra:
+<ul>
+<li>Ungenutzte Instanzen haben jeden Morgen einen Fehler in die Logdatei geschrieben, weil es keinen SiteKey gab.</li>
+<li>Das stündliche Backup soll nur für Instanzen angefertigt werden, die tatsächlich genutzt wurden.</li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem
+<a href="https://github.com/openpetra/openpetra/milestone/17?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2021.10</a> zu finden!</p>
+
+<h3>Version 2021.04 vom 30. April 2021</h3>
+
+<p>Diese Version beinhaltet die Arbeit von 2 Monaten, März und April.
+Die meisten Änderungen betreffen den Import von Kontoauszügen, wir unterstützen nun die Dateiformate CAMT und MT940.</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+
+Kontaktmodul:
+<ul>
+<li>Kontakt finden: Man kann die Kontaktnamen nun auch in anderer Reihenfolge im Suchergebnis anzeigen lassen.</li>
+<li>Kontakt bearbeiten: Es wird eine Adresse automatisch als gültig markiert, wenn man sie eingibt.</li>
+<li>Kontakt bearbeiten: Fehler behoben: Es wurde manchmal eine Änderung an der Bankverbindung nicht gespeichert.</li>
+<li>Kontakte importieren: Spaltennamen werden erkannt, auch wenn die Groß/Kleinschreibung unterschiedlich ist.</li>
+</ul>
+
+Buchhaltung und Spendenverwaltung:
+<ul>
+<li>Buchungsstapel und Spendenstapel: Beim Speichern mit einem leeren Datum gab es eine unklare Fehlermeldung.</li>
+<li>Beim Zurücksetzen eines Buchunggstapels wird nun ein funktionierendes Buchungsdatum benutzt.</li>
+<li>BankImport: Man kann einstellen, welcher Verwendungszweck per Voreinstellung für unbekannte Spenden zum Einsatz kommt.</li>
+<li>BankImport: Es können nun Kontoauszüge als CAMT XML Dateien importiert werden, und anhand der Kontonummer wird der Spender direkt zugeordnet.</li>
+<li>BankImport: Es können nun Kontoauszüge als MT940 Dateien importiert werden.</li>
+<li>BankImport: Importierte Kontoauszüge können auch wieder aus OpenPetra gelöscht werden.</li>
+</ul>
+
+Patenschaften:
+<ul>
+<li>Fehler behoben: Man konnte eine Patenschaft nicht öffnen, wenn ein Kommentar leer war.</li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem
+<a href="https://github.com/openpetra/openpetra/milestone/16?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2021.04</a> zu finden!</p>
+
+
+<h3>Version 2021.02 vom 6. März 2021</h3>
+
+<p>Diese Version beinhaltet die Arbeit von 2 Monaten, Januar und Februar. 
+Es gab große Verbesserungen beim Import von Kontakten (zur Einrichtung eines Systems), und auch für Bankkonten pro Kontakt.</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+
+Kontaktmodul:
+<ul>
+<li>Kontakt bearbeiten: Man kann nun ein oder mehrere Bankkonten pro Kontakt verwalten.</li>
+<li>Kontakt bearbeiten: Fehler behoben bei Einwilligungen, wenn nur der Ort oder das Land geändert wurden.</li>
+<li>Kontakt bearbeiten: Man kann nun manuell auch Einwilligungen aus der Vergangenheit anlegen. Man kann Einwilligungen hinzufügen, wenn bisher noch gar keine Einwilligungen vorlagen.</li>
+<li>Kontakt finden: Fehler behoben: Wenn man ungültige Zeichen bei der Suche nach Kontaktschlüssel eingibt, gibt es eine verständliche Fehlermeldung.</li>
+<li>Kontakt finden: Der Filter auf Kontaktart (Organisation, Familie) ist nun in der Voreinstellung leer.</li>
+<li>Kontakte importieren: man kann nun auch Kontonummern (IBANs) importieren.</li>
+<li>Kontakte importieren: Zeige Fehlermeldung wenn der Ländercode leer ist.</li>
+<li>Kontakte importieren: Man kann nun alle Kontakte löschen, um so die Datenbank in dieser Hinsicht zurückzusetzen.</li>
+<li>Kontakte importieren: Einwilligungen importieren</li>
+<li>Kontakte importieren: Kategorien importieren</li>
+<li>Kontakte importieren: schlägt fehl wenn es den Kontakt mit dem gleichen Namen und gleicher Adresse oder E-Mail Adresse schon gibt.</li>
+<li>Kontakte importieren: Es werden nun auch Microsoft Excel (xlsx) und LibreOffice (ods) Dateien unterstützt. Das ist stabiler als der bisherige CSV Import aus Textdateien.</li>
+<li>Kontakte importieren: Fehlermeldung wenn Spaltenüberschriften unbekannt sind.</li>
+<li>Ein Kontakt kann nun gelöscht werden, falls keine Spenden damit verknüpft sind.</li>
+</ul>
+
+Buchhaltung:
+<ul>
+<li>Ein paar Fehler beim Anlegen eines neuen Hauptbuches wurden behoben.</li>
+</ul>
+
+Spendenverwaltung:
+<ul>
+<li>Neue Option: in der Spendenbescheinigung kann nun auch ein Fragezettel gedruckt werden für Spender, die noch keine Einwilligung für Verwendung ihrer Adresse für den Newsletter gegeben haben.</li>
+<li>Der Bereicht für die Newsletter für Leute ohne Spendenbescheinigung berücksichtigt nun auch die Einwilligungen.</li>
+<li>Spendenbescheinigungen: Fehler beim Drucken wurde behoben.</li>
+</ul>
+
+Patenschaften:
+<ul>
+<li>Es kann nun eine Liste von Patenschaften gedruckt werden.</li>
+</ul>
+
+Allgemeine Verbesserungen:
+<ul>
+<li>Eine Fehlermeldung kann angeheftet werden, damit man mehr Zeit hat sie zu lesen. Außerdem kann man lange Fehlermeldungen als Text-Datei herunterladen.</li>
+</ul>
+
+Technische Verbesserungen:
+<ul>
+<li>Fehler behoben wenn es zu viele Datenbank Verbindungen gab: Verbindungen werden nun geschlossen, wenn nicht mehr benötigt, und der Connection Pool wird automatisch neugestart wenn er leer ist.</li>
+<li>Verwerfe unbenutzten Code beim Abbrechen von Datenbankabfragen.</li>
+<li>Benutzt nun das SharpZipLib nuget Paket anstelle von ICSharpCode.SharpZipLib.dll</li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem
+<a href="https://github.com/openpetra/openpetra/milestone/15?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2021.02</a> zu finden!</p>
+
+
+<h3>Version 2020.12 vom 2. Januar 2021</h3>
+
+<p>Diese Version beinhaltet die Arbeit von 2 Monaten, November und Dezember. Im Patenschaftsmodul ist viel passiert. Aber auch andere Module erhielten Korrekturen und neue Funktionalität, und auch technische Verbesserungen wurden umgesetzt.</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+
+Patenschaftsmodul:
+<ul>
+<li>Erinnerungen per E-Mail für Patenschaften funktionieren nun</li>
+<li>Erinnerungen: benutze Vorlagendateien für die E-Mails</li>
+<li>Zeige zukünftige Paten der Kinder im Suchergebnis</li>
+<li>Man kann nach dem Vornamen eines Kindes suchen, auch wenn kein Familienname hinterlegt ist</li>
+<li>Filtern aller Kinder, die noch keinen Paten haben</li>
+<li>Patenschaften nach Pate filtern</li>
+<li>Patenschaften können nach dem Names des Kindes oder nach Patenschaftsbetreuer sortiert werden.</li>
+<li>Das Hochladen vom Foto eines Kindes zeigt nun ggfs. einen Fehler</li>
+<li>Man kann Patenkinder nun auch löschen</li>
+<li>Zeige Anschrift und Kontaktmöglichkeiten eines Paten in der Spendenübersicht</li>
+<li>Im Suchergebnis von Patenschaften gibt es nun eine Vorschau mit Kontaktmöglichkeiten des Paten</li>
+<li>Kategorien für Kontakte: Man kann jetzt eine Kategorie auf inaktiv oder aktiv setzen, und die Gruppierung der Kategorie setzen (wichtig für Patenschaften)</li>
+</ul>
+
+Weitere Verbesserungen und Korrekturen:
+<ul>
+<li>Kontaktsuche: filtere nach Schlüssel des Kontaktes</li>
+<li>Nur noch Benutzer mit dem Recht PTNRADMIN können die Einwilligungskanäle und Verwendungszwecke für Einwilligungen bearbeiten</li>
+<li>Leerer Kontakt: Fehlermeldung korrigiert, die gezeigt werden soll, wenn man versucht zu speichern. Es wird nicht mehr nach der Einwilligung gefragt.</li>
+<li>Spendenbescheinigungen: Die HTML Vorlage und das Logo können als Voreinstellung gespeichert werden.</li>
+<li>In den Berichten über die Kontobewegungen und die Kontenbilanzen können die Konten besser ausgewählt werden.</li>
+<li>Beim Wiederherstellen von alten Datenbanken wird nun nicht einfach die Version der Daten gesetzt, sondern es werden entsprechend die Aktualisierung der Daten durchgeführt.</li>
+<li>Bei der Neuinstallierung einer OpenPetra Instanz wird nun nicht einfach die Datenbankversion gesetzt, sondern es werden auch die Datenbankaktualisierungen durchgeführt.</li>
+</ul>
+
+Technische Verbesserungen:
+<ul>
+<li>Alle Unterstützung für SQLite wurde aus dem Quelltext entfernt</li>
+<li>MySQL 8 wird nun unterstützt</li>
+<li>Benutze MysqlConnector anstelle von Mysql.Data</li>
+<li>NUnit wurde auf die neueste Version 3.12 aktualisiert, und es kommen nun nuget Pakete zum Einsatz</li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem <a href="https://github.com/openpetra/openpetra/milestone/14?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2020.12</a> zu finden!</p>
+
+<h3>Version 2020.10: vom 4. November 2020</h3>
+
+<p>Diese Version bringt Verbesserungen bei der Kontaktsuche, bei der Verwaltung von Benutzern, 
+für Finanzbuchungen und Spendenbuchhaltung, und für das Patenschaftsmodul.</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+<ul>
+<li>Verbesserungen an der Kontaktsuche: Man kann nun die Sortierung der Ergebnisse ändern, und man kann sich mehr als 25 Ergebnisse anzeigen lassen.</li>
+<li>Behoben: Der Einwilligungsschalter auf dem Formular zum Bearbeiten der Kontakte hatte eine mißverständliche Beschriftung.</li>
+<li>Verschiedene Verbesserungen am Patenschaftsmodul: Erinnerungen und Kommentare können schon in der Liste durch Mausbewegung gelesen werden,
+Die Optionen des Status für die Kinder sind nicht mehr fest verdrahtet, Benutzer ohne Berechtigung für Buchhaltung können nun wieder die Patenschaften verwalten,
+Kinder können nun auch mit Teilen des Namens gesucht werden, in der Liste der Kinder werden auch die momentan aktuellen Paten angezeigt.</li>
+<li>Behoben: Benutzer verwalten: man konnte nach dem Bearbeiten des Benutzers nicht mehr speichern.</li>
+<li>Verschiedene Verbesserungen am Formulare für die Benutzerverwaltung: Der Tag der letzten Anmeldung eines Benutzers wird in der Liste gezeigt,
+und nach dem Bearbeiten eines Benutzers wird die Liste entsprechend aktualisiert.</li>
+<li>In den Hauptbuch-Buchungen: In der Liste der Transaktionen werden durch Mausbewegung die Namen von Konten und Kostenstellen angezeigt.</li>
+<li>Man kann nun bei einem Spendenstapel vor dem Buchen einen Test durchführen, um die Summe pro Verwendungszeck anzeigen zu lassen.</li>
+<li>Behoben: Nach dem Bearbeiten eines Spendenstapels wurde die Summe nicht mehr in der Liste angezeigt.</li>
+<li>Behoben: Man kann nun wieder die Spendentransaktionen schließen, in den Spendenstapeln.</li>
+<li>Wenn ein einzelner Spendenstapel exportiert werden soll, dann wird der Status des Stapels nicht berücksichtigt. So kann man nun auch abgebrochene Stapel exportieren.</li>
+<li>Kontoauszüge importieren: Wenn man einen Spendenstapel anlegen will, aber ein Verwendungszweck fehlt, wird nun eine aussagekräftige Fehlermeldung gezeigt.</li>
+<li>Behoben: Bearbeiten einer Spenden-Transaktion: Das Eingangsdatum wurde nicht richtig angezeigt.</li>
+<li>Behoben: PostgreSQL: Man konnt Kontakte nicht bearbeiten.</li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem <a href="https://github.com/openpetra/openpetra/milestone/13?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2020.10</a> zu finden!</p>
+
+
+<h3>Version 2020.09: vom 10. Oktober 2020</h3>
+
+<p>In dieser Version gab es keine großen Neuerungen.</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+<ul>
+<li>Neuer Bericht, um die Kontakte und ihre Adressen für Abonnements aufzulisten.</li>
+<li>Bemerkungen zu neuen Versionen werden nun immer aktuell angezeigt und nicht aus dem Cache mit alten Informationen angezeigt.</li>
+<li>Monats- und Jahresabschluß zeigen nun die Datumsangaben der aktuellen Periode korrekt an.</li>
+<li>Während einer Neuinstallation wird nun das Passwort für den MySQL/MariaDB root Benutzer gesetzt.</li>
+<li>Fehler bei Formularen behoben, das Select Element wurde nicht richtig geschlossen.</li>
+<li>Export der Datenbank als Yml.gz Datei funktioniert nun wieder.</li>
+<li>Kontoauszüge aus CAMT Datei importieren: Problem mit EREF+ wurde behoben, dadurch wurden Spenden nicht wiedererkannt.</li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem <a href="https://github.com/openpetra/openpetra/milestone/12?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2020.09</a> zu finden!</p>
+
+<h3>Version 2020.06: vom 16. Juli 2020</h3>
+
+<p>Die große Veränderung in dieser Version ist: Man kann nun die Einwilligung von Kontakten speichern, wie die Adresse oder andere Kontaktdaten benutzt werden dürfen.</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+<ul>
+<li>Unterstützung für DSGVO</li>
+<li>Cookie OpenPetraSessionID muss Secure oder SameSite setzen</li>
+<li>Bericht über die Kontobilanzen steht nun im Javascript Client zur Verfügung</li>
+<li>Die Kategorien für Patenschaften erscheinen nun nicht mehr bei normalen Kontakten</li>
+<li>Benutzer konnte kein neues Handbuch anlegen</li>
+<li>Demo Datenbank für Tests müssen immer im gleichen Monat starten</li>
+<li>Info über das Hauptbuch: zeige wieder Details des aktuellen Monats</li>
+<li>Versionshinweise: falls die Hinweise nicht übersetzt wurden, soll per Default die englische Version gezeigt werden</li>
+<li>Es wird nur noch ein Backup pro Datenbank pro Tag aufbewahrt</li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem <a href="https://github.com/openpetra/openpetra/milestone/11?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2020.06</a> zu finden!</p>
+
+<h3>Version 2020.04: vom 8. Mai 2020</h3>
+
+<p>Die großen Veränderungen in dieser Version sind: die erste Version des Patenschaftsmoduls,
+und Verbesserungen an der Daten-Sicherheit.</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+<ul>
+<li>Erste Stufe für das Patenschaftsmodul: man kann Kinder anlegen, und ihnen mehrere Sponsoren zuordnen. Man kann Erinnerungen einrichten (die momentan aber noch nicht zu E-Mail Benachrichtigungen führen), und Notizen zu schulischer oder familiärer Situation hinterlegen.</li>
+<li>Erleichterungen für die Erstinbetriebnahme von OpenPetra: Im gehosteten Betrieb wird nicht nur ein SYSADMIN Benutzer eingerichtet, sondern auch ein normaler Benutzer ohne Rechte zur System-Administration. Im Einzel-Betrieb erscheint ein Dialog bei der Erstanmeldung von SYSADMIN, der die Einrichtung der Instanz vereinfacht.</li>
+<li>Erleichterungen zum Anlegen eines Hauptbuches: wenn ein Benutzer mit Finanzberechtigung sich anmeldet, und es gibt noch kein Hauptbuch, erscheint ein Dialog, der die Einrichtung des Hauptbuches vereinfacht.</li>
+<li>Die öffentlich verfügbaren API Endpunkte wurden reduziert, und erfordern nun mehr Rechte. Dadurch wird vermieden, dass Daten abfließen können.</li>
+<li>Unterstützung für Fedora 32: Einrichtung von MariaDB funktioniert jetzt. Außerdem: CentOS 8 und Ubuntu 20.04 werden mittlerweile ebenfalls von <a href="https://get.openpetra.org">https://get.openpetra.org</a> unterstützt.</li>
+<li>Das Test-Framework Cypress wurde auf die neueste Version aktualisiert.</li>
+<li>Wir benutzen nun Weblate für die Übersetzung des Clients: <a href="https://hosted.weblate.org/projects/openpetra/js-client">https://hosted.weblate.org/projects/openpetra/js-client</a></li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem <a href="https://github.com/openpetra/openpetra/milestone/10?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2020.04</a> zu finden!</p>
+
+<h3>Version 2020.03: vom 30. März 2020</h3>
+
+<p>Es gab eine Pause von mehreren Monaten, in denen keine neue Version veröffentlicht wurde. Wir arbeiten gerade an einem neuen Modul für das Verwalten von Patenschaften, das ist aber in diesem Release noch nicht enthalten.</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+
+<ul>
+<li>Es gibt den Client jetzt auf Norwegisch</li>
+<li>Lange Berichte wurden nach einer bestimmten Länge abgeschnitten</li>
+<li>Man konnte Berichte nicht mehr als PDF herunterladen</li>
+<li>Spendenbescheinigungen sollen nur an Anschriften gesendet werden, die als gültig markiert sind</li>
+<li>Fehler im Bericht "Adressen für Jahresrückblick ohne Spender" behoben</li>
+<li>Man kann Verwendungszweck jetzt mit einer einzigen Auswahl setzen, Gruppe und Detail wurden zusammengefasst</li>
+<li>Beim Anlegen eines neuen Hauptbuches werden die Verwendungszwecke DONATION angelegt, um Probleme mit den Verwendungszwecken GIFT zu vermeiden</li>
+<li>Es gab die Möglichkeit, dass sich zwei Seitenaufrufe gegenseitig blockiert haben</li>
+<li>Es gab Probleme mit statischen Variablen, die über Sessions und Threads hinweg geteilt wurden</li>
+<li>Wir setzen nun MySQL auf AppVeyor ein, um SQLite nicht mehr zu benötigen</li>
+<li>Die Unterstützung für SQLite wurde entfernt</li>
+<li>Benutze BigInt für OdbcParameter statt Decimal, da sonst die Abfragen zu langsam sein können</li>
+<li>nant generateSolution entfernt nun die Mono dlls und Windows dlls</li>
+<li>Die Konfigurationsdateien können für alle Instanzen leicht neu erzeugt werden</li>
+<li>Probleme mit Berechtigungen für das tmp Verzeichnis für das OpenPetra-Server Skript</li>
+<li>Die Seite mit Informationen über die Instanz zeigte nur die Version des Tarballs, nicht die Version des installierten RPM Paketes</li>
+<li>Beim Wechseln zwischen Entwicklungszweigen gab es Probleme mit den ASMX Dateien</li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem <a href="https://github.com/openpetra/openpetra/milestone/9?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2020.03</a> zu finden!</p>
+
+<h3>Version 2019.12: vom 6. Januar 2020</h3>
+
+<p>Wir haben im Dezember keine neue Version veröffentlicht, weil die Infrastruktur und das Aussehen von OpenPetra weitgehend umgebaut und verbessert wurde...</p>
+
+<p>Es gibt nun ein Skript auf <a href="https://getopenpetra.com">getopenpetra.com</a>, mit dem sich ganz einfach eine Entwicklungs- oder Testumgebung auf CentOS 7, Fedora 31, Debian Buster und Ubuntu (Eoan und Bionic) einrichten lässt. Dieses Skript wird ebenfalls benutzt, um den Demo Server einzurichten, und um die nächtlichen Tests durchzuführen.</p>
+
+<p>Eine weitere sichtbare Veränderung besteht in der Vereinfachung der Benutzeroberfläche im Javascript Client. Es sollte nun einfacher sein, auf einen Blick zu erkennen, welche Aktionen dem Benutzer zur Verfügung stehen.</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+
+<ul>
+<li>Neues Menü und neue Navigation: Funktionen werden nicht mehr weit unten in der Menüstruktur versteckt. Es gibt einen neuen Startbildschirm.</li>
+<li>Skripte von OpenPetraScripts/openpetra wurden in openpetra-server.sh integriert, und stehen direkt zur Verfügung.</li>
+<li>Unterstützung für MariaDB 10 in z.B. Ubuntu Eoan und Fedora 31.</li>
+<li>Fehler behoben: Wenn viele Datenbanken auf einem Server aktualisiert werden, wurden die MySQL Verbindungen nicht geschlossen.</li>
+<li>Das Erstellen eines neuen Hauptbuches wurde vereinfacht, und der Benutzer kann nun direkt mit dem neuen Hauptbuch arbeiten.</li>
+<li>Verbesserungen an der Funktion, die neuen Kontostände vor dem Buchen eines Hauptbuchstapels zu sehen: Es wird nun ein Kontostand mit dem Wert 0 ordentlich angezeigt,  und es wird nun auch die Differenz zum momentanen Kontostand angezeigt.</li>
+<li>Fehler behoben: Es werden keine Buchungen im Hauptbuch erlaubt, die jenseits der offenen Monate liegen.</li>
+<li>Fehler behoben: Das Rückbuchen von Buchungen im Hauptbuch funktioniert nun wieder.</li>
+<li>Spendenstapel: Man kann nun eine einzelne Spende korrigieren: Es wird ein neuer Spendenstapel mit der Korrektur angelegt.</li>
+<li>Fehler behoben: Inaktive Verwendungszwecke verursachten Probleme bei der Spendenkorrektur.</li>
+</ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem <a href="https://github.com/openpetra/openpetra/milestone/7?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2019.12</a> zu finden!</p>
+
+<h3>Version 2019.10: vom 22. November 2019</h3>
+
+Diese Version hätte eigentlich schon Ende Oktober fertig sein sollen, aber besser spät als nie...<br>
+Die größte Neuerung in dieser Version ist die Möglichkeit, dass Partner sich selber verwalten können: Falls man diese Einstellung in den Systemeinstellungen als Benutzer SYSADMIN aktiviert, dann können sich Ihre Unterstützer und Mitglieder selber in OpenPetra registrieren, und dann auch ihre Kontaktdaten selber eintragen! Sie können selbstverständlich nur ihre eigenen Daten sehen. Diese Funktion kann noch ausgebaut werden, daher bin ich interessiert an Rückmeldungen!</p>
+
+<p>Hier ist die Liste der Verbesserungen in dieser Version:</p>
+
+<ul><li>Selbstbedienung für Partner: registrieren, und die eigenen Daten pflegen</li>
+<li>Der Bericht "Partner mit Kategorien" gibt nun auch die E-Mail Adressen und Telefonnummern aus.</li>
+<li>Menüpunkte werden gar nicht mehr angezeigt, wenn der Benutzer sie eh nicht benutzen darf. Bisher wurden sie ausgegraut gezeigt.</li>
+<li>demo.openpetra.org: Klare Ansage: keine echten Daten eingeben. Die Datenbank wird jede Nacht zurückgesetzt.</li>
+<li>demo.openpetra.org: Es wird nun eine Flagge in der Menüleiste gezeigt, um das Umschalten der Sprache zu erleichtern.</li>
+<li>Fehler bei Dialogen gehoben, falls der Schalter doppelt geklickt wurde.</li>
+<li>Fehler behoben: Manchmal wurde der Anmeldebildschirm nicht angezeigt.</li></ul>
+
+<p>Einige dieser Verbesserungen wurden durch die Teilnehmer der Mitgliederversammlung des <a href="https://luki.org/" rel=" nofollow ugc">LuKi e.V.</a> angeregt, vielen Dank für die Rückmeldungen!</p>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem <a href="https://github.com/openpetra/openpetra/milestone/6?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2019.10</a> zu finden!</p>
+
+<h3>Version 2019.09: vom 3. Oktober 2019</h3>
+<p>In dieser neuen Version von OpenPetra geht es hauptsächlich um die Mandantenfähigkeit.</p>
+
+<p>Dadurch ist es mir möglich, ohne hohe Kosten das Hosten von OpenPetra anzubieten, weil ich mehrere Kunden mit einem einzigen Mono Dienst versorgen kann, dadurch wird weniger RAM und CPU benötigt. Als Folge daraus ist der kostenlose Testzugang auf <a href="https://www.openpetra.com" rel=" nofollow ugc">OpenPetra.com</a> nun <strong>zeitlich unbeschränkt</strong>! Dadurch können auch Vereine außerhalb des SEPA-Raums OpenPetra benutzen, auch wenn wir noch keine Zahlungen von dort annehmen können. Natürlich freue ich mich über jeden zahlenden Kunden (ab 5 Euro im Monat), dadurch kann der Dienst wachsen!</p>
+
+<p>Veränderungen in dieser Version:</p>
+
+<ul><li>Ein Mono Dienst kann nun für mehrere Kunden genutzt werden. Dadurch wird mandantenfähiges Hosting möglich, wo jeder Kunde eine eigene Konfigurationsdatei und Datenbank hat.</li>
+<li>Wir mussten die Berechnung der Berichte umstellen, damit wir ohne UIConnector und statische Variablen arbeiten können, sondern pro Anfrage das Ergebnis geliefert wird. Dazu wurde die neue Tabelle s_report_result hinzugefügt.</li>
+<li>Neue Instanzen, die noch keinem Kunden zugeordnet sind, erlauben keine Anmeldung mit Benutzer SYSADMIN.</li>
+<li>Neue Kunden erhalten nun eine E-Mail mit ihrem Namen in der Anrede, mit dem Link zum Neusetzen des Passwortes für SYSADMIN. Bisher war die Anrede in dieser E-Mail leer, und sah verwirrend aus.</li></ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem <a href="https://github.com/openpetra/openpetra/milestone/5?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2019.09</a> zu finden!</p>
+
+<h3>Version 2019.07: vom 10. August 2019</h3>
+Die Veröffentlichung dieser Version war eigentlich für Ende Juli geplant, aber es hat dann doch länger gedauert, bis alles bereit war.<br>
+Dieses mal wurde nicht so viele neue Funktionen eingebaut, sondern im technischen Bereich geschahen einige Aufräumarbeiten und Verbesserungen.</p>
+
+<p>Funktionale Änderungen:</p>
+<ul><li>Die Benutzerschnittstelle für den Jahresabschluß wurde verbessert und dem Monatsabschluß angeglichen.</li>
+<li>Die Formatierung von Beträgen wurde verbessert, es gab einen Fehler für Beträge unter 10 Euro.</li></ul>
+
+<p>Technische Änderungen:</p>
+<ul><li>Die Unterstützung für MySQL wurde verbessert.</li>
+<li>Ein paar schon bisher als veraltete Datenbankfelder wurden endlich komplett entfernt (z.B. p_partner_location.p_email_address_c, das nun über Partner Contact Attributes umgesetzt wird).</li>
+<li>Wir unterstützen nun auch Ubuntu als Entwicklungsumgebung. Ich lasse die CI Tests auf Github mit Appveyor (siehe ci.openpetra.org) laufen, das nun auch Ubuntu für die Tests anbietet. Dadurch wird die Qualität von OpenPetra verbessert, denn es wurden bereits ein paar Fehler entdeckt, die auf den CI Läufen mit CentOS auf dem LightBuildServer (<a href="https://lbs.solidcharity.com/package/solidcharity/openpetra/openpetra-test-server-mysql" rel=" nofollow ugc">siehe OpenPetra Test des Servers mit MySQL</a>) nicht zu Tage traten.</li>
+<li>Ich arbeite an einem Projekt, um statische Variablen zu ersetzen. Dies wird es erlauben, viele unterschiedliche Kunden in einer einzigen OpenPetra Instanz zu betreiben. Dieses Projekt ist noch nicht abgeschlossen (siehe <a href="https://forum.openpetra.org/d/869-refactoring-of-static-variables" rel=" nofollow ugc">Fortschrittsmeldungen im englischen Forum</a>), aber die aktuelle Version enthält schon angepassten Code, und die Tests funktionieren alle noch.</li>
+<li>Ich habe das openpetra-client-js Projekt in das Hauptprojekt von OpenPetra auf Github verschoben, um die Komplexität zu verringern. Der Client ist nun hier zu finden: <a href="https://github.com/openpetra/openpetra/tree/master/js-client" rel=" nofollow ugc">https://github.com/openpetra/openpetra/tree/master/js-client</a></li></ul>
+
+<p>Weitere Details über die gelösten Aufgaben dieser Version sind in dem <a href="https://github.com/openpetra/openpetra/milestone/3?closed=1" rel=" nofollow ugc">Meilenstein auf Github für die Version 2019.07</a> zu finden!</p>
+
+<h3>Version 2019.06: vom 29. Juni 2019</h3>
+<p>Das sind die wichtigsten Änderungen, die Teil der Veröffentlichung im Juni 2019 sind:</p>
+<ul>
+<li>Die Anmeldung eines Benutzers wird nun in der Datenbank verwaltet, und nicht mehr im Arbeitsspeicher. Das bedeutet, dass angemeldete Benutzer sich nach einem Neustart des Servers nicht mehr neu anmelden müssen.</li>
+<li>Kleine Korrektur bei der Verarbeitung von Kontoauszügen: Kontobewegungen, die am Ende des Monats gebucht werden, und erst im neuen Monat auf unserem Konto eintreffen, werden korrekt im neuen Monat verbucht.</li>
+<li>Einige Korrekturen, damit PostgreSQL als Datenbank eingesetzt werden kann.</li>
+<li>Der Client zeigt jetzt eine Fehlermeldung, wenn man noch den Browser IE11 oder älter benutzt.</li>
+</ul>
+<p>Hier ist eine detailierte Übersicht aller Änderungen in dieser neuen Version: <a href="https://github.com/openpetra/openpetra/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+milestone%3ARelease_2019-06+is%3Aclosed+" target="_blank" rel="noopener noreferrer">Gelöste Aufgaben im Meilenstein 2019.06</a>
+
+<h3>Version 2019.05: vom 27. Mai 2019</h3>
+<p>Das sind die wichtigsten Änderungen, die Teil der Veröffentlichung im Mai 2019 sind:</p>
+<ul>
+<li>Einen Änderungsstapel anlegen für einen gebuchten Spendenstapel</li>
+<li>Einen Spendenstapel als Excel Datei exportieren</li>
+<li>Den Gesamtbetrag, und die Beträge der einzelnen Spenden des Spendenstapels anzeigen</li>
+<li>Es werden gebuchte Spendenstapel deutlicher als schreibgeschützt gezeigt</li>
+<li>Beim Abschluss des Monats wurden Verbesserungen vorgenommen, man kann jetzt direkt sehen, welchen Datumsbereich die aktuelle Periode abdeckt.</li>
+<li>Im Hintergrund wurde ganz viel Quelltext überarbeitet, um die Datenbankverbindungen zu modernisieren. Es gibt jetzt viele Datenbankverbindungen, statt dem bisherigen Versuch, nur eine Datenverbindung so oft wie möglich wiederzuverwenden.</li>
+</ul>
+<p>Hier ist eine detailierte Übersicht aller Änderungen in dieser neuen Version: <a href="https://github.com/openpetra/openpetra/issues?utf8=%E2%9C%93&amp;q=is%3Aissue+milestone%3ARelease_2019-05+is%3Aclosed+" target="_blank" rel="noopener noreferrer">Gelöste Aufgaben im Meilenstein 2019.05</a>
+
+<h3>Version 2019.02: vom 5. Februar 2019</h3>
+<p>Das sind die wichtigsten Änderungen, die im Januar 2019 umgesetzt wurden:</p>
+<ul>
+<li>Jährliche Spendenbescheinigungen wurden umgesetzt.</li>
+<li>Es gibt jetzt einen Adress-Bericht für den Jahresrückblick, der ohne die Spender ist, die sowieso die Jahresspendenbescheinigung erhalten.</li>
+<li>Man kann jetzt in der Partnersuche die letzte Spende sehen.</li>
+<li>Beim Anlegen und Bearbeiten von Partnern wird jetzt das Land korrekt verarbeitet.</li>
+<li>Das Handbuch wurde auf <a href="https://handbuch.openpetra.de" target="_blank" rel="noopener">https://handbuch.openpetra.de</a> erweitert.</li>
+</ul>
+
+<h2>Bemerkungen zu den Testversionen (Beta-Versionen) von OpenPetra.org</h2>
+
+<h3>Beta 2017.02.4: 16. März 2017</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Korrekturen und Erweiterungen in dieser Version: <br/>
+<ul>
+<li>Fix for Bankimport plugin: can now update matches that have been used on earlier statements already.</li>
+<li>Fix for Standalone installer: check for Visual C++ redistributables which is needed for LibSodium. Also checks on startup of standalone application.</li>
+<li>Fix for initdb for server installer: only drop the database if it exists.</li>
+<li>MySQL: improve the speed of loading a database from yml.gz file.</li>
+<li>MySQL: fix for loading DataAdapter</li>
+<li>Fix for the link to the client installer</li>
+</ul>
+
+<h3>Beta 2017.02: 6. März 2017</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Korrekturen und Erweiterungen in dieser Version: <br/>
+<ul>
+<li>0005819: [Reports] Improve performance of the DonorGiftStatement-&gt; report type 'Totals' via the SelectUsingDataAdapterMulti function</li>
+<li>0005876: [Reports] Partner By Special Type - Internal Error</li>
+<li>0005823: [Reports] Print Partner - Report can contain two 'Finance Details' sections!</li>
+<li>0005836: [ICH] Empty Admin Fee batch causes ICH calculation to fail</li>
+<li>0005671: [Setup Screens] Postcode Regions Setup -&gt; Print should show regions and ranges combined</li>
+<li>0005841: [Import/Export] Fixing problems with importing partners for a conference</li>
+<li>0005848: [Reports] Income Expense Statement: new NextYearBudget field is not totalled as it should be.</li>
+<li>0005832: [Reports] Add "Paginate" facility to RecipientGiftStatement</li>
+</ul>
+
+<h3>Beta 2016.12: 27. Februar 2017</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Über diese Version:
+<ul>
+<li>Verschiedene Verbesserungen im Finanz- und Partner-Modul</li>
+<li>Das System zum Erstellen der Berichte wurde überarbeitet und ist jetzt sicherer.</li>
+<li>Das Installieren eines eigenen OpenPetra Servers auf Linux wurde vereinfacht.</li>
+</ul>
+
+<h3>Beta 2016.10: 3. November 2016</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Über diese Version:
+<ul>
+<li>Verschiedene Verbesserungen im Finanz- und Partner-Modul</li>
+<li>Verbesserte Unterstützung für MySQL, neben der bestehenden Unterstützung von PostgreSQL und SQLite</li>
+</ul>
+
+<h3>Beta 2016.07: 3. Oktober 2016</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Über diese Version:
+<ul>
+<li>Verschiedene Verbesserungen im Finanz- und Partner-Modul</li>
+<li>Verbesserte Sicherheit, Passwörter werden jetzt mit der Sodium Bibliothek verschlüsselt.</li>
+</ul>
+
+<h3>Beta 2015.09.4: 23. Dezember 2015</h3>
+
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Über diese Version:
+<ul>
+	<li>Die Arbeit aus dem ICT Zweig seit September ist noch nicht eingeflossen, deshalb heisst diese Version noch nicht 2015.12.</li>
+	<li>Es gab einen Fehler bei der Standalone Version, man wurde jedesmal nach einem neuen Passwort gefragt. Das ist korrigiert.</li>
+	<li>Die Standalone Version enthält jetzt auch die Bankimport Plugins.</li>
+	<li>Mehrere Fehler wurden behoben, um ein Beispielszenario in einem Tutorial beschreiben zu können. Diese Anleitung wird bald veröffentlicht werden.</li>
+</ul>
+
+<h3>Beta 2015.09: 23.09.2015</h3>
+
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Verbesserungen in diesem Release:<br/>
+<ul>
+<li>Verschiedene Verbesserungen im Finanz- und Partner-Modul</li>
+<li>Wir nennen diese Version nun Beta, weil wir die folgende Funktionalität testen und stabilisieren wollen, beschrieben auf dieser Seite im Wiki:
+<a href="https://wiki.openpetra.org/index.php/Functions_to_be_included_in_Beta_Summer_2015">Functions to be included in Beta Summer 2015</a></li>
+</ul>
+
+
+<h2>Bemerkungen zu den Testversionen (Alpha-Versionen) von OpenPetra.org</h2>
+
+<h3>Alpha 2014.12: 05.12.2014</h3>
+Verbesserungen in diesem Release:<br/><br/>
+
+Finanzmodul:
+<ul>
+<li>Vereinfachte Spendenerfassung durch vorbelegte Feldkombinationen</li>
+<li>Import kompletter Batches oder Transaktionen zu bestehenden Batches in die Spendenerfassung; wahlweise über .csv Dateien oder die Zwischenablage</li>
+<li>Import kompletter Batches oder Transaktionen ins Hauptbuch; wahlweise über .csv Dateien oder die Zwischenablage</li>
+<li>Korrekturen im Bereich Monatsabschluss und Jahresabschluss</li>
+<li>Verbesserte Handhabung von Ausbuchungen</li>
+</ul>
+
+Partnermodul
+<ul>
+<li>Neuer Tab Contact Log. Möglichkeit, ein Logbuch zu führen, wer wann von wem bei welcher Gelegenheit kontaktiert wurde.</li>
+<li>Neuer Contact Details Tab. Möglichkeit, Kontaktdaten flexibel und unabhängig von der Postadresse zu erfassen. Wir sind dabei die betroffenen Berichte umzuschreiben, so dass sie die neuen Strukturen aufgreifen.</li>
+</ul>
+
+Client/Server Kommunikation
+<ul>
+<li>Die alte .Net Remoting Lösung wurde durch moderne Webservices ersetzt. Das bedeutet, dass ab sofort die marktübliche SSL Verschlüsselung für die Kommunikation zwischen den OpenPetra Clients und dem OpenPetra Server eingesetzt wird.</li>
+</ul>
+
+Plugins
+<ul>
+<li>Mit dieser neuen Version gibt es die Möglichkeit, Plugins zu benutzen. Durch die neuen Webservices ist es jetzt einfacher, neue Funktionen einzubinden, ohne das ganze Programm neu kompilieren zu müssen. Es gibt schon ein paar Plugins in einem Repository auf GitHub: <a href="https://github.com/solidcharity?query=OpenPetraPlugin_" title="Github Search for OpenPetra plugins" target="_blank">https://github.com/solidcharity?query=OpenPetraPlugin_</a></li>
+</ul>
+
+Einzelplatzversion
+<ul>
+<li>Die Einzelplatzversion von OpenPetra ist jetzt tatsächlich eine simple Anwendung, es wird kein Server mehr im Hintergrund gestartet. Das erleichtert die Benutzung auf Notebooks und Einzelplatzrechnern enorm: es gibt keine Fehlermeldungen von der Firewall mehr!</li>
+<li>Der Windows installer für die Einzelplatzversion steht auf Sourceforge bereit: <a href="http://sourceforge.net/projects/openpetraorg/files/openpetraorg/OpenPetra.org%20Alpha%202014/OpenPetraSetup-2014.12.0.0.exe/download" target="_blank">OpenPetraSetup-2014.12.0.0.exe</a></li>
+</ul>
+
+OpenPetra im Webbrowser
+<ul>
+<li>Es gibt einen experimentellen Ansatz, OpenPetra im Webbrowser zu benutzen. Dieses steht auf <a href="https://demo.solidcharity.com" target="_blank">https://demo.solidcharity.com</a> zum Ausprobieren bereit.</li>
+</ul>
+
+Gehostetes OpenPetra
+<ul>
+<li>Um auszuprobieren, wie OpenPetra über das Internet genutzt werden kann, gibt es auch den fetten .Net Client auf <a href="https://demo.solidcharity.com" target="_blank">https://demo.solidcharity.com</a>
+</li>
+</ul>
+
+Aktualisierte Demo Datenbanken
+<ul>
+<li>Wir haben die Demo Datebanken mit Beispieldaten aktualisiert, sie stehen bei <a href="https://sourceforge.net/projects/openpetraorg/files/openpetraorg/demodata/" target="_blank">Sourceforge</a> zum Herunterladen bereit. Die Buchhaltung ist wieder im aktuellen Jahr, und es sind die neuen Partner Kontaktkategorien und Typen enthalten!</li>
+</ul>
+
+<h3>0.3.0: 22. Juli 2014</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+Um detailliert alle behobenen Fehler zu betrachten, schauen Sie sich bitte diese Seite an: <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.3.0.htm">Bugs closed in 0.3.0</a><br/>
+<br/>
+
+OpenPetra wurde mehr getestet denn je. Etliche Probleme die von den Testern gefunden wurden konnten behoben werden. 
+Das Ergebnis ist ein insgesamt stabileres OpenPetra. Diesen Fortschritt haben wir mit einem Versionssprung auf 0.3.0 honoriert. 
+Trotz allem ist die Nutzung von OpenPetra  nur zu Versuchszwecken empfohlen.
+<p/>
+
+<p><b>Wesentliche Verbesserungen in dieser Version</b></p>
+
+Filter- und Suchfunktionen
+<ul>
+<li>Im Bereich der Kreditorenbuchhaltung wie auch bei der Pflege von Extrakten stehen diese Funktionen jetzt zur Verfügung.</li>
+<li>Damit ist die Implementierung von Filter- und Suchfunktionen in OpenPetra weitgehend abgeschlossen.</li>
+</ul>
+
+Tastatursteuerung
+<ul>
+<li>Eine Reihe von Tastaturbefehlen wurden als Standard festgelegt. Diese helfen bei der  Navigation innerhalb der veschiedenen Bildschirme in OpenPetra. Die jeweils verfügbaren Tastaturbefehle sind nun im Hilfe-Menü ersichtlich.</li>
+</ul>
+
+Bestimmungsort für Spenden
+<ul>
+<li>Eine weitere Neuerung ist die Möglichkeit, den Bestimmungsort für Spenden zu setzen. Diese Funktion ist eng mit der Zuweisung der Einsatzgebiete im Personalbereich verbunden.</li>
+</ul>
+
+Partner/Personal
+<ul>
+<li>Das Formular zur Addressverwaltung wurde komplett überarbeitet und den OpenPetra Standards hinsichtlich der Nutzung angepasst.</li>
+<li>Die Partnersuche wurde um die Suchfunktion nach Bank- und Kontodaten erweitert.</li>
+<li>Ein neuer Bildschirm steht jetzt zur Verfügung, der eine Übersicht über die Anmeldungen und Bewerbungen zu Kurz- und Langzeiteinsätzen bietet.</li>
+</ul>
+
+Buchhaltung
+<ul>
+<li>Das Einrichten von Kassenbuch/Hauptbuch wurde verbessert.</li>
+<li>Die Spendenverwaltung erhielt eine neue Suchfunktion zum Auffinden von Spenden. </li>
+<li>Die Spendenhistorie für Geber und Empfänger sind jetzt direkt von Eingabebildschirm aufrufbar.</li>
+<li>Die letzte Transaktion wird automatisch geladen, sobald der Geber eingegeben wurde. Dadurch wird die Spendenerfassung für regelmäßige Zahlungen vereinfacht.</li>
+<li>Im Hauptbuch können Transaktionen aus CSV-Dateien in ein leeres Journal importiert werden.</li>
+</ul>
+
+
+<h3>0.2.28: 18. Dezember 2013</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+Um detailliert alle behobenen Fehler zu betrachten, schauen Sie sich bitte diese Seite an: <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.28.htm">Bugs closed in 0.2.28</a><br/>
+<br/>
+
+OpenPetra wurde mehr denn je getestet, dabei wurden viele Fehler gefunden. Daher haben wir bei diesem Release den Schwerpunkt auf Qualität und Stabilität gelegt; viele Fehler wurden behoben!<br/>
+Nutzerfreundlichkeit war ebenfalls ein Schwerpunkt, sowie das Standardisieren von Bildschirmdesigns und Bildschirmverhalten.
+<p/>
+
+Allgemeine Verbesserungen:<br/>
+<ul>
+<li>Gänzlich neue Such- und Filterfunktionalität sowie Anzeige der Anzahl von Datensätzen. Dies wurde für 75 Bildschirme implementiert!</li>
+<li>Neuer "Preferences"-Dialog: hier können viele benutzerspezifische Einstellungen gemacht werden.</li>
+<li>Verbesserungen bei der Arbeitsgeschwindigkeit in einigen Bildschirmen wenn viele Daten angezeigt werden (besonders in den GL Batch, Gift Batch und Partner Find-Bildschirmen).</li>
+<li>In vielen Bildschirmen wurde das Layout verbessert, speziell in Dialogen.</li>
+<li>In vielen Bildschirmen wurde die Gültigkeitsprüfung von Daten verbessert.</li>
+</ul>
+
+Partner:
+<ul>
+<li>Neu: Vereinigen von Partnern (Partner Merge).</li>
+<li>Neu: Drucken von Partnern.</li>
+<li>Neu: Exportieren von Partnern eines Extrakts.</li>
+</ul>
+
+Personnel:
+<ul>
+<li>Nur Fehlerbehebungen.</li>
+</ul>
+
+Finance:
+<ul>
+<li>Hauptsächlich Fehlerbehebungen.</li>
+</ul>
+
+Conference:
+<ul>
+<li>Neu: Anzeigen von Teilnehmern (Browse Attendees).</li>
+</ul>
+
+
+<h3>0.2.26: 23. September 2013</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+Um detailliert alle behobenen Fehler zu betrachten, schauen Sie sich diese Seite an: <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.26.htm">Bugs closed in 0.2.26</a><br/>
+<br/>
+Hier sind die maßgeblichen Änderungen dieser Version:<br/><br/>
+
+Allgemeine Verbesserungen:<br/>
+<ul>
+<li>Einige allgemeine Verbesserungen in der Benutzeroberfläche von OpenPetra, basierend auf "Feedback" das wir von Testern erhalten haben.</li>
+<ul>
+<li>Offensichtlichste Änderung: Schaltflächen für Listenoperation sind nun jeweils unterhalb der Liste anstatt rechts neben der Liste platziert.</li>
+</ul>
+<li>Löschfunktion für Daten in Listen wurde in allen Bildschirmmasken implementiert in denen diese Funktion bisher fehlte, in allen anderen Bildschirmmasken wurde sie verbessert.</li>
+<li>Berichte können nun nach MS Excel exportiert werden.</li>
+<li>Viele Fehler wurden behoben und viele neue Funktionen eingebaut - <em>mehr als 170!</em></li>
+</ul>
+
+Partner:
+<ul>
+<li>Der Partner Edit-Bildschirm erhielt eine neue "Karteikarte" zur Pflege der Interessen eines Partners.</li>
+</ul>
+
+Personnel:
+<ul>
+<li>Nur Fehlerbehebungen.</li>
+</ul>
+
+Finance:
+<ul>
+<li>Viele Funktionen wurden erweitert/verbessert.</li>
+<li>Monats- und Jahresabschlußfunktionen wurden stark verbessert.</li>
+<li>Budget-Funktionalitaet wurde verbessert.</li>
+<li>Datenimport und -export wurden verbessert.</li>
+<li>Sammelbuchungen im Hauptbuch können nun storniert werden.</li>
+<li>Performanz in den Bereichen Spendenbuchhaltung und Hauptbuch wurde verbessert.</li>
+<li>Die Ausführungszeit von mehreren Berichten wurde verkürzt.</li>
+<li>Viele Fehler behoben - in diesem Release wurden die meisten Fehler im Finance-Modul behoben.</li>
+</ul>
+
+
+Conference:
+<ul>
+<li>Grundlegende Funktionen sind nun verfügbar.</li>
+</ul>
+
+
+<h3>0.2.24: 19. März 2013</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+Um detailliert alle behobenen Fehler zu betrachten, schauen Sie sich diese Seite an: <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.24.htm">Bugs closed in 0.2.24</a><br/>
+<br/>
+Hier sind die maßgeblichen Änderungen dieser Version:<br/><br/>
+
+Allgemeine Verbesserungen:<br/>
+<ul>
+<li>Der OpenPetra-Client kann nicht mehr geschlossen werden, wenn noch Eingabebildschirme offen sind in denen vergessen wurde, Daten zu speichern. Gegebenenfalls wird ein entsprechender Hinweis mit den betroffenen Bildschirmen angezeigt.</li>
+<li>Das unabsichtliche Erzeugen von doppelten Datensätzen wird nun abgefangen - der Benutzer erhält eine entsprechende Fehlermeldung.</li>
+<li>Viele Bildschirme zur Stammdatenwartung wurden erweitert.</li>
+<li>Verbesserte Dateneingabeprüfung und höhere Benutzerfreundlichkeit.</li>
+<li>Viele Fehler wurden behoben und viele neue Funktionen eingebaut - <em>mehr als 200!</em></li>
+</ul>
+
+Partner:
+<ul>
+<li>Flexibilität bei der Nutzung von Extrakten hinsichtlich ihrer Schnittmenge, Vereinigungsmenge und Restmenge erweitert.</li>
+<li>Partner können nun gelöscht werden.</li>
+<li>Grundlegende Funktionen zum Eingeben von Bankverbindungen und weiterer Finanzdetails sind nun im Partner Edit-Bildschirm vorhanden.</li>
+</ul>
+
+Personnel:
+<ul>
+<li>Nur Fehlerbehebungen.</li>
+</ul>
+
+Finance:
+<ul>
+<li>Verbesserungen beim Arbeiten mit mehreren Hauptbüchern.</li>
+<li>Verbesserungen in den Gift- und GL Batch-Bildschirmen, speziell bei Stornos und den Analyseattributen für Transaktionen.</li>
+<li>Verbesserte Funktionalität des Recurring Gift-Bildschirms.</li>
+<li>Neuer Recurring GL Batch Screen (zum Verwalten regelmäßig wiederkehrender Transaktionen).</li>
+<li>Verbesserungen bei den Einstellungen der Hauptbücher; Übersichtsseite für Hauptbucheinstellungen ist nun verfügbar.</li>
+<li>Das Verhalten der zwei Bildschirme für die Bearbeitung der Wechselkurse ist wesentlich verbessert worden.</li>
+<li>Vor allem in den Finanzberichten und im Kreditorenbuchhaltungs-Subsystem wurden viele Fehler behoben.</li>
+<li>GL Batch Import und Gift Batch Import haben nun eine Fortschrittsanzeige.</li>
+</ul>
+
+
+<h3>0.2.22-1: 30. Oktober 2012</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+Um detailliert alle behobenen Fehler zu betrachten, schauen Sie sich diese Seite an: <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.22-1.htm">Bugs closed in 0.2.22-1</a><br/>
+<br/>
+Diese Version ist ein kleines 'Update' zur letzten Version. Die Neuerung besteht im Wesentlichen in einem verbesserten Hauptmenü (bessere Modul-Navigation auf der linken Seite, neuer 'Breadcrumb Trail' auf der rechten Seite oberhalb der Aufgaben, weitere Layoutverbesserungen).
+<br/><br/>
+
+Personnel:
+<ul>
+<li>Neue Option, Extracts zur Aktualisierung von Daten zu verwenden: Bestehendes Abo (Subscription) veraendern.</li>
+</ul>
+
+<h3>0.2.22: 15. Oktober 2012</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+Um detailliert alle behobenen Fehler zu betrachten, schauen Sie sich diese Seite an: <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.22.htm">Bugs closed in 0.2.22</a><br/>
+<br/>
+Hier sind die maßgeblichen Änderungen dieser Version:<br/><br/>
+
+Allgemeine Verbesserungen:<br/>
+<ul>
+<li>Geändertes, benutzerfreundlicheres Hauptmenü</li>
+<li>vermehrte Nutzung des ValidierungsFrameworks und somit unfassendere Validierung der Feldinhalte</li>
+<li>deutlich verbesserte Grid-Funktionalität</li>
+<li>Einführung von .NET single port remoting</li>
+<li>Intranet Export verfügbar</li>
+<li>viele bug fixes</li>
+</ul>
+
+Partner:
+<ul>
+<li>verbesserter PartnerFind Screen</li>
+<li>neue Extrakte</li>
+<li>Möglichkeit Subscriptions/Abos über Extrakte hinzuzufügen oder zu löschen</li>
+<li>neue Demodatenbank mit mehr Partnerdaten</li>
+</ul>
+
+Personnel:
+<ul>
+<li>Anmeldungen für Events und Bewerbungen für Einsatzfelder jetzt verfügbar</li>
+<li>zusätzliche Extrakte verfügbar</li>
+<li>verbesserte Funktionen bei den Individual Data Screens</li>
+<li>Möglichkeit Units in der Hierarchie zu verschieben</li>
+</ul>
+
+Finance:
+<ul>
+<li>überarbeitete Hauptbuch- und Spendenverwaltung</li>
+<li>erweiterte Möglichkeiten in Bereich der Spendenbescheinigungen</li>
+<li>verbessertes Handling von Budgets</li>
+<li>neue Demodatenbank</li>
+</ul>
+
+<h3>0.2.20: 25. Mai 2012</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.20.htm">Bugs closed in 0.2.20</a><br/>
+<br/>
+
+General improvements for all screens:
+<ul>
+<li>more validation of user input, using our new validation framework</li>
+<li>better layout of controls, which also works better on Linux clients, with Mono</li>
+</ul>
+
+Personnel:
+<ul>
+<li>More extracts</li>
+<li>improving functionality and stability of Individual Data Screens</li>
+</ul>
+
+Finance:
+<ul>
+<li>Gifts and recurring gifts: some bug fixes</li>
+<li>ICH: HOSA calculation</li>
+<li>GL Setup: some bug fixes</li>
+<li>Budget: consolidate budgets works now</li>
+<li>AP: reverse payment, support foreign currencies</li>
+<li>Donor and Recipient Extracts</li>
+</ul>
+
+System Manager:
+<ul>
+<li>Import of yml.gz files is now much faster</li>
+<li>find a demo database with lots of partners, gift batches, invoices, workers, etc: <a href="http://openpetraorg.sourceforge.net/demodata/demodata.yml.gz">demodata.yml.gz</a></li>
+</ul>
+
+<h3>0.2.18: 14. M&auml;rz 2012</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.18.htm">Bugs closed in 0.2.18</a><br/>
+<br/>
+
+Partner Edit:
+<ul><li>Many fixes in Partner Edit majority on Address, Family and Subscription Tab</li></ul>
+
+Personnel:
+<ul>
+<li>Implementation of Individual Data Screens</li>
+<li>e.g. personal data, passport details,</li>
+<li>emergency data, job assignments and more</li>
+<li>Extract framework established</li>
+<li>various new Extracts are now ready to use</li>
+<li>Extract Master list improved</li>
+</ul>
+
+Finance:
+<ul>
+<li>Gifts: Improvements on Gift Batch import and export</li>
+<li>Budget: bug fixes in Budget section</li>
+<li>Budget: consolidate budgets finished</li>
+<li>ICH: .csv stewardship reports -  export, send as email and import is now  possible</li>
+<li>Setup: Fix on exchange rates setup</li>
+<li>AP: more functionality of Accounts Payable in place</li>
+<li>AP: reversing of payments now enabled</li>
+<li>AP: reporting functions added</li>
+<li>others: fix on import from bank interface</li>
+</ul>
+
+<h3>0.2.16: 22 Dezember 2011</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.16.htm">Bugs closed in 0.2.16</a><br/>
+<ul>
+<li>Fixes to the Partner Edit and Partner Find screens</li>
+<li>Partner Edit: family members and family tab</li>
+<li>New report for subscriptions</li>
+<li>Creation of ICH stewardship batch</li>
+<li>Maintain budgets, and create budgets automatically based on last years actuals</li>
+<li>Accounts Payable: continue implementation, and bug fixes</li>
+<li>Gift batch: several fixes, and filter gift batches by month</li>
+<li>Fix a bug with authentication.</li>
+<li>Changes to the database structure. If you have already entered data, please let us know. Please note that this is currently in Alpha stage and not recommended for production use.</li>
+</ul>
+
+<h3>0.2.14: 10. November 2011</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.14.htm">Bugs closed in 0.2.14</a><br/>
+<ul>
+<li>New tabs for the Partner Edit screen: Subscriptions and Relationships</li>
+<li>New Personnel area on the Partner Edit screen: Languages and Special Needs as examples for the future Personnel screens.</li>
+<li>For the moment, we do allow now the creation of PERSON records again, for testing with the Personnel module. But note that this software is in Alpha stage, and you might not be able to upgrade your PERSON records to future versions!</li>
+<li>Several fixes to Partner Find screen.</li>
+<li>A reasonable Tab Order on all screens.</li>
+<li>Gift System: retrieve donor and recipient history</li>
+<li>Gift System: support admin fees payable and receivable (linked with motivation details), initial work on admin fee calculation and ICH stewardship</li>
+<li>Fixed a couple of bugs for GL import and export</li>
+<li>Support for CentOS and Debian servers running OpenPetra</li>
+<li>Changes to the database structure. If you have already entered data, please let us know. Please note that this is currently in Alpha stage and not recommended for production use.</li>
+</ul>
+
+<h3>0.2.12: 19. September 2011</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.12.htm">Bugs closed in 0.2.12</a><br/>
+<ul>
+<li>Many fixes to the GL Batch screen.</li>
+<li>Many fixes to the finance reports.</li>
+<li>Fix to export/import cost centre hierarchies.</li>
+<li>Creating a new ledger is now much easier.</li>
+<li>New functionality: Can do now a test run of posting a batch, and see which accounts/cost centres would be affected in which way.</li>
+<li>7 new maintain screens have been added to the Finance module.</li>
+<li>Changes to the database structure. If you have already entered data, please let us know. Please note that this is currently in Alpha stage and not recommended for production use.</li>
+
+<h3>0.2.10: 28 May 2011</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.10.htm">Bugs closed in 0.2.10</a><br/>
+<ul>
+<li>Support for multiple currencies, working with exchange rates</li>
+<li>Financial Month End closing, Year end closing</li>
+<li>Recurring Gift batches</li>
+<li>Revert and adjust gifts</li>
+<li>Add and maintain Commitment periods for staff</li>
+<li>Lots of improvements to the Online Registration. Printing to PDF on Linux, etc.</li>
+<li>Start of Danish Translation</li>
+<li>Spanish Translation almost complete</li>
+<li>Changes to the database structure. If you have already entered data, please let us know. Please note that this is currently in Alpha stage and not recommended for production use.</li>
+</ul>
+
+<h3>0.2.8: 18. Februar 2011</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.8.htm">Bugs closed in 0.2.8</a><br/>
+<ul>
+<li>New Maintain table screens (see <a href="http://bzr.openpetra.org:8088/loggerhead/trunk/revision/1112">Commit messages</a>).</li>
+<li>Web application for Online Registrations (not included in the standalone version)</li>
+<li>PDF Printing on Linux</li>
+<li>Improvements to Partner Find screen</li>
+<li>Improvements to GL Import and Export</li>
+<li>Improvements to Gift Import and Export</li>
+<li>Improvements to Account Hierarchy screen</li>
+<li>Improvements to Cost Centre Hierarchy screen</li>
+<li>More accurate internal handling of numbers for currency amounts</li>
+<li>Support cultures, the user can select the culture, and the user interface language of the client</li>
+</ul>
+
+<h3>0.2.6: 9. Dezember 2010</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<ul>
+<li>Now using resource dlls for translations rather than .mo files.</li>
+<li>Added Spanish translation.</li>
+<li>Fix bug for creating new ledgers (<a href="http://sourceforge.net/apps/mantisbt/openpetraorg/view.php?id=128">Bug 128</a>).</li>
+<li>Fix to contact find screen (<a href="http://sourceforge.net/apps/mantisbt/openpetraorg/view.php?id=149">Bug 149</a>). This screen does not give much benefit yet, since the contacts cannot be entered in OpenPetra yet.</li>
+<li>Disabled the option to create PERSON records. For the moment, please only create FAMILY records. We are working to find an easier way of dealing with partners.</li>
+<li>GL: Analysis Attributes can be added to an account and to each transaction towards that account.</li>
+<li>Import key ministries (special partners of class UNIT). see the sample file in C:\Program Files\OpenPetra.org\demo30\partners\SampleFilePartnerImport.yml</li>
+<li>Gift batch screen is now able to process gifts to key ministries/projects.</li>
+<li>Exporting of Gift batches.</li>
+</ul>
+
+<h3>0.2.4: 28. September 2010</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<ul>
+<li>Fehler behoben, der das &Ouml;ffnen des Spendenfensters verhindert hat und auch das Ver&auml;ndern des eigenen Passworts (<a href="http://sourceforge.net/apps/mantisbt/openpetraorg/view.php?id=136">Bug 136</a>).</li>
+<li>Fehler beim Exportieren und Importieren der kompletten Datenbank behoben (<a href="http://sourceforge.net/apps/mantisbt/openpetraorg/view.php?id=139">Bug 139</a>).</li>
+<li>Ein Benutzerzugang wird jetzt nach zu vielen fehlgeschlagenen Passworteingaben deaktiviert (<a href="http://sourceforge.net/apps/mantisbt/openpetraorg/view.php?id=137">Bug 137</a>).</li>
+<li>Benutzerdefinierte Voreinstellungen f&uuml;r die Berichte werden jetzt im Benutzerverzeichnis gespeichert, und die vorgegebenen Standardeinstellungen werden zentral im Programme Verzeichnis verwaltet.</li>
+<li>Exportieren von GL Batches ist jetzt implementiert. Muss noch getestet werden.</li>
+</ul>
+
+<h3>0.2: 9. September 2010</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<ul>
+<li>Viele Fenster zum Bearbeiten von oft verwendeten Listen wurden hinzugef&uuml;gt, die meisten wurden von Freiwilligen entwickelt! Mit diesen Fenstern kann der Benutzer die Inhalte der Auswahlfelder bearbeiten, zum Beispiel Berufsbezeichnungen usw.</li>
+<li>Es gibt viele neue Berichte f&uuml;r das Konferenzmodul, das Partner und das Finanzmodul. Manche k&ouml;nnen noch nicht richtig genutzt werden, weil man die Daten noch gar nicht eingeben kann. Aber manche B&uuml;ros, die bestehende Datenbanken von Petra 2.x benutzen, k&ouml;nnen mit den Berichten schon was anfangen.</li>
+<li>Ein neuer Bericht wurde f&uuml;r eine kleine Hilfsorganisation in England hinzugef&uuml;gt: Man kann jetzt sich die Adressen von allen Partnern ausgeben lassen, die mit bestimmten Attribute markiert worden sind, z.B. Spender, "Bekommt Newsletter", Bewerber.</li>
+<li>Viel Arbeit wurde in den Bildschirm f&uuml;r das Bearbeiten der Finanzbuchungen gesteckt: Man kann jetzt ungebuchte Buchungen verwerfen, ungebuchte Transaktionen l&ouml;schen, und ganze Sammlungen von Buchungen aus CSV Dateien importieren. Ausserdem werden die Summen von Haben und Soll im oberen Teil des Fensters angezeigt, und man kann die Buchungen filtern, damit man zum Beispiel nur die gebuchten oder nur die zu buchenden Elemente sieht.</li>
+<li>Einige Fehler mit dem Oberfl&auml;chenelement zur Auswahl von Listenelementen wurde behoben, und auch mit dem Element zur Anzeige von Listen welches auf vielen Fenstern zum Einsatz kommt.</li>
+<li>Symbolbilder erscheinen jetzt wieder mit transparentem Hintergrund.</li>
+<li>Das System f&uuml;r die &Uuml;berwachung der Zugriffsberechtigung wurde jetzt eingebaut, das bedeutet dass die Module inaktiv dargestellt werden, zu denen der Benutzer keinen Zugang hat.</li>
+<li>Der voreingestellte DEMO Benutzer hat keine SYSADMIN Rechte mehr, das heisst um neue Benutzer anzulegen, muss man mit dem Benutzer SYSADMIN und dem Passwort CHANGEME sich anmelden (WICHTIG: alle Buchstaben in CHANGEME m&uuml;ssen Gro&szlig; geschrieben werden!). Bei tats&auml;chlichem Einsatz mit echten Daten ist es unbedingt wichtig, dass Sie das Passwort f&uuml;r den SYSADMIN Benutzer ver&auml;ndern, und einen eigenen neuen Benutzer mit den ben&ouml;tigten Rechten anlegen, und den DEMO Benutzer deaktivieren!</li>
+<li>Die Einzelplatzversion von OpenPetra erlaubt jetzt den parallelen Betrieb verschiedener Datenbanken. Falls Sie den voreingestellten Gruppennamen verwenden, sollte alles so bleiben wie gehabt. Falls Sie OpenPetra in einer anderen Gruppe im Startmen&uuml; installiert haben, beachten Sie bitte dass die bisher genutzte Datenbank wohl noch in C:\Dokumente und Einstellungen\{Ihr Windows Benutzername}\Anwendungsdaten\OpenPetra.org\db30 liegt. Sie sollten die Datei petra.db von dort nach C:\Dokumente und Einstellungen\{Ihr Windows Benutzername}\Anwendungsdaten\{Your selected Groupname}\db30 kopieren.</li>
+</ul>
+
+<h3>0.1: 19. Juni 2010</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<ul>
+<li>Diese Version stellt den Wechsel von Pre-Alpha Status auf Alpha dar. Das bedeutet, dass diese Version von OpenPetra schon recht deutlich zeigt, was OpenPetra alles kann.
+Es gibt auch ein
+<a href="http://sourceforge.net/apps/mediawiki/openpetraorg/index.php?title=Basic_Tutorial">englisches Tutorial mit Beispieldaten im OpenPetra-Wiki</a>,
+anhand dessen man die M&ouml;glichkeiten von OpenPetra 0.1 erkunden kann.
+Wir m&uuml;ssen von einem produktiven Einsatz noch abraten, wir ermutigen Sie aber zum gr&uuml;ndlichen Erkunden der Funktionen von OpenPetra.</li>
+<li>Man kann jetzt neue Typen anlegen, die man dann f&uuml;r das Kategorisieren von Partnern benutzen kann.</li>
+<li>Gro&szlig;e Verbesserungen am Partner Bildschirm. Man kann jetzt Familien, Einzelpersonen und Organisationen anlegen und bearbeiten.</li>
+<li>Ab jetzt gibt es wirklich sichere Verschl&uuml;sselung mit einem Schl&uuml;sselpaar bestehend aus einem &ouml;ffentlichem und einem geheimem Schl&uuml;ssel. Bisher wurde nur mit einem einzigen geheimem Schl&uuml;ssel gearbeitet, der sowohl dem Client als auch dem Server bekannt sein musste.</li>
+</ul>
+
+<h3>0.0.15.0: 02. Juni 2010</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+<ul>
+<li>Man kann jetzt neue Hauptb&uuml;cher anlegen. Alle zur Verf&uuml;gung stehenden Hauptb&uuml;cher werden automatisch im Navigationsmen&uuml; angezeigt.</li>
+<li>Importieren von Partnerdaten aus CSV Dateien: das hilft beim Importieren von Adressen aus anderen Quellen. Man muss jede Adresse best&auml;tigen, und das System zeigt an falls ein Partner schon in der Datenbank existiert.</li>
+<li>Der Serienbrief f&uuml;r Erstspender ist jetzt Teil von OpenPetra.</li>
+<li>Beim Verschicken von Serienbriefen kann man jetzt alle Partnerschl&uuml;ssel von Empf&auml;ngern des Serienbriefes in einem Extrakt sichern. Ausserdem kann man den Serienbrief in der Kontakthistorie jedes Empf&auml;ngers vermerken.</li>
+<li>Es gibt jetzt einen Suchbildschirm f&uuml;r die Kontakthistorie aller Partner, und dort kann man auch Eintr&auml;ge l&ouml;schen, um zum Beispiel Fehleingaben r&uuml;ckg&auml;ngig zu machen. Die Kontakthistorie wird auch bald Teil des Hauptpartnerbildschirms sein.</li>
+<li>Das Navigationsmen&uuml; wurde aufger&auml;umt, es gibt keinen Demobereich mehr, da die richtigen Module mittlerweile schon viele funktionierende Eintr&auml;ge haben.</li>
+<li>Benutzerverwaltung: Benutzer erzeugen, Passw&ouml;rter &auml;ndern, Zuweisung von Zugriffsrechten (Zugriffsrechte werden momentan noch nicht angewandt).</li>
+<li>Wir haben einige neue Berichte f&uuml;r Partner und Adressen eingef&uuml;gt: Kurzer Adressenbericht, Kurzer Bericht &uuml;ber Stiftungen, Bericht &uuml;ber unterst&uuml;tzende Kirchen, Bericht &uuml;ber g&uuml;ltige Bankkonten, Statistik von Abonnements, Massenbericht von Adressen</li>
+<li>Fehler behoben, damit OpenPetra nicht geschlossen werden kann, solange noch Fenster mit ungespeicherten &Auml;nderungen offen sind.</li>
+<li>Wir haben ein paar Beispieldateien zum Installationspaket hinzugef&uuml;gt, mit denen Sie experimentieren k&ouml;nnen, und eine leere Datenbankdatei, mit der Sie ihre eigene Produktiv-Datenbank starten k&ouml;nnen.</li>
+<li>Bisher wurden beim Update auf eine neue Version die SQLite Datenbank gesichert, und dann durch eine frische neue Version der Demo Datenbank ersetzt.
+Ab dem Installieren dieser Version wird die existierende Datenbank beibehalten und automatisch auf den neuesten Stand gebracht, damit Sie weiter mit Ihren Daten arbeiten k&ouml;nnen.</li>
+</ul>
+
+<h3>0.0.14.0: 03. April 2010</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Der Bildschirm f&uuml;r die Spendenbuchhaltung wurde verbessert, und unterst&uuml;tzt jetzt auch Mehrfachspenden, d.h. der Spender m&ouml;chte dass die Spende f&uuml;r verschiedene Verwendungszwecke aufgeteilt wird<br/>
+Man kann jetzt auch MT940 Bankausz&uuml;ge importieren. Momentan k&ouml;nnen nur Dateien, die nur einen einzigen Auszug enthalten, importiert werden.<br/>
+Die Berichte haben in den vorherigen Versionen keine Daten mehr angezeigt, und funktionieren jetzt wieder.<br/>
+Die Darstellung der Betr&auml;ge und Datumsangaben in den Tabellen sehen jetzt besser aus.<br/>
+Man kann jetzt noch besser eine OpenPetra Datenbank in Postgresql importieren. Bisher gab es Probleme bei Sequenzen, die jetzt behoben sind.<br/>
+
+<h3>0.0.13.0: 08 M&auml;rz 2010</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Einige Fehler beim Importieren und Exportieren der Daten wurden behoben, unter anderem werden jetzt die Sequenzwert korrekt verarbeitet.<br/>
+Das Bearbeiten von Spenden sollte jetzt funktionieren. Bisher wurde der Spender nicht gespeichert.<br/>
+Das Installieren des Clients sollte jetzt wieder funktionieren.<br/>
+Optional: Das Anmeldefenster kann sich jetzt den Benutzernamen merken.<br/>
+
+<h3>0.0.12.0: 15. Februar 2010</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+OpenPetra funktioniert jetzt auch mit Mysql, so wie es schon mit Postgresql und Sqlite funktioniert.<br/>
+Der Remote Client installiert jetzt auch auf Windows Vista, und das automatische Updaten funktioniert auch dort (Windows 7 sollte auch tun).<br/>
+Die OpenPetra Datenbank kann jetzt als Textdatei exportiert werden, und in eine andere OpenPetra Instanz installiert werden. Das erm&ouml;glicht die einfache Mitnahme von Daten von einer Einzelplatzversion auf eine gehostete Version, oder zur Migration zwischen unterschiedlichen Datenbanktypen.<br/>
+Das automatische Wiedererkennen von Spenden funktioniert jetzt.<br/>
+Man kann jetzt Spendenbescheinigungen (ein Serienbrief) drucken.<br/>
+
+<h3>0.0.11.0: 11. Januar 2010</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Mit dieser Version kann man bereits existierende Stammdaten aus einer Yml Datei importieren.<br/>
+Das automatische Aktualisieren der Clients funktioniert jetzt.<br/>
+Die vernetzte Version von OpenPetra benutzt jetzt verschl&uuml;sselte Kommunikation, um die Sicherheit zu gew&auml;hrleisten.<br/>
+Es ist jetzt m&ouml;glich, ein Plugin zu entwickeln, um die Benutzerauthentifizierung mit LDAP oder phpBB oder einem anderen Dienst durchzuf&uuml;hren.<br/>
+
+<h3>0.0.10.0: 13. November 2009</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Kontohierarchie kann jetzt importiert werden. Neue Konten werden automatisch erzeugt. Dadurch wird die Anpassung von OpenPetra an die spezifischen Bed&uuml;rfnisse einer Organisation vereinfacht.<br/>
+Das Importieren von Wechselkursen f&uur; Fremdw&auml;hrungen funktioneirt jetzt. Dadurch wird es m&ouml;glich, Berichte auch in einer internationalen W&auml;hrung anzuzeigen, damit sie von den Managern in der Zentrale einfacher verstanden werden k&ouml;nnen.<br/>
+Berichte f&uuml;r Einkommen/Ausgaben und Bilanzen und Auflistung der detailierten Geldbewegungen funktionierten jetzt und wurden auch soweit getested. Nat&uuml;rlich k&ouml;nnen sie noch weiter verbessert werden, z.B. dass der Benutzer selber die Spaltenanordnung und -inhalte bestimmen kann, und dass &uuml;ber ein Quartal berichtet werden kann, usw.<br/>
+Finanztransaktionen k&ouml;nnen jetzt aus Excel via CSV Dateien importiert werden, in denen jede Spalte f&uuml;r eine bestimmte Kategorie steht, und wenn ein Wert in dieser Spalte eingetragen ist, wird er auf das entsprechende Konto gebucht. Eine Datendefinitionsdatei enth&auml;lt Hinweise auf das Datumsformat und das Format der Betr&auml;ge, und die Kontennamen pro Spalte. Dank dieser Funktionalit&auml;t kann das Importieren leicht an andere Umgebungen angepasst werden. Im vorliegenden Fall benutzen wir es, um bestehende Abrechnungen eines anderen B&uuml;ros zu importieren.<br/>
+
+<h3>0.0.9.0: 12. Oktober 2009</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Rechnungen k&ouml;nnen jetzt bezahlt werden, und sie werden gleich in GL verbucht. Es geht leider noch nicht, Rechnungen nur teilweise zu bezahlen, und Zahlungen in Fremdw&auml;hrungen werden auch noch nicht unterst&uuml;tzt.<br/>
+Die Hierarchie der Kontenbl&auml;tter kann jetzt in einem Baum angezeigt werden, und neue Konten k&ouml;nnen hinzugef&uuml;gt werden. Man kann noch nicht die Konten innerhalb der Hierarchie verschieben, und man kann auch noch keine Konten l&ouml;schen.<br/>
+Man kann die Kontenhierarchie jetzt in die Dateiformate CSV, YML und XML exportieren. Dadurch wird es m&ouml;glich, die Kontenhierarchie auch ausserhalb von OpenPetra zu bearbeiten, und zwischen OpenPetra System auszutauschen. Das Importieren dieser Dateien funktioniert allerdings noch nicht.<br/>
+
+<h3>0.0.8.0: 21. September 2009</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+AP Rechnungen k&ouml;nnen jetzt verbucht werden.<br/>
+Das neue Navigationssystem funktioniert im Prinzip, obwohl es bald noch erweitert werden sollte, damit die Benutzer es an eigene Bed&uuml;rfnisse anpassen k&ouml;nnen, und auch Suchboxen sollen das Suchen stark vereinfachen.<br/>
+Ein neuer Demo Ordner wurde im neuen Navigationssystem erstellt, damit man die funktionierenden Teile von OpenPetra schnell erreichen kann.<br/>
+Das klassische Navigationssystem mit den tief verzweigten Men&uuml;strukturen ist immer noch verf&uuml;gbar, es ist &uuml;ber einen Befehl in der Symbolleiste zu erreichen.
+
+<h3>0.0.7.0: 05. September 2009</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Ein paar Fehler in der vorherigen Version im Partner Edit und Partner Find Bildschirm wurden behoben.<br/>
+Diese Bildschirme sollten jetzt auch auf Linux und Mac besser funktionieren.<br/>
+Man kann jetzt GL Batches buchen!<br/>
+Es gibt jetzt den Account Details Bericht, mit dem man die gebuchten Transaktionen und neuen Bilanzen pr&uuml;fen kann.<br/>
+
+<h3>0.0.6.0: 19. August 2009</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Der Bildschirm zum Verwalten aller Gesch&auml;ftsvorg&auml;nge sieht jetzt schon recht gut aus, und man kann Batches, Journale und die einzelnen
+Gesch&auml;ftsvorg&auml;nge speichern. Man kann Kostenstellen und Konten f&uuml;r die Gesch&auml;ftsvorg&auml;nge ausw&auml;hlen.
+<br/><br/>
+Ein paar Verbesserungen im Accounts Payable Module sollten die Fehlermeldungen der vorherigen Version beheben.
+
+<h3>0.0.5.0: 25. Juli 2009</h3>
+Bitte beachten Sie auch die vorherigen Notizen, die unten zu finden sind!<br/>
+<br/>
+Jetzt kann man schon Rechnungen im Accounts Payable Modul anlegen und Rechnungsdetails hinzuf&uuml;gen, und es alles speichern.
+Dann kann man nach dem Lieferanten suchen, und die Rechnungen und Gutschriften des Lieferanten &ouml;ffnen.
+<br/>
+Es gibt eine erste Vorschau des Bildschirms f&uuml;r allgemeine Zahlungsvorg&auml;nge im Hauptbuch. Der Bildschirm hat aber noch keine Funktionalit&auml;t.
+<br/>
+Ausserdem gibt es eine erste Vorschau von einfachen Wartungsbildschirmen, zum Beispiel f&uuml;r das Verwalten der W&auml;hrungen und der Wechselkurse. Auch hier gibt es noch keine Funktionalit&auml;t.
+<br/><br/>
+Der Sinn dieser Vorschaubildschirme ist es, zu zeigen, wie einfach man mit dem Scaffolding neue Bildschirme anlegen kann. Im Accounts Payable Modul ist es so ausprogrammiert, dass die Funktionalit&auml;t
+schon weitestgehend automatisch erzeugt wird, und nur kleine Sonderf&auml;lle ausprogrammiert werden m&uuml;ssen.
+
+<h3>0.0.4.0: 13. Juli 2009</h3>
+Die wichtigste Neuerung ist im Rechnungssystem, dass man Lieferanten anlegen kann. Um dies zu testen, muss man erst im Partnermodul einen Partner vom Typ Organisation anlegen,
+und dann ins Finanzmodul gehen, und dort Accounts Payable w&auml;hlen, und dort auf New Supplier klicken.
+Man kann den Lieferanten speichern, und auch wieder danach suchen, mit Namen oder Partnerschl&uuml;ssel. Das Suchfenster merkt sich die letzten 30 Suchbegriffe und erg&auml;nzt automatisch.
+<br/>
+Vorschaufenster vom Bildschirm zum Bearbeiten von Rechnungen und der Liste aller Rechnungen eines Lieferanten sind ebenfalls zu sehen, aber haben noch keine Funktionalit&auml;t.
+<br/><br/>
+Einige kleinere Fehler wurde korrigiert, z.B. im Partner Edit Bildschirm wurde der Fehler behoben, wenn &Auml;nderungen beim Schliessen des Fenster gespeichert werden sollen.
+Im Partner Find Bildschirm kann man direkt mit der Return Taste die Suche ausl&ouml;sen.
+<br/><br/>
+In dieser Version sollte auch wieder die PostgreSQL Unterst&uuml;tzung laufen, die ist in 0.0.3 kaputt gegangen.
+<br/><br/>
+Diese Version gibt es nicht nur als Windows Einzelplatzversion, sondern es gibt jetzt auch eine Version des OpenPetra Servers f&uuml;r Linux.
+Im Moment funktioniert diese Version nur mit PostgreSQL. Siehe auch die Datei INSTALL im tar.gz Archiv.
+Weiterhin gibt es jetzt ein Remote Client Installationsprogramm, damit man einen OpenPetra Client installieren kann, der sich mit einem OpenPetra Server auf Linux verbindet.
+
+<h3>0.0.3.0: 20. Juni 2009</h3>
+Eine gro&szlig;e Neuigkeit ist, dass &Uuml;bersetzungen jetzt funktionieren, und der Petra Client wird jede Sprachdatei die in diesem Verzeichnis, z.B. C:\Programme\OpenPetra.org\bin30\locale\de\LC_MESSAGES\i18n.mo existiert, benutzen.
+Man muss evtl. die Umgebungsvariable LANGUAGE unter Windows Systemeinstellungen entsprechend setzen, um eine andere Sprache nutzen zu k&ouml;nnen.
+Mithilfe beim &Uuml;bersetzen ist erw&uuml;nscht! Bitte folgen Sie im <a href="http://sourceforge.net/apps/mediawiki/openpetraorg/index.php?title=HowTo_help_with_Translation">Wiki den entsprechenden Anleitungen</a>!
+<br/><br/>
+Das Finanzmodul kann man jetzt &ouml;ffnen, und 2 Vorschaubildschirme k&ouml;nnen ge&ouml;ffnet werden: Einmal zum Zuweisen von Spenden aus Kontoausz&uuml;gen, und ein anderer ist der Hauptbildschirm des Account Payable, zum Bezahlen von Rechnungen.
+<br/><br/>
+Es wird wohl sein, dass Ihre Datenbank ersetzt werden wird, aber die gesicherte alte Datenbank ist immer noch hier: z.B. eg. C:\Dokumente und Einstellungen\[Benutzername]\Anwendungsdaten\OpenPetra.org\db30\petra.db.1.bak;
+Wir hoffen, bald ein richtiges Updatesystem bereitstellen zu k&ouml;nnen.
+<br/><br/>
+Einige der Probleme der vorherigen Versionen wurden behoben, z.b. das Datum beim St&auml;dtebericht sollte jetzt behoben sein.
+
+<h3>0.0.2.0: 13 Juni 2009</h3>
+Die wichtigste Neuerung ist der &quot;Partner By City&quot; Bericht. Um diesen Bericht auszuprobieren,
+einfach ein paar Partner im Partner Edit Bildschirm anlegen, und dann den Bericht auf diesen St&auml;dten laufen lassen.
+Im Moment funktioniert der Bericht nur f&uuml;r Partner vom Typ FAMILY; und es scheint auch ein Fehler zu existieren:
+Adressen, die erst ab heute g&uuml;ltig sind, werden im Bericht nicht angezeigt; L&ouml;sung: einfach das Datum bei der Adresse auf gestern oder fr&uuml;her setzen!
+<br/><br/>
+Eine weitere hilfreiche Erweiterung ist die untere Leiste auf jedem Bildschirm, die einen Hilfetext f&uuml;r das momentan selektierte Feld anzeigt.
+Dies kann zum Beispiel auf dem Partner Edit Bildschirm sehr hilfreich sein, damit man weiss welche Bedeutung die verschiedenen Felder haben.
+
+<h3>0.0.1.3: 1 Juni 2009</h3>
+Dies ist die erste Ver&ouml;ffentlichung von OpenPetra.org.<br/>
+Es gibt momentan nur eine Einzelplatzversion, die SQLite benutzt, um die Installation so einfach wie m&ouml;glich zu gestalten.<br/>
+<br/>
+Man meldet sich mit dem Benutzernamen <b>demo</b> an, und das Passwort ist ebenfalls <b>demo</b>.<br/>
+<br/>
+Es gibt momentan nur 2 Bildschirme, die tats&auml;chlich funktionieren:<br/>
+Gehen Sie in das Partner Modul, und im Men&uuml; w&auml;hlen Sie &quot;Partner&quot; / &quot;Neuer Partner&quot;.<br/>
+Dort k&ouml;nnen Sie einen neuen Partner anlegen, eine Adresse hinzuf&uuml;gen, und den Partner speichern.<br/>
+<br/>
+Dann k&ouml;nnen Sie auf dem Hauptschirm vom Partner Modul im Men&uuml; &quot;Partner&quot; - &quot;Suchen & Bearbeiten&quot; w&auml;hlen.<br/>
+Suchen Sie nach dem Partner, den Sie vorhin angelegt haben.<br/>
+Wenn Sie auf das Ergebnis doppelklicken, wird der Partner wieder zum Bearbeiten ge&ouml;ffnet.<br/>
+</div>
+</body>
+</html>

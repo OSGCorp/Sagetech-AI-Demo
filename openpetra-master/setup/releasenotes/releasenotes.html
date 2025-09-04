@@ -1,0 +1,1239 @@
+<html>
+<head>
+<title>OpenPetra.org Release Notes</title>
+
+<style>
+#main {max-width: 800px; margin-left: auto; margin-right: auto}
+</style>
+
+</head>
+<body>
+
+<div id="main">
+<h2>Monthly Releases of OpenPetra</h2>
+
+<h3>Release 2023.02: February 27th, 2023</h3>
+
+<p>This release includes the work since July 2022.<br/>
+Most significant changes have been to Contact screens, donations and memberships.
+</p>
+
+<p>So here is the list of changes for this release:</p>
+
+Contacts:
+<ul>
+<li>Translate Partner Classes</li>
+<li>Contact Find: confirm filter selection with return key</li>
+<li>Contact Find: Find Contacts by IBAN</li>
+<li>New Contact: valid address tick was not saved after confirmation dialog</li>
+<li>Contact Edit: display tabs more prominent</li>
+<li>Contact Edit: Show donations of a contact</li>
+<li>Export E-Mail Addresses from Excel to Webmailer with comma as separator</li>
+<li>Export Addresslists to Excel: fix column and row positions for mail merge</li>
+<li>Properly display publication names or channel codes if they have no translation</li>
+</ul>
+
+Donations:
+<ul>
+<li>Send Annual Receipts optionally via E-Mail</li>
+<li>Include a marker on the annual receipt if a newsletter should be added in the post</li>
+<li>Annual receipts didn't print the logo and the signature</li>
+<li>browser of motivation details should show details of account and costcentre when hovering with mouse</li>
+<li>bankimport: display transactions after import</li>
+<li>bankimport: CSV import should process columns for IBAN and BIC</li>
+</ul>
+
+
+Sponsorships:
+<ul>
+<li>check imported and matched bank statement against sponsorships</li>
+<li>Sponsorship: cannot open and close multiple sponsorship dialogs</li>
+</ul>
+
+
+Membership:
+<ul>
+<li>Manage memberships</li>
+</ul>
+
+System:
+<ul>
+<li>backup of mysql database blocked the whole server</li>
+</ul>
+
+
+<p>For more details about the issues solved in this release, visit the 
+    <a href="https://github.com/openpetra/openpetra/milestone/19?closed=1" rel=" nofollow ugc" target="_blank">Milestone at Github for release 2023.02</a>!</p>
+
+
+<h3>Release 2022.07: July 29th, 2022</h3>
+
+<p>This release includes the work since October 2021.<br/>
+There has been quite some work in the background.<br/>
+Most significant changes have been improvements to security, and the new feature of recurring donations and SEPA Direct Debit support.
+</p>
+
+<p>So here is the list of changes for this release:</p>
+
+Security related:
+<ul>
+    <li>Avoid Cross-site scripting by validating all user input from the web</li>
+    <li>If user changes the password then all other sessions must be invalidated</li>
+    <li>Force SYSADMIN to change the password in a fresh system</li>
+</ul>
+
+Donation Module:
+<ul>
+    <li>Recurring Donation Batches for member fees, with export of SEPA Direct Debit file and submission of Donation Batch</li>
+    <li>Do not print a formal receipt for other charities that have donated to our charity</li>
+    <li>There was always an empty page at the end of the receipts</li>
+</ul>
+
+Accounting Module:
+<ul>
+    <li>Delete Ledger: this was broken and now works again</li>
+    <li>Import of skr49 account hierarchy failed because of security check</li>
+</ul>
+
+General UI issues:
+<ul>
+    <li>When an error or success message is displayed at the top of the screen the focus was for the full width</li>
+    <li>switching between different forms did not work properly</li>
+    <li>hide wait message after exporting database as yml.gz file</li>
+    <li>special url or parameter to show password reset form</li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the 
+    <a href="https://github.com/openpetra/openpetra/milestone/18?closed=1" rel=" nofollow ugc" target="_blank">Milestone at Github for release 2022.07</a>!</p>
+
+
+<h3>Release 2021.10: October 26th, 2021</h3>
+
+<p>This release includes the work since May.<br/>
+A lot of work was done behind the scenes, to move the hosting of OpenPetra.com from virtual machines to shared hosting at https://hostsharing.net.<br/>
+Other changes happened in the setup of a ledger, for various scenarios.</p>
+
+<p>So here is the list of changes for this release:</p>
+
+Contact Module:
+<ul>
+<li>Search for Contacts with multiple parts of the name</li>
+</ul>
+
+Accounting Module:
+<ul>
+<li>Creating new Ledger: International Currency should be set properly</li>
+<li>add german account hierarchy example</li>
+<li>Import of cost centre yml file: delete unused cost centres</li>
+<li>GL Batch: adding new GL Batch with empty debit or credit will show server error</li>
+<li>Debit and Credit should always be in this order</li>
+<li>GL Batch: Import and Export of transactions</li>
+<li>Exporting GL Batch to xlsx: decimal numbers exported as strings</li>
+</ul>
+
+Donation Module:
+<ul>
+<li>display error message if donation batch cannot be opened because there are no motivation details</li>
+</ul>
+
+Sponsored children:
+<ul>
+<li>Sponsorship: Edit form only shows only one sponsor even if there are multiple sponsors for this child</li>
+</ul>
+
+Hosting OpenPetra:
+<ul>
+<li>empty instances have an error each morning in the log because of failing ExecuteScalar for SiteKey</li>
+<li>Only run the hourly backup if the instance is actually being used</li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the 
+<a href="https://github.com/openpetra/openpetra/milestone/17?closed=1" rel=" nofollow ugc">Milestone at Github for release 2021.10</a>!</p>
+
+
+<h3>Release 2021.04: April 30th, 2021</h3>
+
+<p>This release includes the work of two months, March and April.
+Most changes have happened in the area of importing bank statements, we now support the CAMT and MT940 file formats.</p>
+
+<p>So here is the list of changes for this release:</p>
+
+Contact Module:
+<ul>
+<li>Find Contact: Option to display Contact Shortname in Readable Order in Result List</li>
+<li>Contact Edit: Set SendMail flag for addresses automatically</li>
+<li>Contact Edit: Bugfix: Modifying bank account might be overwritten</li>
+<li>Contact Import: Column names should be case insensitive</li>
+</ul>
+
+Accounting and Donation module:
+<ul>
+<li>GL Batch and Gift Batch: Saving with an empty date causes an error refering to the server log file</li>
+<li>Use a proper date for reversing a GL batch</li>
+<li>BankImport: Set Default Motivation Detail for new matches</li>
+<li>BankImport: Import Bank Statements from CAMT XML file, matching by bank account number</li>
+<li>BankImport: Import MT940 files</li>
+<li>BankImport: Allow to delete imported statements</li>
+</ul>
+
+Sponsored children:
+<ul>
+<li>Bugfix: cannot open sponsorship if comment is null.</li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the 
+<a href="https://github.com/openpetra/openpetra/milestone/16?closed=1" rel=" nofollow ugc">Milestone at Github for release 2021.04</a>!</p>
+
+<h3>Release 2021.02: March 6th, 2021</h3>
+
+<p>This release includes the work of two months, January and February. A lot has happened in the initial import of contacts, and also for bank accounts of contacts.</p>
+
+<p>So here is the list of changes for this release:</p>
+
+Contact Module:
+<ul>
+<li>Edit Contact: Maintain one or multiple bank accounts per contact.</li>
+<li>Edit contact: fix a bug with consent error, if only city or country code is changed.</li>
+<li>Edit contact: Allow manual adding of historic consent to contact. Add consent if there was no consent stored before.</li>
+<li>Find contact: fixed bug: typing not a number in contact key search will return hint to server log</li>
+<li>Find contact: the filter for Contact Type should be empty by default</li>
+<li>Import Contacts: can now import bank accounts (IBAN) as well.</li>
+<li>Import Contacts: display error if Country Code is wrong</li>
+<li>Import Contacts: there is now an option to delete all contacts, to reset the database in that regard.</li>
+<li>Import Contacts: import with consent</li>
+<li>Import Contacts: import with categories</li>
+<li>Import Contacts: fail if contact exists already with the same name and address or email address</li>
+<li>Import Contacts: support from Microsoft Excel (xlsx) and LibreOffice (ods) files. That is more stable than the existing CSV import.</li>
+<li>Import Contacts: complain if column captions cannot be interpreted</li>
+<li>A contact can now be deleted, if it does not have donations associated.</li>
+</ul>
+
+Accounting module:
+<ul>
+<li>Fixed a bug with creating a new ledger.</li>
+</ul>
+
+Donation module:
+<ul>
+<li>New option: Extended the template to print questionnaire for consent on the annual receipt.</li>
+<li>Report for Newsletter for people without annual receipt must consider consent.</li>
+<li>Donation Receipts: fixed bug: Error when trying to print the receipt</li>
+</ul>
+
+Sponsored children:
+<ul>
+<li>Print a list of sponsored children.</li>
+</ul>
+
+General improvements:
+<ul>
+<li>Pin an error message in the js client, and download long error messages as text file.</li>
+</ul>
+
+Technical improvements:
+<ul>
+<li>Fix issues with too many database connections, closing connections when not needed and clearing the pool automatically.</li>
+<li>Drop unused code, for canceling database queries.</li>
+<li>Use SharpZipLib nuget package instead of ICSharpCode.SharpZipLib.dll</li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the 
+<a href="https://github.com/openpetra/openpetra/milestone/15?closed=1" rel=" nofollow ugc">Milestone at Github for release 2021.02</a>!</p>
+
+<h3>Release 2020.12: January 2nd, 2021</h3>
+
+<p>This release includes the work of two months, November and December. A lot has happened in the sponsorship module. But also other areas got fixes and new features, and technical improvements have been implemented as well.</p>
+
+<p>So here is the list of changes for this release:</p>
+
+Sponsorship module:
+<ul>
+<li>Make sure that Reminders for Sponsorship work</li>
+<li>Reminder: use template files for emails</li>
+<li>Sponsorship: show future sponsors of children in the search result</li>
+<li>Sponsorship: Filter by firstname of child if there is an empty family name</li>
+<li>Filter sponsored children by the attribute they have no sponsor</li>
+<li>Filter sponsorships by sponsor</li>
+<li>sort sponsorship by child, or by admin</li>
+<li>Upload of image of child does not show error</li>
+<li>Deletion of sponsored children</li>
+<li>Display address and contact details of sponsor</li>
+<li>Sponsorship: Preview Sponsorship in List with contact details of donor</li>
+<li>Partner Types: edit flag for active type and type category (important for status of sponsored child)</li>
+</ul>
+
+Other features and fixes:
+<ul>
+<li>Contact Find: filter by contact key</li>
+<li>Limit Consent Channel and Purpose Edit to permission PTNRADMIN</li>
+<li>Empty contact: fix error messages when trying to modify; not asking for consent</li>
+<li>Gift Receipting: Store HTML Template and Logo as default</li>
+<li>Type Ahead for Account Detail Report and Trial Balance Report</li>
+<li>Restoring database (loadymlgz) sets the database version but does not run the upgrade scripts</li>
+<li>New installation of instance should not change the database version without running the db updates</li>
+</ul>
+
+Technical improvements:
+<ul>
+<li>Completely drop support for SQLite from the code</li>
+<li>Support for MySQL 8</li>
+<li>Use MysqlConnector instead of Mysql.Data</li>
+<li>Update NUnit to latest version 3.12 and use nuget packages</li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the 
+<a href="https://github.com/openpetra/openpetra/milestone/14?closed=1" 
+rel=" nofollow ugc">Milestone at Github for release 2020.12</a>!</p>
+
+<h3>Release 2020.10: November 4th, 2020</h3>
+
+<p>This release has improvements to the Contact Find form, the management of users, GL Batch and Donations Batch, and Sponsorship module.</p>
+
+<p>So here is the list of changes for this release:</p>
+
+<ul>
+<li>Improvements to Contact List: option for sorting of search result, and displaying more results than 25.</li>
+<li>Fixed: Consent button on Contact Edit has misleading label</li>
+<li>Various fixes for sponsorship module: tooltips for reminders and comments in the list,
+children categories are not hardcoded anymore, fix permissions for users that don't have FINANCE permissions, 
+filter child's name with fragments of the name, show current donors in list of children.</li>
+<li>Fixed: Manage Users: cannot save edited user</li>
+<li>Various fixes for user management form: show last login, and fix refresh after changing a user.</li>
+<li>GL Batch: show names of accounts and cost centres in the list of transactions</li>
+<li>Test functionality for posting a donation batch: show the sum of the amounts per motivation detail.</li>
+<li>Fixed: After editing the gift batch, the total is not displayed anymore in the list</li>
+<li>Fixed: Closing the gift transaction list in gift batch screen does not work</li>
+<li>When exporting a single gift batch, don't consider the state of the batch. This means you can now export cancelled batches.</li>
+<li>Bankimport: when creating a gift batch display meaningful error message on missing motivation detail</li>
+<li>Fixed: Edit Gift Transaction: does not properly show entry date</li>
+<li>Fixed: PostgreSQL: cannot edit contact in Web UI</li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the 
+<a href="https://github.com/openpetra/openpetra/milestone/13?closed=1" 
+rel=" nofollow ugc">Milestone at Github for release 2020.10</a>!</p>
+
+
+<h3>Release 2020.09: October 10th, 2020</h3>
+
+<p>There are only small changes in this release.</p>
+
+<p>So here is the list of changes for this release:</p>
+
+<ul>
+<li>New report to list the contacts and their addresses for subscriptions</li>
+<li>Release Notes are not cached across releases anymore</li>
+<li>Month end and Year end now show the dates of the current periods properly</li>
+<li>During fresh installation, a password will be set for the MySQL/MariaDB root user</li>
+<li>Bugfix for forms, select element was not closed properly</li>
+<li>Export of database as yml.gz file now works again</li>
+<li>Bankimport: CAMT: fix issue with trailing EREF+ content which prevented matches</li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the 
+<a href="https://github.com/openpetra/openpetra/milestone/12?closed=1" 
+rel=" nofollow ugc">Milestone at Github for release 2020.09</a>!</p>
+
+
+<h3>Release 2020.06: July 16th, 2020</h3>
+
+<p>The big change in this version is: support for storing consent of contacts to use their address or contact details.</p>
+
+<p>So here is the list of changes for this release:</p>
+
+<ul>
+<li>Support for GDPR / DSGVO</li>
+<li>Cookie OpenPetraSessionID should use Secure or SameSite</li>
+<li>Trial Balance Report in js client Reports</li>
+<li>The tags for sponsorship should not be visible for normal contacts</li>
+<li>user cannot create a new ledger</li>
+<li>demo database for tests must start in the same month</li>
+<li>Ledger Info: show more details about current posting periods</li>
+<li>Default to english Release notes if releasenotes html file not available for current language</li>
+<li>keep only one backup file of database per day</li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the 
+<a href="https://github.com/openpetra/openpetra/milestone/11?closed=1" 
+rel=" nofollow ugc">Milestone at Github for release 2020.06</a>!</p>
+
+<h3>Release 2020.04: May 8th, 2020</h3>
+
+<p>The big changes in this version are: the initial version of the sponsorship module, 
+and improvements to data security.</p>
+
+<p>So here is the list of changes for this release:</p>
+
+<ul>
+<li>Initial version of the sponsorship module: You can maintain 
+children, and assign sponsoring donors to them. You can configure 
+reminders (which don't result in email notifications yet), and you can 
+create notes regarding the school or family situation.</li>
+<li>Guided setup: in the hosted setup, the initial setup does not only 
+configure the SYSADMIN user, but also a non-privileged user. In the 
+manual setup, a dialog is displayed when the SYSADMIN user logs in for 
+the first time, helping to do the initial configuration of the 
+OpenPetra instance.</li>
+<li>Guided setup for ledger: if a user with finance permissions logs 
+in, and there is no ledger yet, then a dialog appears that helps to do 
+the initial configuration of a ledger.</li>
+<li>The publicly available API end points have been reduced, and 
+require more permissions. This will avoid that data can be read by 
+unprivileged users.</li>
+<li>Support for Fedora 32: configuration of MariaDB now works again. 
+Also: CentOS 8 and Ubuntu 20.04 are supported by
+<a href="https://get.openpetra.org">https://get.openpetra.org</a>.</li>
+<li>The testing framework Cypress has been updated to the latest 
+version.</li>
+<li>We now use again Weblate for the translation of the client: <a href="https://hosted.weblate.org/projects/openpetra/js-client">https://hosted.weblate.org/projects/openpetra/js-client</a></li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the 
+<a href="https://github.com/openpetra/openpetra/milestone/10?closed=1" 
+rel=" nofollow ugc">Milestone at Github for release 2020.04</a>!</p>
+
+<h3>Release 2020.03: March 30th, 2020</h3>
+
+<p>We skipped a couple of releases in the past months. New functionality for sponsorship was developed, but it is not part of this release yet.</p>
+
+<p>An important change in this release is how static variables are shared between sessions. That was buggy but has been fixed in this release.</p>
+
+<p>So here is the list of changes for this release:</p>
+
+<ul>
+<li>add norwegian as supported language</li>
+<li>long reports are cut off at some point</li>
+<li>Regression: Printing to PDF does not work anymore</li>
+<li>Print donation receipts only for valid addresses</li>
+<li>Bug in Report "Partner addresses for annual report without donors"</li>
+<li>Motivation Details Selection in Gift Detail and BankImport: single selection for group and detail</li>
+<li>When creating a new ledger, create motivation group DONATIONS</li>
+<li>deadlock on Session clean up</li>
+<li>Issues with static variables shared between threads</li>
+<li>Use MySQL on AppVeyor so that we don't need to support SQLite anymore</li>
+<li>drop support for sqlite</li>
+<li>OdbcParameter Decimal for Int64 slows queries down</li>
+<li>nant generateSolution should remove the Mono dlls and windows dlls</li>
+<li>rewrite configuration files for all instances</li>
+<li>permissions issue with tmp directory for openpetra server script</li>
+<li>About only shows version of tarball, not version of rpm build</li>
+<li>When switching between branches there are issues with asmx files</li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the <a href="https://github.com/openpetra/openpetra/milestone/9?closed=1" rel=" nofollow ugc">Milestone at Github for release 2020.03</a>!</p>
+
+<h3>Release 2019.12: January 6th, 2020</h3>
+
+<p>We skipped a release in December, because quite a lot of refactoring and restructuring has been going on...</p>
+
+<p>We have now a script at <a href="https://getopenpetra.com">getopenpetra.com</a> that helps with setting up a development or testing environment on CentOS 7, Fedora 31, Debian Buster and Ubuntu (Eoan and Bionic). This script is also used for setting up the demo server, and to run all the nightly tests.</p>
+
+<p>Another visible change has been the refactoring of the navigation in the javascript client. It should now be easier to find your way around OpenPetra, and see which actions are available to the user.</p>
+
+<p>So here is the list of changes for this release:</p>
+
+<ul>
+<li>New menu structure and layout: Functionality is not hidden away. New start form.</li>
+<li>Move scripts from OpenPetraScripts/openpetra to openpetra-server.sh</li>
+<li>Support for MariaDB 10 in e.g. Ubuntu Eoan and Fedora 31.</li>
+<li>Fixed Bug: When upgrading many databases on one server, we run out of MySQL connections</li>
+<li>Creating a new ledger has been improved, the user can now immediately start working with the new ledger.</li>
+<li>Improvements to the feature to display the balances before posting a GL batch: display balance for value 0, and display the calculated difference caused by the proposed GL Batch being posted.</li>
+<li>Fixed Bug: Don't allow GL transactions that are beyond the forward posting periods.</li>
+<li>Fixed Bug: GL Batch revert now works again.</li>
+<li>Donation Batch: Adjust only one donation: a new batch for the adjustment will be created.</li>
+<li>A bug was fixed with inactive motivation details causing trouble during donation adjustment.</li>
+</ul>
+
+<p>For more details about the issues solved in this release, visit the <a href="https://github.com/openpetra/openpetra/milestone/7?closed=1" rel=" nofollow ugc">Milestone at Github for release 2019.12</a>!</p>
+
+<h3>Release 2019.10: November 22nd, 2019</h3>
+
+<p>This release was scheduled for the end of October, but better late than never...!</p>
+
+<p>The main new feature in this release is the new optional self service for partners: If you enable this option in the System Settings as user SYSADMIN, then your members or supporters can sign up themselves in OpenPetra, and can enter their contact details themselves! They cannot see any other data, but their own. This could be extended, so if you have interest in this function, please let me know!</p>
+
+<p>So here is the list of changes for this release:</p>
+
+<ul><li>Self Service for Partners: sign up, maintain their own data</li>
+<li>Report "Partner With Categories" now prints the e-mail addresses and phone numbers</li>
+<li>Don't display menu items if the user does not have permission. Previously they were greyed out.</li>
+<li>demo.openpetra.org: make it very clear: no sensitive data. data is reset each night</li>
+<li>demo.openpetra.org: Language switcher is now visual with flags.</li>
+<li>fixed issue with modal dialog if button is clicked twice</li>
+<li>fixed: sometimes the login dialog was not displayed</li></ul>
+
+<p>For more details about the issues solved in this release, visit the <a href="https://github.com/openpetra/openpetra/milestone/6?closed=1" rel=" nofollow ugc">Milestone at Github for release 2019.10</a>!</p>
+
+<h3>Release 2019.09: October 3rd, 2019</h3>
+<p>This release is mainly about multi-tenancy. <br>
+This allows me to host OpenPetra without much cost, because I can serve multiple customers with one Mono service, needing less RAM and CPU. As a result, the free testing period at <a href="https://www.openpetra.com" rel=" nofollow ugc">OpenPetra.com</a> is now <strong>indefinite</strong>! This makes it easier for people outside the SEPA area, to still use OpenPetra, even if we cannot accept payments at this time. Still I would very much like paying customers (from 5 Euro a month), which allows us to grow the service!</p>
+
+<p>Changes in this release:</p>
+
+<ul><li>Allow one Mono process to run for multiple instances. This allows multi-tenancy, with each customer having his own config file and database.</li>
+<li>We needed to redesign the way the reports were calculated, to work without UIConnector and static variables, but per request. New table s_report_result has been added.</li>
+<li>New instances, that are not assigned to customers yet, don't allow login with user SYSADMIN.</li>
+<li>New customers will receive an email notification with their name, with the link to set the password for SYSADMIN. Previously, the text of that email was broken, and without a name of recipient.</li></ul>
+
+<p>For more details about the issues solved in this release, visit the <a href="https://github.com/openpetra/openpetra/milestone/5?closed=1" rel=" nofollow ugc">Milestone at Github for release 2019.09</a>!</p>
+
+<h3>Release 2019.07: August 10th, 2019</h3>
+<p>This release was scheduled for the end of July, but it has taken more time to get the release ready.<br>
+Not much functionality was changed, but again a lot in the technical area has been tidied up and improved.</p>
+
+<p>functional changes:</p>
+<ul><li>the UI of the year end has been improved and looks now similar to the month end.</li>
+<li>The formatting of amounts has been improved, there was a bug for amounts less than 10 Euros.</li></ul>
+
+<p>technical changes:</p>
+<ul><li>support for MySQL has been improved.</li>
+<li>some deprecated database fields have finally been dropped (eg. p_partner_location.p_email_address_c, which now is implemented with the partner contact attributes).</li>
+<li>we have support now for Ubuntu as development environment. I run the CI tests on Github with Appveyor (see <a href="https://ci.openpetra.org" rel=" nofollow ugc">https://ci.openpetra.org</a>), which now offers Ubuntu containers for the tests. This helps to improve the overall quality of the code, since some issues have come to the surface, that were not visible with the CI runs on CentOS with the LightBuildServer (see <a href="https://lbs.solidcharity.com/package/solidcharity/openpetra/openpetra-test-server-mysql" rel=" nofollow ugc">OpenPetra Test of the server with mysql</a>)</li>
+<li>I am working on a project to replace static variables. This will allow to host multiple tenants on a single OpenPetra server instance. This project is ongoing (<a href="https://forum.openpetra.org/d/869-refactoring-of-static-variables" rel=" nofollow ugc">see updates in the forum</a>), but this release contains the updated code already, and it does pass the tests.</li>
+<li>I moved the openpetra-client-js repository into the main openpetra repository, to make life easier. It is now here: <a href="https://github.com/openpetra/openpetra/tree/master/js-client" rel=" nofollow ugc">https://github.com/openpetra/openpetra/tree/master/js-client</a></li></ul>
+
+<p>For more details about the issues solved in this release, visit the <a href="https://github.com/openpetra/openpetra/milestone/3?closed=1" rel=" nofollow ugc">Milestone at Github for release 2019.07</a>!</p>
+
+
+<h3>Release 2019.06: June 29th, 2019</h3>
+
+These are the major changes that are part of the release in June 2019:<br/>
+<ul>
+<li>Sessions are now stored and managed in the database, not in memory. This means that sessions now survive a server restart.</li>
+<li>Small fix for importing bank statements, for transactions that have the date submitted and date posted across two months.</li>
+<li>A number of fixes to supporting PostgreSQL as database backend.</li>
+<li>The client will now show an error message if the user is still using IE 11 or older.</li>
+</ul>
+
+For more details, see the issues closed in this release: <a href="https://github.com/openpetra/openpetra/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3ARelease_2019-06+is%3Aclosed+">Issues closed in Milestone 2019.06</a>
+
+<h3>Release 2019.05: May 27th, 2019</h3>
+
+These are the major changes that are part of the release in May 2019:<br/>
+<ul>
+<li>Create an adjustment batch for a posted Gift batch</li>
+<li>Export Gift batches to Excel file</li>
+<li>Show total amount, and amounts of gifts for the Gift batch</li>
+<li>Avoid editing posted/read only Gift batches.</li>
+<li>Fixes for closing month/period, improved UI showing the dates of the current period.</li>
+<li>In the background, much of the code was refactored to not reuse database connections across a user session, but for each request a new database connection is opened. This is how it should be done nowadays.</li>
+</ul>
+
+For more details, see the issues closed in this release: <a href="https://github.com/openpetra/openpetra/issues?utf8=%E2%9C%93&q=is%3Aissue+milestone%3ARelease_2019-05+is%3Aclosed+">Issues closed in Milestone 2019.05</a>
+
+
+<h3>Release 2019.02: February 5th, 2019</h3>
+
+These are the major changes that happened in January 2019:<br/>
+<ul>
+<li>annual receipts have been implemented.</li>
+<li>an address report was implemented for publications, excluding the people that receive an annual receipt.</li>
+<li>artner find now shows the last donation.</li>
+<li>partner edit has a fix to process the country code correctly.</li>
+<li>the manual was started at https://docs.openpetra.org</li>
+</ul>
+
+<h2>Release Notes OpenPetra.org (Beta)</h2>
+
+<h3>Beta 2017.02.4: 16 March 2017</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Fixes and enhancements in this release: <br/>
+<ul>
+<li>Fix for Bankimport plugin: can now update matches that have been used on earlier statements already.</li>
+<li>Fix for Standalone installer: check for Visual C++ redistributables which is needed for LibSodium. Also checks on startup of standalone application.</li>
+<li>Fix for initdb for server installer: only drop the database if it exists.</li>
+<li>MySQL: improve the speed of loading a database from yml.gz file.</li>
+<li>MySQL: fix for loading DataAdapter</li>
+<li>Fix for the link to the client installer</li>
+</ul>
+
+<h3>Beta 2017.02: 06 March 2017</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Fixes and enhancements in this release: <br/>
+<ul>
+<li>0005819: [Reports] Improve performance of the DonorGiftStatement-&gt; report type 'Totals' via the SelectUsingDataAdapterMulti function</li>
+<li>0005876: [Reports] Partner By Special Type - Internal Error</li>
+<li>0005823: [Reports] Print Partner - Report can contain two 'Finance Details' sections!</li>
+<li>0005836: [ICH] Empty Admin Fee batch causes ICH calculation to fail</li>
+<li>0005671: [Setup Screens] Postcode Regions Setup -&gt; Print should show regions and ranges combined</li>
+<li>0005841: [Import/Export] Fixing problems with importing partners for a conference</li>
+<li>0005848: [Reports] Income Expense Statement: new NextYearBudget field is not totalled as it should be.</li>
+<li>0005832: [Reports] Add "Paginate" facility to RecipientGiftStatement</li>
+</ul>
+
+<h3>Beta 2016.12: 27 February 2017</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Enhancements in this release: <br/>
+<ul>
+<li>Various changes, in the Finance and Partner System.</li>
+<li>The reporting system has been refactored to be more secure.</li>
+<li>The setup of an OpenPetra server on Linux has been made easier.</li>
+</ul>
+
+<h3>Beta 2016.10: 3 November 2016</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Enhancements in this release: <br/>
+<ul>
+<li>Various changes, in the Finance and Partner System.</li>
+<li>Better support for MySQL, besides PostgreSQL and SQLite</li>
+</ul>
+
+<h3>Beta 2016.07: 3 October 2016</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Enhancements in this release: <br/>
+<ul>
+<li>Various changes, in the Finance and Partner System.</li>
+<li>Improved security, passwords are now hashed with the Sodium library.</li>
+</ul>
+
+<h3>Beta 2015.09.4: 23 December 2015</h3>
+
+Please see the previous release notes below as well!<br/>
+<br/>
+About this release:
+<ul>
+	<li>This does not include the work from the ICT branch later than September, so we still call this version 2015.09.</li>
+	<li>There is a fix for Standalone, you are not always asked to change your password anymore.</li>
+	<li>The Standalone version now comes with the bankimport plugins.</li>
+	<li>Various fixes have been implemented to make a tutorial which will be published soon.</li>
+</ul>
+
+<h3>Beta 2015.09: 23 September 2015</h3>
+
+Please see the previous release notes below as well!<br/>
+<br/>
+Enhancements in this release: <br/>
+<ul>
+<li>Various changes, in the Finance and Partner System.</li>
+<li>We call this version now Beta, because we want to test and stabilize the following functionality, as described on this Wiki page: <a href="https://wiki.openpetra.org/index.php/Functions_to_be_included_in_Beta_Summer_2015">Functions to be included in Beta Summer 2015</a></li>
+</ul>
+
+<h2>Release Notes OpenPetra.org (Alpha)</h2>
+
+<h3>Alpha 2014.12: 05 December 2014</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Enhancements in this release: <br/><br/>
+
+Finance module
+<ul>
+<li>Improved Gift Entry workflow with pre-defined settings</li>
+<li> Gift import of whole batches or transactions for existing batches only. Import from clipboard now available</li>
+<li> GL import of whole batches or transactions only. Import from clipboard now available</li>
+<li> Fixes to Month End and Year End</li>
+<li> Improved handling of reversals</li>
+</ul>
+
+Partner module
+<ul>
+<li>New: Contact Log Tab. Ability to track who was contacted by whom at what occasion</li>
+<li>New: Contact Details Tab. This gives you more flexibility in saving contact details independently from a physical address. We are currently changing related reports to reflect the new structure.</li>
+</ul>
+
+Client/Server communication
+<ul>
+<li>The old .Net remoting solution has been replaced by modern web services. This means you can use standard and state-of-the-art SSL encryption to secure your communication between the OpenPetra clients with the OpenPetra server.</li>
+</ul>
+
+Plugins
+<ul>
+<li>with this release, we introduce plugins. With the new web services, it is now much easier to add new functionality without having to programmatically embed all functionality into the core of OpenPetra. You can find some plugins already in the repository at GitHub: <a href="https://github.com/solidcharity?query=OpenPetraPlugin_" title="Github Search for OpenPetra plugins" target="_blank">https://github.com/solidcharity?query=OpenPetraPlugin_</a></li>
+</ul>
+
+Standalone
+<ul>
+<li>now the standalone is actually a single application, not anymore a server and client software. This makes it easier to run on laptops and user workstations: no more error messages and questions for permission from the firewall!</li>
+<li>You can download the Windows installer for the standalone version at Sourceforge: <a href="http://sourceforge.net/projects/openpetraorg/files/openpetraorg/OpenPetra.org%20Alpha%202014/OpenPetraSetup-2014.12.0.0.exe/download" target="_blank">OpenPetraSetup-2014.12.0.0.exe</a></li>
+</ul>
+
+Web-browser based client
+<ul>
+<li>There is an experimental client available, that allows users to use OpenPetra within their Web browser. Have a look at <a href="https://demo.solidcharity.com" target="_blank">https://demo.solidcharity.com</a></li>
+</ul>
+
+Hosted demo available
+<ul>
+<li>To see how OpenPetra works over the Internet, you can even test the fat .Net client at <a href="https://demo.solidcharity.com" target="_blank">https://demo.solidcharity.com</a>
+</li>
+</ul>
+
+Updated demo databases
+<ul>
+<li>We have updated the demo databases, and they are available at <a href="https://sourceforge.net/projects/openpetraorg/files/openpetraorg/demodata/" target="_blank">Sourceforge</a>. The financial years are now uptodate again, and the demo databases include the new partner contact categories and types!</li>
+</ul>
+
+<h3>0.3.0: 22 July 2014</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.3.0.htm">Bugs closed in 0.3.0</a><br/>
+<br/>
+
+OpenPetra has received more testing than ever. Many problems that were identified by the testers got addressed and have been solved. 
+As a result the application is more stable overall and we increased OpenPetras version number to 0.3.0 to indicate that. 
+Still, any use of the application at this stage must be seen as experimental.
+<p/>
+
+<p><b>Major improvements in this version</b></p>
+
+Filter/Find Implementation
+<ul>
+<li>The Accounts Payable screens and the Extract Maintenance screens are finished.</li>
+<li>Filter/Find implementation is essentially complete across the whole of OpenPetra.</li>
+</ul>
+
+Keyboard Shortcuts
+<ul>
+<li>A number of standard keyboard shortcuts to aid in navigating around the main parts of any OpenPetra screen have been implemented. There is even a help screen to remind the users what the shortcuts are (launched via the Help Menu).</li>
+</ul>
+
+Gift Destination
+<ul>
+<li>Gift Destination settings in the Partner Edit screen now determine the Field that the money is sent to. This is closely linked to the Commitment Records in the Personnel Module.</li>
+</ul>
+
+Partner/Personnel
+<ul>
+<li>The Address Tab on the Partner Edit screen has been re-written so that it now complies with OpenPetra standards in terms of coding as well as user experience.</li>
+<li>Search for Bank Details in the Partner Find screen has been implemented.</li>
+<li>A new screen to browse through Short Term and Long Term Applications has been added.</li>
+</ul>
+
+Finance
+<ul>
+<li>The Ledger Setup has been improved.</li>
+<li>The Gift Entry system is enhanced by a global search function for gifts.</li>
+<li>Donor and Recipient history is now accessible from the gift entry screen.</li>
+<li>The last Transaction is loaded as soon as the donor is entered, which makes data entry easier for regular gifts.</li>
+<li>In the General Ledger, Transactions can now be imported into an empty Journal.</li>
+</ul>
+
+
+<h3>0.2.28: 18 December 2013</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.28.htm">Bugs closed in 0.2.28</a><br/>
+<br/>
+
+OpenPetra has received more testing than ever and as a result many bugs have been found. Hence we put the focus for this release on quality and stability; many bugs were fixed!<br/>
+Usability has been a focus, too, as was improved consistency of screen designs and screen behaviours.
+<p/>
+
+General improvements for all OpenPetra Modules:
+<ul>
+<li>All-new Filter and Find functionality for lists of data on 75 screens, plus record counters!</li>
+<li>New Preferences dialog: allows adjustment of many user-configurable settings.</li>
+<li>Performance improvements when working with larger amounts of data in several screens (esp. GL Batch and Gift Batch, Partner Find).</li>
+<li>Improvements to the layout of many screens, especially Dialogs.</li>
+<li>Improvements to data validation on many screens.</li>
+</ul>
+
+Partner:
+<ul>
+<li>New: Merging of Partners.</li>
+<li>New: Printing of Partners.</li>
+<li>New: Exporting of Partners in an Extract.</li>
+</ul>
+
+Personnel:
+<ul>
+<li>Only bug fixes.</li>
+</ul>
+
+Finance:
+<ul>
+<li>Mainly bug fixes.</li>
+</ul>
+
+Conference:
+<ul>
+<li>New: Browse attendees.</li>
+</ul>
+
+
+<h3>0.2.26: 23 September 2013</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.26.htm">Bugs closed in 0.2.26</a><br/>
+<br/>
+
+General improvements for all OpenPetra Modules:
+<ul>
+<li>Several overall improvements to the user interface of OpenPetra, based on results from user tests conducted earlier this year.</li>
+<ul>
+<li>The most obvious change: Button panels that used to be to the right of lists of data are now placed under the lists.</li>
+</ul>
+<li>Deletion of records got implemented in all screens where it was previously missing and got improved in all other screens.</li>
+<li>Report results can now be exported to MS Excel.</li>
+<li>Many bug fixes and new features - <em>over 170!</em></li>
+</ul>
+
+Partner:
+<ul>
+<li>Partner Interests Tab is now available in the Partner Edit screen.</li>
+</ul>
+
+Personnel:
+<ul>
+<li>Only bug fixes.</li>
+</ul>
+
+Finance:
+<ul>
+<li>Many features got enhanced.</li>
+<li>Month End and Year End got heavily improved.</li>
+<li>Improvements to Budgets.</li>
+<li>Improved import and export interfaces.</li>
+<li>GL Batch reversal is now possible.</li>
+<li>Performance improvements in General Ledger and in Gift Batch processes.</li>
+<li>Performance improvements in several reports.</li>
+<li>Lots of bugs fixed - most bug fixes in this release were done in the Finance Module.</li>
+</ul>
+
+Conference:
+<ul>
+<li>Basic functionality is now available.</li>
+</ul>
+
+
+<h3>0.2.24: 19 March 2013</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.24.htm">Bugs closed in 0.2.24</a><br/>
+<br/>
+
+General improvements for all OpenPetra Modules:
+<ul>
+<li>Main Menu now shows a message that lists Forms that need to be closed in order for the user to be able to close the OpenPetra Client</li>
+<li>Inadvertent creation of duplicate records now causes relevant messages to be displayed</li>
+<li>Many setup screens have been extended</li>
+<li>Improved data validation and usability</li>
+<li>Many bug fixes and new features - <em>over 200!</em></li>
+</ul>
+
+Partner:
+<ul>
+<li>Extracts can now be combined, intersected and subtracted from</li>
+<li>Deletion of Partner records</li>
+<li>Initial implementation of Finance Details of Partner records in the Partner Edit screen.</li>
+</ul>
+
+Personnel:
+<ul>
+<li>Only bug fixes</li>
+</ul>
+
+Finance:
+<ul>
+<li>Improved handling of multiple ledgers</li>
+<li>Improvements to the Gift and GL Batch screens, with a particular focus on Gift Reversals and Analysis Attributes for transactions</li>
+<li>Improved Recurring Gift screen functionality</li>
+<li>New Recurring GL Batch Screen</li>
+<li>General Ledger Setup improvements; overview of Ledger Settings now available</li>
+<li>Greatly improved behaviour of the two exchange rate screens</li>
+<li>Especially the Finance Reports and the Accounts Payable sub-system have seen many bug fixes</li>
+<li>GL Batch Import and Gift Batch Import now show the import progress</li>
+</ul>
+
+
+<h3>0.2.22-1: 30 October 2012</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.22-1.htm">Bugs closed in 0.2.22-1</a><br/>
+<br/>
+
+This release is a minor release that contains one main feature: improved Main Menu (better Module Navigation on the left, new 'Breadcrumb Trail' on the right above the Tasks, other layout improvements).
+<br/>
+<br/>
+Personnel:
+<ul>
+<li>Add option to update extracts: change existing subscription</li>
+</ul>
+
+
+<h3>0.2.22: 15 October 2012</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.22.htm">Bugs closed in 0.2.22</a><br/>
+<br/>
+
+General improvements for all screens:
+<ul>
+<li>Improved layout and usability of the Main Menu</li>
+<li>More validation of user input, using our new Validation Framework</li>
+<li>Significantly improved Grid behaviour (list/detail views)</li>
+<li>Single port .NET Remoting now in place</li>
+<li>Intranet export available</li>
+<li>Many bug fixes</li>
+</ul>
+
+Partner:
+<ul>
+<li>Improved Partner Find screen</li>
+<li>More Extracts available</li>
+<li>Possibility to add/remove Subscriptions to/from a list of Partners in an Extract</li>
+<li>New demo database</li>
+</ul>
+
+Personnel:
+<ul>
+<li>Applications for Events and Fields now supported</li>
+<li>More Extracts available</li>
+<li>Improved functionality and stability of Individual Data Screens</li>
+<li>Changes to the Unit Hierarchy now possible</li>
+</ul>
+
+Finance:
+<ul>
+<li>Re-design of Gift Batch and GL Batch</li>
+<li>Advanced Gift Receipting </li>
+<li>Improved Budget handling</li>
+<li>New demo database (multi-ledger)</li>
+</ul>
+
+<h3>0.2.20: 25 May 2012</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.20.htm">Bugs closed in 0.2.20</a><br/>
+<br/>
+
+General improvements for all screens:
+<ul>
+<li>more validation of user input, using our new validation framework</li>
+<li>better layout of controls, which also works better on Linux clients, with Mono</li>
+</ul>
+
+Personnel:
+<ul>
+<li>More extracts</li>
+<li>improving functionality and stability of Individual Data Screens</li>
+</ul>
+
+Finance:
+<ul>
+<li>Gifts and recurring gifts: some bug fixes</li>
+<li>ICH: HOSA calculation</li>
+<li>GL Setup: some bug fixes</li>
+<li>Budget: consolidate budgets works now</li>
+<li>AP: reverse payment, support foreign currencies</li>
+<li>Donor and Recipient Extracts</li>
+</ul>
+
+System Manager:
+<ul>
+<li>Import of yml.gz files is now much faster</li>
+<li>find a demo database with lots of partners, gift batches, invoices, workers, etc: <a href="http://openpetraorg.sourceforge.net/demodata/demodata.yml.gz">demodata.yml.gz</a></li>
+</ul>
+
+<h3>0.2.18: 14 March 2012</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.18.htm">Bugs closed in 0.2.18</a><br/>
+<br/>
+
+Partner Edit:
+<ul><li>Many fixes in Partner Edit majority on Address, Family and Subscription Tab</li></ul>
+
+Personnel:
+<ul>
+<li>Implementation of Individual Data Screens</li>
+<li>e.g. personal data, passport details,</li>
+<li>emergency data, job assignments and more</li>
+<li>Extract framework established</li>
+<li>various new Extracts are now ready to use</li>
+<li>Extract Master list improved</li>
+</ul>
+
+Finance:
+<ul>
+<li>Gifts: Improvements on Gift Batch import and export</li>
+<li>Budget: bug fixes in Budget section</li>
+<li>Budget: consolidate budgets finished</li>
+<li>ICH: .csv stewardship reports -  export, send as email and import is now  possible</li>
+<li>Setup: Fix on exchange rates setup</li>
+<li>AP: more functionality of Accounts Payable in place</li>
+<li>AP: reversing of payments now enabled</li>
+<li>AP: reporting functions added</li>
+<li>others: fix on import from bank interface</li>
+</ul>
+
+<h3>0.2.16: 22 December 2011</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.16.htm">Bugs closed in 0.2.16</a><br/>
+<ul>
+<li>Fixes to the Partner Edit and Partner Find screens</li>
+<li>Partner Edit: family members and family tab</li>
+<li>New report for subscriptions</li>
+<li>Creation of ICH stewardship batch</li>
+<li>Maintain budgets, and create budgets automatically based on last years actuals</li>
+<li>Accounts Payable: continue implementation, and bug fixes</li>
+<li>Gift batch: several fixes, and filter gift batches by month</li>
+<li>Fix a bug with authentication.</li>
+<li>Changes to the database structure. If you have already entered data, please let us know. Please note that this is currently in Alpha stage and not recommended for production use.</li>
+</ul>
+
+<h3>0.2.14: 10 November 2011</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.14.htm">Bugs closed in 0.2.14</a><br/>
+<ul>
+<li>New tabs for the Partner Edit screen: Subscriptions and Relationships</li>
+<li>New Personnel area on the Partner Edit screen: Languages and Special Needs as examples for the future Personnel screens.</li>
+<li>For the moment, we do allow now the creation of PERSON records again, for testing with the Personnel module. But note that this software is in Alpha stage, and you might not be able to upgrade your PERSON records to future versions!</li>
+<li>Several fixes to Partner Find screen.</li>
+<li>A reasonable Tab Order on all screens.</li>
+<li>Gift System: retrieve donor and recipient history</li>
+<li>Gift System: support admin fees payable and receivable (linked with motivation details), initial work on admin fee calculation and ICH stewardship</li>
+<li>Fixed a couple of bugs for GL import and export</li>
+<li>Support for CentOS and Debian servers running OpenPetra</li>
+<li>Changes to the database structure. If you have already entered data, please let us know. Please note that this is currently in Alpha stage and not recommended for production use.</li>
+</ul>
+
+<h3>0.2.12: 19 September 2011</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.12.htm">Bugs closed in 0.2.12</a><br/>
+<ul>
+<li>Many fixes to the GL Batch screen.</li>
+<li>Many fixes to the finance reports.</li>
+<li>Fix to export/import cost centre hierarchies.</li>
+<li>Creating a new ledger is now much easier.</li>
+<li>New functionality: Can do now a test run of posting a batch, and see which accounts/cost centres would be affected in which way.</li>
+<li>7 new maintain screens have been added to the Finance module.</li>
+<li>Changes to the database structure. If you have already entered data, please let us know. Please note that this is currently in Alpha stage and not recommended for production use.</li>
+</ul>
+
+<h3>0.2.10: 28 May 2011</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.10.htm">Bugs closed in 0.2.10</a><br/>
+<ul>
+<li>Support for multiple currencies, working with exchange rates</li>
+<li>Financial Month End closing, Year end closing</li>
+<li>Recurring Gift batches</li>
+<li>Revert and adjust gifts</li>
+<li>Add and maintain Commitment periods for staff</li>
+<li>Lots of improvements to the Online Registration. Printing to PDF on Linux, etc.</li>
+<li>Start of Danish Translation</li>
+<li>Spanish Translation almost complete</li>
+<li>Changes to the database structure. If you have already entered data, please let us know. Please note that this is currently in Alpha stage and not recommended for production use.</li>
+</ul>
+
+<h3>0.2.8: 18 February 2011</h3>
+Please see the previous release notes below as well!<br/>
+For a detailed list of all bugs solved for this release, see <a href="http://openpetraorg.sourceforge.net/ReleaseDetails/BugsFixed_Alpha-0.2.8.htm">Bugs closed in 0.2.8</a><br/>
+<ul>
+<li>New Maintain table screens (see <a href="http://bzr.openpetra.org:8088/loggerhead/trunk/revision/1112">Commit messages</a>).</li>
+<li>Web application for Online Registrations (not included in the standalone version)</li>
+<li>PDF Printing on Linux</li>
+<li>Improvements to Partner Find screen</li>
+<li>Improvements to GL Import and Export</li>
+<li>Improvements to Gift Import and Export</li>
+<li>Improvements to Account Hierarchy screen</li>
+<li>Improvements to Cost Centre Hierarchy screen</li>
+<li>More accurate internal handling of numbers for currency amounts</li>
+<li>Support cultures, the user can select the culture, and the user interface language of the client</li>
+</ul>
+
+<h3>0.2.6: 09 December 2010</h3>
+Please see the previous release notes below as well!<br/>
+<ul>
+<li>Now using resource dlls for translations rather than .mo files.</li>
+<li>Added Spanish translation.</li>
+<li>Fix bug for creating new ledgers (<a href="http://sourceforge.net/apps/mantisbt/openpetraorg/view.php?id=128">Bug 128</a>).</li>
+<li>Fix to contact find screen (<a href="http://sourceforge.net/apps/mantisbt/openpetraorg/view.php?id=149">Bug 149</a>). This screen does not give much benefit yet, since the contacts cannot be entered in OpenPetra yet.</li>
+<li>Disabled the option to create PERSON records. For the moment, please only create FAMILY records. We are working to find an easier way of dealing with partners.</li>
+<li>GL: Analysis Attributes can be added to an account and to each transaction towards that account.</li>
+<li>Import key ministries (special partners of class UNIT). see the sample file in C:\Program Files\OpenPetra.org\demo30\partners\SampleFilePartnerImport.yml</li>
+<li>Gift batch screen is now able to process gifts to key ministries/projects.</li>
+<li>Exporting of Gift batches.</li>
+</ul>
+
+<h3>0.2.4: 28 September 2010</h3>
+Please see the previous release notes below as well!<br/>
+<ul>
+<li>Fix bug that prevented opening the gift batch screen, and the change of the password (<a href="http://sourceforge.net/apps/mantisbt/openpetraorg/view.php?id=136">Bug 136</a>).</li>
+<li>Fix bug that caused the export and import of the full database to fail (<a href="http://sourceforge.net/apps/mantisbt/openpetraorg/view.php?id=139">Bug 139</a>).</li>
+<li>Retire the user after too many failed login attempts (<a href="http://sourceforge.net/apps/mantisbt/openpetraorg/view.php?id=137">Bug 137</a>).</li>
+<li>User defined settings for the reports are now maintained in the user directory, but the default settings are kept centrally in the programs directory.</li>
+<li>Export of GL Batches has been added. Still needs testing.</li>
+</ul>
+
+<h3>0.2: 9 September 2010</h3>
+Please see the previous release notes below as well!<br/>
+<ul>
+<li>Plenty of maintenance screens have been added, most of them have been developed by volunteers! With these maintenance screens the user now can maintain most of the lookup fields, eg. occupation codes, etc</li>
+<li>We have plenty of more reports for the Conference module, Partner module and Finance module. Some of them are not much of use yet, since the data cannot be entered yet. But some can be used already with existing databases which are upgraded from Petra 2.x.</li>
+<li>The new report "Partner by Special Type" has been added for a small charity in the UK, to list all partners and their address who have been tagged with special attributes (eg. Donor, Newsletter subscriber, Potential co-worker, etc).</li>
+<li>GL Batches screen has been improved: You can now cancel batches, delete journals, delete transactions, and import GL batches from CSV files. Also the credit and debit totals are summarized at the top of the screen. You can filter for unposted or all batches.</li>
+<li>Fixed some issues with the checked list box control, and the grid we use on many windows.</li>
+<li>Icons have now transparent background again.</li>
+<li>The permissions system is now implemented, ie. the modules are greyed out if you don't have access to that module.</li>
+<li>The normal DEMO user does not have SYSADMIN rights anymore, and therefore to create new users etc, you have to login with user SYSADMIN and password CHANGEME (important: all letters of the password CHANGEME are uppercase!). For production use, you are urgently requested to change the password for the SYSADMIN user, and to create a new user for yourself and to deactivate the DEMO user!</li>
+<li>The standalone installer now supports several OpenPetra installations in parallel. If you choose the default Groupname, nothing will change. But if you change the default groupname, please note that your previous database might still be in C:\Documents and Settings\{Your user name}\Application Data\OpenPetra.org\db30. You might want to copy the file petra.db to C:\Documents and Settings\{Your user name}\Application Data\{Your selected Groupname}\db30.</li>
+</ul>
+
+<h3>0.1: 19 June 2010</h3>
+Please see the previous release notes below as well!<br/>
+<ul>
+<li>This version marks the change from pre-alpha status to Alpha.
+This means that this version of OpenPetra shows quite clearly what OpenPetra is capable of.
+There is also an <a href="http://sourceforge.net/apps/mediawiki/openpetraorg/index.php?title=Basic_Tutorial">english tutorial with sample data on the OpenPetra wiki</a>,
+and you are welcome to use the tutorial to discover the functionality of OpenPetra.
+Unfortunately we have to discourage the production use of OpenPetra at this moment in time, but we invite you to thoroughly explore the features of OpenPetra.</li>
+<li>You can now add new Special Types for the Partner Edit screen.</li>
+<li>Big improvements for the Partner Edit screen. You can now create and edit persons, families, organisations etc.</li>
+<li>It is now possible to have really secure encryption with Public/Private key. Previously, we only had encryption with one single private key which was not so safe since the private key needed to be shared between the client and the server.</li>
+</ul>
+
+<h3>0.0.15.0: 02 June 2010</h3>
+Please see the previous release notes below as well!<br/>
+<ul>
+<li>Create new Ledgers. All available ledgers are automatically available in the navigation menu.</li>
+<li>Import partners from CSV: this will help to import addresses from other sources. You have to confirm each address, and the system will tell you if the partner already exists in the database.</li>
+<li>The Form letter for first time donors is now part of the OpenPetra system.</li>
+<li>When sending the form letter, you can create an Extract of all partner keys that will receive the letter, and you can create an entry in their contact history.</li>
+<li>There is a new screen that allows searching the contact history of all partners, and allows deleting of contact history, in case something was entered incorrectly. The contact history will soon be part of the Partner Edit screen as well.</li>
+<li>The main navigation screen has been tidied up, we have no demo section anymore, but all functionality can be found in the respective module.</li>
+<li>User management: add users, change password, assign group membership for permissions (to be implemented later).</li>
+<li>We have added a number of new reports for partners and addresses: Brief Address Report, Brief Foundation Report, Supporting Churches Report, Valid Bank Account Report, Publication Statistical Report, Bulk Address Report</li>
+<li>Fixed a bug that would allow closing OpenPetra even if screens were still open with unsaved changes.</li>
+<li>We have included some sample files for you to experiment with, and an empty database for starting your own production database.</li>
+<li>Previously when installing a new version of OpenPetra standalone, the SQLite database has been backed up, and a fresh version of the current demo database was installed. This version is the first that will upgrade an existing OpenPetra database, and you will be able to continue with your own data.</li>
+</ul>
+
+<h3>0.0.14.0: 03 April 2010</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Improved handling of Gift batches and transactions, now supporting split gifts (donor gives a donation that are split into several recipients/projects)<br/>
+Initial support for importing finance transaction from a bank statement of type MT940<br/>
+The reports did not work in the previous releases, and now work again<br/>
+The amounts and dates are displayed with nicer formatting in the data grids<br/>
+Improvements to data loading for Postgresql (sequences did not work in previous release)<br/>
+
+<h3>0.0.13.0: 08 March 2010</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Several bug fixes for import and export of data, was missing the sequences etc.<br/>
+Editing gifts should now work. Previously the donor was not stored.<br/>
+Fixes for Client installer.<br/>
+Optional: login screen can now remember the user name.<br/>
+
+<h3>0.0.12.0: 15 February 2010</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+OpenPetra now supports Mysql as well as Postgresql and Sqlite.<br/>
+The Remote Client installer and the patchtool now work with Windows Vista (and probably Windows 7 as well).<br/>
+Export the database to text file, and import it into another OpenPetra installation. This allows easy migration between Standalone and Hosted installations, or between different database types.<br/>
+Matching of gifts now works.<br/>
+Printing of gifts receipts (form letters) has been implemented.<br/>
+
+<h3>0.0.11.0: 11 January 2010</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+This version now supports importing partners from a Yml file.<br/>
+The patchtool works now, this allows easy upgrades on the client side.<br/>
+The server version now uses encryption to secure the communication between client and server.<br/>
+It is possible to use a plugin dll for authentication against other services (eg. LDAP, phpBB database, etc).<br/>
+
+<h3>0.0.10.0: 13 November 2009</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Import of account hierarchy works now. New accounts will be created automatically. This helps with customizing OpenPetra to the specific needs of an organisation.<br/>
+Import of foreign currency exchange rates works now. This helps with displaying reports in international currency for auditors from other countries.<br/>
+Income/Expense Sheet, Balance Sheet, and Account Detail reports now work and have been tested. Of course they still need improvements, especially for allowing the user which columns to print, reporting by quarter, etc.<br/>
+GL transactions can be imported from Excel sheets (CSV files), with each column representing an account, and values in those columns are assigned to the correct accounts. A data definition file describes the date and currency format, and the account names for each column. This functionality can be adjusted for other situations; in the current case we can use it to import historic data from another office.<br/>
+
+<h3>0.0.9.0: 12 October 2009</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+AP payments can now be created for posted AP documents, and the payments are posted to GL. Partial payments are not supported yet, neither are payments in different currencies.<br/>
+The account hierarchy can now be displayed in a treeview, and new accounts can be added. It does not work yet to move accounts around in the hierarchy, neither can you delete accounts yet.<br/>
+You can export the account hierarchy to CSV, YML, or XML. This will help with editing the account hierarchy in an editor you prefer. The import of these files does not work yet.<br/>
+
+<h3>0.0.8.0: 21 September 2009</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Posting of AP documents works now.<br/>
+The new navigation system is basically working, though it should be extended soon to allow the user to customize it, and context sensitive search boxes will be added as well.<br/>
+A new Demo folder has been added to the new navigation system to show the functionality that has already been implemented.<br/>
+The classic navigation systems with the deep and complicated menu structure is still available, via a toolbar button.
+
+<h3>0.0.7.0: 05 September 2009</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+Some bugs from the previous release with Partner Edit and Partner Find have been fixed.<br/>
+Those screens should now work better with Linux and Mac.<br/>
+Posting of GL batches works now!<br/>
+There is the report for Account details, which should show the transactions and balances affected.<br/>
+
+<h3>0.0.6.0: 19 August 2009</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+The General Ledger Batch/Journal/Transaction screen is now looking much better, and you can actually store batches, journals and transactions.
+You can select Account codes and Cost centre codes for transactions.
+<br/><br/>
+A few improvements have been added to the Accounts Payable screens, hopefully there are less exceptions than before.
+
+<h3>0.0.5.0: 25 July 2009</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+It is now possible in Accounts Payable to create invoices and add invoice details, and store them. You can search for the supplier, and open the invoices and credit notes of that supplier.
+<br/>
+There is a first preview of the General Ledger Batch/Journal/Transaction screen, without any functionality yet.
+<br/>
+There is a first preview of simple maintenance screens, examples are Currency Setup and Exchange Rate Setup screens. They don't have functionality yet.
+<br/><br/>
+The point of these preview screens is to show how easy it is using scaffolding to generate new screens. 
+The screens in the Accounts Payable module already have most of their functionality automatically generated, just a few special cases need to be programmed manually.
+
+<h3>0.0.4.0: 13 July 2009</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+The main new feature is the Accounts Payable supplier edit screen where you can edit new suppliers. For testing, first create a partner of type Organisation in the Partner module, and 
+then go into the finance module, select Accounts Payable, and click on new supplier. It works to save the supplier, and to search for the supplier by either partner name or partner key.
+The search box remembers the last 30 searches and autocompletes.
+<br/>
+Previews of the invoice edit screen and the supplier transaction screen have also been added, but they don't have functionality yet.
+<br/><br/>
+Some smaller bugs have been fixed, eg. when closing the partner edit screen with changed data and then saving when asked. Also the Partner Find now works with the enter key.
+<br/><br/>
+This release now supports PostgreSQL server again, the support was broken in 0.0.3.
+<br/><br/>
+This release comes not only with a standalone installer, but also with a server installer for Linux. That server installer only works with Postgresql at the moment. Please see the file INSTALL in the linux server tar.gz archive.
+There is now also a remote client installer for Windows for OpenPetra installations that connect to a Linux server.
+
+<h3>0.0.3.0: 20 June 2009</h3>
+Please see the previous release notes below as well!<br/>
+<br/>
+The new thing is that you can create a translation, and the Petra Client will use any language file that is located eg. in C:\Program Files\OpenPetra.org\bin30\locale\de\LC_MESSAGES. 
+You might need to set the LANGUAGE variable in your Windows Environment Variables to use another language than is installed.
+We do welcome translations, please have a look on the <a href="http://sourceforge.net/apps/mediawiki/openpetraorg/index.php?title=HowTo_help_with_Translation">wiki for instructions</a>.
+<br/><br/>
+The Finance module main screen can now be opened, and two prototype screens are available, for Gift processing from bank statements, and the main screen for Accounts Payable.
+<br/><br/>
+Please note that your database file will be replaced, and the backup you can still find here: eg. C:\Documents and Settings\[User Name]\Application Data\OpenPetra.org\db30\petra.db.1.bak; we hope to integrate a patching system soon.
+<br/><br/>
+Some of the issues in the previous versions have been fixed, eg. the date in the Partner by city report does work now.
+
+<h3>0.0.2.0: 13 June 2009</h3>
+Please see the previous release notes below as well!<br/>
+The main visible new functionality is the &quot;Partner By City&quot; report. 
+To test it, create a few partners in Partner Edit, and then run the report for those cities.
+At the moment, this is limited to partners of type FAMILY; and there also seems to be a bug: 
+if an address is only valid from today, the report would not show it; so set the valid date to a past date.
+<br/><br/>
+You may also notice the status bar with context sensitive help, depending on the field that currently is in focus. 
+This is for example useful on Partner Edit, when it tells the meaning for each field.
+
+<h3>0.0.1.3: 1 June 2009</h3>
+This is the initial release of OpenPetra.org.<br/>
+It only comes as a Standalone installation, using SQLite, to make the installation very simple.<br/>
+<br/>
+Login with User ID <b>demo</b> and password is <b>demo</b> as well.<br/>
+<br/>
+There are only 2 screens that actually provide functionality:<br/>
+Go into the Partner module, and in the menu select &quot;Partner&quot; / &quot;New Partner&quot;.<br/>
+You can create a new partner, add an address, and save the partner.<br/>
+<br/>
+Then you can go in the Partner Main screen in the menu to &quot;Partner&quot; / &quot;Find & Maintain Partner&quot;.<br/>
+Search for the partner you just created.<br/>
+To edit the partner, double click on the row in the result grid.<br/>
+</div>
+
+</body>
+</html>

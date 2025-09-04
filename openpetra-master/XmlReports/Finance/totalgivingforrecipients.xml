@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE reports SYSTEM "../reports.dtd">
+<reports>
+  <report id="TotalGivingForRecipients">
+    <description>
+      This report shows the total giving for each of the last 4 years for some fields and/or for various special
+      types set up in the Partner module
+    </description>
+    <reportparameters>
+      <reportparameter name="param_ledger_number_i"/>
+      <reportparameter name="param_currency"/>
+    </reportparameters>
+
+    <reportheader/>
+    <pageheader>
+      <field whichfield="title1">
+        <value text="Historic Donors Per Recipient" />
+      </field>
+
+      <field whichfield="title2">
+        <value function="getLedgerName({{param_ledger_number_i}})"/>
+      </field>
+      <field whichfield="descr1">
+        <value text="Ledger: "/>
+        <value variable="param_ledger_number_i"/>
+        <value text="   "/>
+        <value function="getLedgerName({{param_ledger_number_i}})"/>
+      </field>
+      <field whichfield="descr2">
+        <fielddetail condition="eq({param_recipient}, All Recipients)">
+          <value text="All Donors"/>
+        </fielddetail>
+        <fielddetail condition="eq({param_recipient}, One Recipient)">
+          <value text="One Recipient: "/>
+          <value variable="param_recipient_key"/>
+        </fielddetail>
+        <fielddetail condition="eq({param_recipient}, Extract)">
+          <value text="Recipients from Extract: "/>
+          <value variable="param_extract_name"/>
+        </fielddetail>
+      </field>
+      <field whichfield="period1">
+        <value text="Currency: "/>
+        <value function="getCurrency({{param_ledger_number_i}}, {GLOBAL:param_currency})"/>
+      </field>
+      <field whichfield="period2">
+        <fielddetail condition="eq({param_field_selection}, all_fields)">
+          <value text="Fields: All Fields"/>
+        </fielddetail>
+        <fielddetail condition="eq({param_field_selection}, selected_fields)">
+          <value text="Selected Fields: "/>
+          <value variable="param_clbFields"/>
+        </fielddetail>
+      </field>
+      <field whichfield="period3">
+        <fielddetail condition="eq({param_type_selection}, all_types)">
+          <value text="Recipient Types: All Types"/>
+        </fielddetail>
+        <fielddetail condition="eq({param_type_selection}, selected_types)">
+          <value text="Selected Types: "/>
+          <value variable="param_clbTypes"/>
+        </fielddetail>
+      </field>
+
+    </pageheader>
+
+    <calculations>
+
+      <calculation id="SelectRecipients" returns="automatic" returnsFormat="row">
+        <query>
+          <queryDetail>
+            <value>Ict.Petra.Server.MFinance.queries.QueryFinanceReport.SelectGiftRecipients</value>
+          </queryDetail>
+        </query>
+      </calculation>
+
+      <calculation id="SelectDonors" returns="automatic" returnsFormat="row">
+        <query>
+          <queryDetail>
+            <value>Ict.Petra.Server.MFinance.queries.QueryFinanceReport.SelectGiftDonors</value>
+          </queryDetail>
+        </query>
+      </calculation>
+
+      <calculation id="PartnerKey" returnsFormat="partnerkey" returns="text">
+        <caption><value text="Donor Key"/></caption>
+        <query>
+          <queryDetail><value variable="DonorKey"/>
+          </queryDetail>                                          
+        </query>
+      </calculation>
+
+      <calculation id="DonorName" returnsFormat="text" returns="text">
+        <caption>
+          <value text="Donor Name"/>
+        </caption>
+        <query>
+          <queryDetail>
+            <value variable="DonorName"/>
+          </queryDetail>
+        </query>
+      </calculation>
+
+      <calculation id="DonorClass" returnsFormat="text" returns="text">
+        <caption>
+          <value text="Class"/>
+        </caption>
+        <query>
+          <queryDetail>
+            <value variable="DonorClass"/>
+          </queryDetail>
+        </query>
+      </calculation>
+
+      <calculation id="Recipient Key" returnsFormat="partnerkey" returns="text">
+        <caption>
+          <value text="Recipient Key"/>
+        </caption>
+        <query>
+          <queryDetail>
+            <value variable="RecipientKey"/>
+          </queryDetail>
+        </query>
+      </calculation>
+
+      <calculation id="Recipient Name" returnsFormat="text" returns="text">
+        <caption>
+          <value text="Recipient Name"/>
+        </caption>
+        <query>
+          <queryDetail>
+            <value variable="RecipientName"/>
+          </queryDetail>
+        </query>
+      </calculation>
+
+      <calculation id="Year-0" returnsFormat="currency" returns="amount">
+        <caption>
+          <value variable="Year0"/>
+        </caption>
+        <query>
+        </query>
+      </calculation>
+
+      <calculation id="Year-1" returnsFormat="currency" returns="amount">
+        <caption>
+          <value variable="Year1"/>
+        </caption>
+        <query>
+        </query>
+      </calculation>
+
+      <calculation id="Year-2" returnsFormat="currency" returns="amount">
+        <caption>
+          <value variable="Year2"/>
+        </caption>
+        <query>
+        </query>
+      </calculation>
+
+      <calculation id="Year-3" returnsFormat="currency" returns="amount">
+        <caption>
+          <value variable="Year3"/>
+        </caption>
+        <query>
+        </query>
+      </calculation>
+
+    </calculations>
+
+    <levels>
+      <level name="main">
+        <detail>
+          <lowerLevelReport level="RecipientLevel" calculation="SelectRecipients"></lowerLevelReport>
+        </detail>
+      </level>
+
+      <level name="RecipientLevel" identification="RecipientKey">
+        <header>
+          <field whichfield="header 1" pos="0cm" width="8cm">
+            <value text="Recipient: "/>
+            <value variable="RecipientKey" format="partnerKey"/>
+            <value text="   "/>
+            <value variable="RecipientName"/>
+          </field>
+        </header>
+        <detail>
+          <lowerLevelReport level="YearLevel" calculation="SelectDonors"></lowerLevelReport>
+        </detail>
+        <footer line="below" space="below">
+          <field whichfield="column 3" line="above">
+            <value function="getSumLowerReport({{lineId}}, 3)"/>
+          </field>
+          <field whichfield="column 4" line="above">
+            <value function="getSumLowerReport({{lineId}}, 4)"/>
+          </field>
+          <field whichfield="column 5" line="above">
+            <value function="getSumLowerReport({{lineId}}, 5)"/>
+          </field>
+          <field whichfield="column 6" line="above">
+            <value function="getSumLowerReport({{lineId}}, 6)"/>
+          </field>
+        </footer>
+      </level>
+
+      <level name="YearLevel">
+        <detail>
+          <field whichfield="column 0" pos="0cm">
+            <value variable="DonorKey" />
+          </field>
+          <field whichfield="column 1">
+            <value variable="DonorName" />
+          </field>
+          <field whichfield="column 2">
+            <value variable="DonorClass" />
+          </field>
+          <field whichfield="column 3">
+            <value variable="YearTotal0" />
+          </field>
+          <field whichfield="column 4">
+            <value variable="YearTotal1" />
+          </field>
+          <field whichfield="column 5">
+            <value variable="YearTotal2" />
+          </field>
+          <field whichfield="column 6">
+            <value variable="YearTotal3" />
+          </field>
+        </detail>
+      </level>
+
+    </levels>
+  </report>
+</reports>

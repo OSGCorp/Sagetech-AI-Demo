@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<project name="ICT-Testing-Build">
+
+<include buildfile="../../../inc/nant/OpenPetra.csharp.xml"/> 
+
+<target name="cleanup">
+    <nant inheritall="false" target="stopServer" buildfile="${path::combine(dir.root, 'OpenPetra.build')}" verbose="${verbose}" failonerror="false"/>
+</target>
+
+<target name="remove_dlls">
+  <!-- similar to inc/nant/OpenPetra.default.targets.xml -->
+  <if test="${'unix'==platform::get-name()}" >
+      <if test="${not file::exists(dir.bin + '/libsodium.so')}">
+        <exec program="bash"
+            workingdir="${dir.bin}"
+            commandline="-c &quot;ln -s ${libsodium.so} libsodium.so&quot;"/>
+      </if>
+
+      <delete file="${dir.bin}/Mono.Security.dll" failonerror="false"/>
+      <delete file="${dir.bin}/libsodium.dll" failonerror="false"/>
+      <delete file="${dir.bin}/libsodium-64.dll" failonerror="false"/>
+  </if>
+</target>
+
+<target name="test-tools">
+    <echo message="Target test-tools started at: ${datetime::now()}" /> 
+    
+    <!-- NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.CodeGeneration.dll" -->
+    
+    <echo message="Target test-tools finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="test-server">
+    <echo message="Target test-server started at: ${datetime::now()}" /> 
+    
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MPartner.server.PartnerEdit.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MPartner.server.PartnerMerge.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MFinance.server.Budget.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MFinance.server.BankImport.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MFinance.server.Gift.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MFinance.server.GL.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MFinance.server.ICH.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MFinance.server.AP.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MFinance.server.CrossLedger.dll" />
+
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MPartner.server.PartnerExports.dll" />
+    
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MSponsorship.dll" />
+
+    <call target="test-server-reports"/>
+
+</target>
+
+<target name="load-reports-test-db">
+    <if test="${not file::exists(dir.root + '/demoWith1ledger.yml.gz')}">
+        <fail message="Please download demoWith1ledger.yml.gz (tag: UsedForNUnitTests) into the root of the OpenPetra working tree..."/>
+    </if>
+    <!-- need to set DebugLevel 1 so that the build server will be notified about progress -->
+    <ExecDotNet program="${dir.bin}/Ict.Petra.Tools.MSysMan.YmlGzImportExport.exe"
+        commandline="-C:${path::combine(dir.root, 'etc/TestServer.config')} -Action:load -YmlGzFile:${dir.root}/demoWith1ledger.yml.gz -Server.DebugLevel:1 -interactive:false"/>
+</target>
+
+<target name="test-server-reports">
+    <echo message="Target test-server-reports started at: ${datetime::now()}" /> 
+
+    <call target="load-reports-test-db"/>
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.Reporting.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MPartner.server.Reporting.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.MFinance.server.Reporting.dll" />
+
+    <echo message="Target test-server-reports finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="test-common">
+    <echo message="Target test-common started at: ${datetime::now()}" />
+
+    <call target="remove_dlls"/>
+
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.Common.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.Common.IO.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.Common.DB.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.Common.Data.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.Common.Verification.dll" />
+    <NUnitConsole assemblyname="${dir.bin}/Ict.Testing.lib.Shared.dll" />
+
+<!--
+    <nunit2>
+        <formatter type="Plain" />
+        <test>
+            <assemblies>
+                <include name="${dir.bin}/Ict.Testing.lib.Common*dll" />
+                <exclude name="${dir.bin}/Ict.Testing.lib.Common.Controls.dll" />
+            </assemblies>
+        </test>
+    </nunit2>
+-->
+
+    <echo message="Target test-common finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="test-without-display">
+    <echo message="Target test-without-display started at: ${datetime::now()}" />
+
+    <call target="test-common"/>
+    <call target="test-tools"/>
+    <call target="test-server"/>
+
+    <echo message="Target test-without-display finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="test-all">
+    <echo message="Target test-all started at: ${datetime::now()}" /> 
+    
+    <property name="combinedTest" value="true"/>
+    <call target="test-without-display"/>
+    
+    <echo message="Target test-all finished at: ${datetime::now()}" /> 
+</target>
+
+<target name="test" depends="remove_dlls">
+    <echo message="Target test started at: ${datetime::now()}" /> 
+
+    <if test="${property::exists('testcase')}">
+        <NUnitConsole assemblyname="${dir.bin}/${file}" testcase="${testcase}"/>
+    </if>
+    <if test="${not property::exists('testcase')}">
+        <NUnitConsole assemblyname="${dir.bin}/${file}"/>
+    </if>
+
+    <echo message="Target test finished at: ${datetime::now()}" /> 
+</target>
+
+</project>

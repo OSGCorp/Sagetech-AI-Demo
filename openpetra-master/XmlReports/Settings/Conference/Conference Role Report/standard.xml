@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<Parameters>
+  <Parameter id="systemsettings" value="eBoolean:true" />
+  <Parameter id="xmlfiles" value="eString:Conference\\conferencerolereport.xml" />
+  <Parameter id="currentReport" value="eString:Conference Role Report" />
+  <Parameter id="MaxDisplayColumns" value="eInteger:6" />
+  <Parameter id="param_conferenceselection" value="eString:one conference" />
+  <Parameter id="param_attendeeselection" value="eString:all attendees" />
+  <Parameter id="param_partnerkey" value="eInteger:0" />
+  <Parameter id="param_conferencekey" value="eInteger:0" />
+  <Parameter id="param_conferencename" value="eString:" />
+  <Parameter id="param_extractname" value="eString:" />
+  <Parameter id="param_calculation" column="0" value="eString:Code" />
+  <Parameter id="ColumnWidth" column="0" value="eInteger:2" />
+  <Parameter id="param_calculation" column="1" value="eString:Total" />
+  <Parameter id="ColumnWidth" column="1" value="eInteger:2" />
+  <Parameter id="param_calculation" column="2" value="eString:Female" />
+  <Parameter id="ColumnWidth" column="2" value="eInteger:2" />
+  <Parameter id="param_calculation" column="3" value="eString:Male" />
+  <Parameter id="ColumnWidth" column="3" value="eInteger:2" />
+  <Parameter id="param_calculation" column="4" value="eString:Couple" />
+  <Parameter id="ColumnWidth" column="4" value="eInteger:2" />
+  <Parameter id="param_calculation" column="5" value="eString:Family" />
+  <Parameter id="ColumnWidth" column="5" value="eInteger:2" />
+</Parameters>

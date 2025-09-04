@@ -1,0 +1,607 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:dc="http://purl.org/dc/elements/1.1/" version="1.1" xmlns:xl="http://www.w3.org/1999/xlink" viewBox="0 0 1200 900" width="1200" height="900">
+  <defs/>
+  <g id="Canvas_1" stroke="none" stroke-dasharray="none" fill="none" fill-opacity="1" stroke-opacity="1">
+    <title>Canvas 1</title>
+    <rect fill="white" x="0" y="0" width="1200" height="900"/>
+    <g id="Canvas_1_Layer_1">
+      <title>Layer 1</title>
+      <g id="Graphic_2">
+        <rect x="0" y="0" width="1" height="1" fill="#f9f9f9"/>
+      </g>
+      <g id="Graphic_3">
+        <title>Text</title>
+        <text transform="translate(379.89844 17.69336)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="24" fill="#2c3e50" x="0" y="22" xml:space="preserve">OpenPetra Server-Client API Architecture</tspan>
+        </text>
+      </g>
+      <g id="Graphic_4">
+        <title>Text</title>
+        <text transform="translate(425.6074 53.52002)" fill="#7f8c8d">
+          <tspan font-family="Arial" font-size="18" fill="#7f8c8d" x="0" y="16" xml:space="preserve">HTTP/REST Communication Between Tiers</tspan>
+        </text>
+      </g>
+      <g id="Graphic_5">
+        <path d="M 40.648438 120 L 310.64844 120 C 316.1713 120 320.64844 124.47715 320.64844 130 L 320.64844 790 C 320.64844 795.52285 316.1713 800 310.64844 800 L 40.648438 800 C 35.12559 800 30.648438 795.52285 30.648438 790 L 30.648438 130 C 30.648438 124.47715 35.12559 120 40.648438 120 Z" fill="#d0f2fe"/>
+        <path d="M 40.648438 120 L 310.64844 120 C 316.1713 120 320.64844 124.47715 320.64844 130 L 320.64844 790 C 320.64844 795.52285 316.1713 800 310.64844 800 L 40.648438 800 C 35.12559 800 30.648438 795.52285 30.648438 790 L 30.648438 130 C 30.648438 124.47715 35.12559 120 40.648438 120 Z" stroke="#3498db" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_6">
+        <title>Text</title>
+        <text transform="translate(120.96729 133.52002)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="18" fill="#2c3e50" x="0" y="16" xml:space="preserve">CLIENT TIER</tspan>
+        </text>
+      </g>
+      <g id="Graphic_7">
+        <path d="M 410 120 L 910 120 C 915.5228 120 920 124.47715 920 130 L 920 790 C 920 795.52285 915.5228 800 910 800 L 410 800 C 404.47715 800 400 795.52285 400 790 L 400 130 C 400 124.47715 404.47715 120 410 120 Z" fill="#c5f8db"/>
+        <path d="M 410 120 L 910 120 C 915.5228 120 920 124.47715 920 130 L 920 790 C 920 795.52285 915.5228 800 910 800 L 410 800 C 404.47715 800 400 795.52285 400 790 L 400 130 C 400 124.47715 404.47715 120 410 120 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_8">
+        <title>Text</title>
+        <text transform="translate(600.3135 133.52002)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="18" fill="#2c3e50" x="0" y="16" xml:space="preserve">SERVER TIER</tspan>
+        </text>
+      </g>
+      <g id="Graphic_9">
+        <path d="M 1012.3555 120 L 1172.3555 120 C 1177.8783 120 1182.3555 124.47715 1182.3555 130 L 1182.3555 790 C 1182.3555 795.52285 1177.8783 800 1172.3555 800 L 1012.3555 800 C 1006.8326 800 1002.3555 795.52285 1002.3555 790 L 1002.3555 130 C 1002.3555 124.47715 1006.8326 120 1012.3555 120 Z" fill="#f8cdcd"/>
+        <path d="M 1012.3555 120 L 1172.3555 120 C 1177.8783 120 1182.3555 124.47715 1182.3555 130 L 1182.3555 790 C 1182.3555 795.52285 1177.8783 800 1172.3555 800 L 1012.3555 800 C 1006.8326 800 1002.3555 795.52285 1002.3555 790 L 1002.3555 130 C 1002.3555 124.47715 1006.8326 120 1012.3555 120 Z" stroke="#e74c3c" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_10">
+        <title>Text</title>
+        <text transform="translate(1047.3467 133.52002)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="18" fill="#2c3e50" x="0" y="16" xml:space="preserve">DATA TIER</tspan>
+        </text>
+      </g>
+      <g id="Graphic_11">
+        <path d="M 75.64844 180 L 275.64844 180 C 278.40986 180 280.64844 182.23858 280.64844 185 L 280.64844 255 C 280.64844 257.76142 278.40986 260 275.64844 260 L 75.64844 260 C 72.88701 260 70.64844 257.76142 70.64844 255 L 70.64844 185 C 70.64844 182.23858 72.88701 180 75.64844 180 Z" fill="#e8f4f8"/>
+        <path d="M 75.64844 180 L 275.64844 180 C 278.40986 180 280.64844 182.23858 280.64844 185 L 280.64844 255 C 280.64844 257.76142 278.40986 260 275.64844 260 L 75.64844 260 C 72.88701 260 70.64844 257.76142 70.64844 255 L 70.64844 185 C 70.64844 182.23858 72.88701 180 75.64844 180 Z" stroke="#3498db" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_12">
+        <title>Text</title>
+        <text transform="translate(123.12793 201.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">JavaScript Client</tspan>
+        </text>
+      </g>
+      <g id="Graphic_13">
+        <title>Text</title>
+        <text transform="translate(131.31055 221.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">HTML/CSS UI</tspan>
+        </text>
+      </g>
+      <g id="Graphic_14">
+        <path d="M 75.64844 290 L 275.64844 290 C 278.40986 290 280.64844 292.23858 280.64844 295 L 280.64844 365 C 280.64844 367.76142 278.40986 370 275.64844 370 L 75.64844 370 C 72.88701 370 70.64844 367.76142 70.64844 365 L 70.64844 295 C 70.64844 292.23858 72.88701 290 75.64844 290 Z" fill="#e8f4f8"/>
+        <path d="M 75.64844 290 L 275.64844 290 C 278.40986 290 280.64844 292.23858 280.64844 295 L 280.64844 365 C 280.64844 367.76142 278.40986 370 275.64844 370 L 75.64844 370 C 72.88701 370 70.64844 367.76142 70.64844 365 L 70.64844 295 C 70.64844 292.23858 72.88701 290 75.64844 290 Z" stroke="#3498db" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_15">
+        <title>Text</title>
+        <text transform="translate(118.5957 311.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Axios HTTP Client</tspan>
+        </text>
+      </g>
+      <g id="Graphic_16">
+        <title>Text</title>
+        <text transform="translate(155.80713 331.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">ajax.js</tspan>
+        </text>
+      </g>
+      <g id="Graphic_17">
+        <path d="M 75.64844 400 L 275.64844 400 C 278.40986 400 280.64844 402.2386 280.64844 405 L 280.64844 475 C 280.64844 477.7614 278.40986 480 275.64844 480 L 75.64844 480 C 72.88701 480 70.64844 477.7614 70.64844 475 L 70.64844 405 C 70.64844 402.2386 72.88701 400 75.64844 400 Z" fill="#e8f4f8"/>
+        <path d="M 75.64844 400 L 275.64844 400 C 278.40986 400 280.64844 402.2386 280.64844 405 L 280.64844 475 C 280.64844 477.7614 278.40986 480 275.64844 480 L 75.64844 480 C 72.88701 480 70.64844 477.7614 70.64844 475 L 70.64844 405 C 70.64844 402.2386 72.88701 400 75.64844 400 Z" stroke="#3498db" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_18">
+        <title>Text</title>
+        <text transform="translate(109.24072 421.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Client-Side Validation</tspan>
+        </text>
+      </g>
+      <g id="Graphic_19">
+        <title>Text</title>
+        <text transform="translate(131.30713 441.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Form Controls</tspan>
+        </text>
+      </g>
+      <g id="Graphic_20">
+        <path d="M 75.64844 510 L 275.64844 510 C 278.40986 510 280.64844 512.2386 280.64844 515 L 280.64844 585 C 280.64844 587.7614 278.40986 590 275.64844 590 L 75.64844 590 C 72.88701 590 70.64844 587.7614 70.64844 585 L 70.64844 515 C 70.64844 512.2386 72.88701 510 75.64844 510 Z" fill="#e8f4f8"/>
+        <path d="M 75.64844 510 L 275.64844 510 C 278.40986 510 280.64844 512.2386 280.64844 515 L 280.64844 585 C 280.64844 587.7614 278.40986 590 275.64844 590 L 75.64844 590 C 72.88701 590 70.64844 587.7614 70.64844 585 L 70.64844 515 C 70.64844 512.2386 72.88701 510 75.64844 510 Z" stroke="#3498db" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_21">
+        <title>Text</title>
+        <text transform="translate(132.45215 531.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Local Storage</tspan>
+        </text>
+      </g>
+      <g id="Graphic_22">
+        <title>Text</title>
+        <text transform="translate(107.9419 551.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Session Management</tspan>
+        </text>
+      </g>
+      <g id="Graphic_23">
+        <path d="M 75.64844 620 L 275.64844 620 C 278.40986 620 280.64844 622.2386 280.64844 625 L 280.64844 695 C 280.64844 697.7614 278.40986 700 275.64844 700 L 75.64844 700 C 72.88701 700 70.64844 697.7614 70.64844 695 L 70.64844 625 C 70.64844 622.2386 72.88701 620 75.64844 620 Z" fill="#e8f4f8"/>
+        <path d="M 75.64844 620 L 275.64844 620 C 278.40986 620 280.64844 622.2386 280.64844 625 L 280.64844 695 C 280.64844 697.7614 278.40986 700 275.64844 700 L 75.64844 700 C 72.88701 700 70.64844 697.7614 70.64844 695 L 70.64844 625 C 70.64844 622.2386 72.88701 620 75.64844 620 Z" stroke="#3498db" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_24">
+        <title>Text</title>
+        <text transform="translate(132.84521 641.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Autocomplete</tspan>
+        </text>
+      </g>
+      <g id="Graphic_25">
+        <title>Text</title>
+        <text transform="translate(104.83154 661.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Dynamic Data Loading</tspan>
+        </text>
+      </g>
+      <g id="Graphic_26">
+        <path d="M 365 200 L 415 200 C 417.7614 200 420 202.23858 420 205 L 420 695 C 420 697.7614 417.7614 700 415 700 L 365 700 C 362.23858 700 360 697.7614 360 695 L 360 205 C 360 202.23858 362.23858 200 365 200 Z" fill="#f0e8f8"/>
+        <path d="M 365 200 L 415 200 C 417.7614 200 420 202.23858 420 205 L 420 695 C 420 697.7614 417.7614 700 415 700 L 365 700 C 362.23858 700 360 697.7614 360 695 L 360 205 C 360 202.23858 362.23858 200 365 200 Z" stroke="#9b59b6" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_27">
+        <title>Text</title>
+        <text transform="translate(376.7378 501.6045) rotate(-90)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">HTTP/REST API</tspan>
+        </text>
+      </g>
+      <g id="Graphic_28">
+        <path d="M 485 180 L 645 180 C 647.7614 180 650 182.23858 650 185 L 650 255 C 650 257.76142 647.7614 260 645 260 L 485 260 C 482.2386 260 480 257.76142 480 255 L 480 185 C 480 182.23858 482.2386 180 485 180 Z" fill="#e8f8ef"/>
+        <path d="M 485 180 L 645 180 C 647.7614 180 650 182.23858 650 185 L 650 255 C 650 257.76142 647.7614 260 645 260 L 485 260 C 482.2386 260 480 257.76142 480 255 L 480 185 C 480 182.23858 482.2386 180 485 180 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_29">
+        <title>Text</title>
+        <text transform="translate(521.94727 201.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Web Services</tspan>
+        </text>
+      </g>
+      <g id="Graphic_30">
+        <title>Text</title>
+        <text transform="translate(512.083 221.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">ASMX Endpoints</tspan>
+        </text>
+      </g>
+      <g id="Graphic_31">
+        <path d="M 485 290 L 645 290 C 647.7614 290 650 292.23858 650 295 L 650 365 C 650 367.76142 647.7614 370 645 370 L 485 370 C 482.2386 370 480 367.76142 480 365 L 480 295 C 480 292.23858 482.2386 290 485 290 Z" fill="#e8f8ef"/>
+        <path d="M 485 290 L 645 290 C 647.7614 290 650 292.23858 650 295 L 650 365 C 650 367.76142 647.7614 370 645 370 L 485 370 C 482.2386 370 480 367.76142 480 365 L 480 295 C 480 292.23858 482.2386 290 485 290 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_32">
+        <title>Text</title>
+        <text transform="translate(514.937 311.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">WebConnectors</tspan>
+        </text>
+      </g>
+      <g id="Graphic_33">
+        <title>Text</title>
+        <text transform="translate(502.3589 331.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Module-Specific API</tspan>
+        </text>
+      </g>
+      <g id="Graphic_34">
+        <path d="M 485 400 L 645 400 C 647.7614 400 650 402.2386 650 405 L 650 475 C 650 477.7614 647.7614 480 645 480 L 485 480 C 482.2386 480 480 477.7614 480 475 L 480 405 C 480 402.2386 482.2386 400 485 400 Z" fill="#e8f8ef"/>
+        <path d="M 485 400 L 645 400 C 647.7614 400 650 402.2386 650 405 L 650 475 C 650 477.7614 647.7614 480 645 480 L 485 480 C 482.2386 480 480 477.7614 480 475 L 480 405 C 480 402.2386 482.2386 400 485 400 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_35">
+        <title>Text</title>
+        <text transform="translate(522.2036 421.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">UIConnectors</tspan>
+        </text>
+      </g>
+      <g id="Graphic_36">
+        <title>Text</title>
+        <text transform="translate(497.3003 441.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Screen-Specific Logic</tspan>
+        </text>
+      </g>
+      <g id="Graphic_37">
+        <path d="M 485 510 L 645 510 C 647.7614 510 650 512.2386 650 515 L 650 585 C 650 587.7614 647.7614 590 645 590 L 485 590 C 482.2386 590 480 587.7614 480 585 L 480 515 C 480 512.2386 482.2386 510 485 510 Z" fill="#e8f8ef"/>
+        <path d="M 485 510 L 645 510 C 647.7614 510 650 512.2386 650 515 L 650 585 C 650 587.7614 647.7614 590 645 590 L 485 590 C 482.2386 590 480 587.7614 480 585 L 480 515 C 480 512.2386 482.2386 510 485 510 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_38">
+        <title>Text</title>
+        <text transform="translate(517.9175 531.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Business Logic</tspan>
+        </text>
+      </g>
+      <g id="Graphic_39">
+        <title>Text</title>
+        <text transform="translate(515.2036 551.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Domain Objects</tspan>
+        </text>
+      </g>
+      <g id="Graphic_40">
+        <path d="M 485 620 L 645 620 C 647.7614 620 650 622.2386 650 625 L 650 695 C 650 697.7614 647.7614 700 645 700 L 485 700 C 482.2386 700 480 697.7614 480 695 L 480 625 C 480 622.2386 482.2386 620 485 620 Z" fill="#e8f8ef"/>
+        <path d="M 485 620 L 645 620 C 647.7614 620 650 622.2386 650 625 L 650 695 C 650 697.7614 647.7614 700 645 700 L 485 700 C 482.2386 700 480 697.7614 480 695 L 480 625 C 480 622.2386 482.2386 620 485 620 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_41">
+        <title>Text</title>
+        <text transform="translate(512.2129 641.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Server Validation</tspan>
+        </text>
+      </g>
+      <g id="Graphic_42">
+        <title>Text</title>
+        <text transform="translate(506.6416 661.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">TVerificationResult</tspan>
+        </text>
+      </g>
+      <g id="Graphic_43">
+        <path d="M 716 180 L 876 180 C 878.7614 180 881 182.23858 881 185 L 881 255 C 881 257.76142 878.7614 260 876 260 L 716 260 C 713.2386 260 711 257.76142 711 255 L 711 185 C 711 182.23858 713.2386 180 716 180 Z" fill="#e8f8ef"/>
+        <path d="M 716 180 L 876 180 C 878.7614 180 881 182.23858 881 185 L 881 255 C 881 257.76142 878.7614 260 876 260 L 716 260 C 713.2386 260 711 257.76142 711 255 L 711 185 C 711 182.23858 713.2386 180 716 180 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_44">
+        <title>Text</title>
+        <text transform="translate(724.94385 201.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">HTTP Binary Serializer</tspan>
+        </text>
+      </g>
+      <g id="Graphic_45">
+        <title>Text</title>
+        <text transform="translate(721.3071 221.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">JSON Parser/Generator</tspan>
+        </text>
+      </g>
+      <g id="Graphic_46">
+        <path d="M 716 290 L 876 290 C 878.7614 290 881 292.23858 881 295 L 881 365 C 881 367.76142 878.7614 370 876 370 L 716 370 C 713.2386 370 711 367.76142 711 365 L 711 295 C 711 292.23858 713.2386 290 716 290 Z" fill="#e8f8ef"/>
+        <path d="M 716 290 L 876 290 C 878.7614 290 881 292.23858 881 295 L 881 365 C 881 367.76142 878.7614 370 876 370 L 716 370 C 713.2386 370 711 367.76142 711 365 L 711 295 C 711 292.23858 713.2386 290 716 290 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_47">
+        <title>Text</title>
+        <text transform="translate(741.5244 311.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Session Manager</tspan>
+        </text>
+      </g>
+      <g id="Graphic_48">
+        <title>Text</title>
+        <text transform="translate(751.6348 331.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Authentication</tspan>
+        </text>
+      </g>
+      <g id="Graphic_49">
+        <path d="M 716 400 L 876 400 C 878.7614 400 881 402.2386 881 405 L 881 475 C 881 477.7614 878.7614 480 876 480 L 716 480 C 713.2386 480 711 477.7614 711 475 L 711 405 C 711 402.2386 713.2386 400 716 400 Z" fill="#e8f8ef"/>
+        <path d="M 716 400 L 876 400 C 878.7614 400 881 402.2386 881 405 L 881 475 C 881 477.7614 878.7614 480 876 480 L 716 480 C 713.2386 480 711 477.7614 711 475 L 711 405 C 711 402.2386 713.2386 400 716 400 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_50">
+        <title>Text</title>
+        <text transform="translate(736.0967 421.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Permission System</tspan>
+        </text>
+      </g>
+      <g id="Graphic_51">
+        <title>Text</title>
+        <text transform="translate(713.9072 441.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">RequireModulePermission</tspan>
+        </text>
+      </g>
+      <g id="Graphic_52">
+        <path d="M 716 510 L 876 510 C 878.7614 510 881 512.2386 881 515 L 881 585 C 881 587.7614 878.7614 590 876 590 L 716 590 C 713.2386 590 711 587.7614 711 585 L 711 515 C 711 512.2386 713.2386 510 716 510 Z" fill="#e8f8ef"/>
+        <path d="M 716 510 L 876 510 C 878.7614 510 881 512.2386 881 515 L 881 585 C 881 587.7614 878.7614 590 876 590 L 716 590 C 713.2386 590 711 587.7614 711 585 L 711 515 C 711 512.2386 713.2386 510 716 510 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_53">
+        <title>Text</title>
+        <text transform="translate(742.707 531.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Progress Tracker</tspan>
+        </text>
+      </g>
+      <g id="Graphic_54">
+        <title>Text</title>
+        <text transform="translate(715.835 551.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Long-Running Operations</tspan>
+        </text>
+      </g>
+      <g id="Graphic_55">
+        <path d="M 716 620 L 876 620 C 878.7614 620 881 622.2386 881 625 L 881 695 C 881 697.7614 878.7614 700 876 700 L 716 700 C 713.2386 700 711 697.7614 711 695 L 711 625 C 711 622.2386 713.2386 620 716 620 Z" fill="#e8f8ef"/>
+        <path d="M 716 620 L 876 620 C 878.7614 620 881 622.2386 881 625 L 881 695 C 881 697.7614 878.7614 700 876 700 L 716 700 C 713.2386 700 711 697.7614 711 695 L 711 625 C 711 622.2386 713.2386 620 716 620 Z" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_56">
+        <title>Text</title>
+        <text transform="translate(737.6382 641.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Data Access Layer</tspan>
+        </text>
+      </g>
+      <g id="Graphic_57">
+        <title>Text</title>
+        <text transform="translate(739.583 661.7378)" fill="#2c3e50">
+          <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">TypedDataAccess</tspan>
+        </text>
+      </g>
+      <g id="Group_118">
+        <g id="Graphic_58">
+          <path d="M 1029.7144 510.96084 L 1029.7144 381.21787 C 1029.7144 372.2656 1057.7776 365 1092.3555 365 C 1126.9334 365 1154.9966 372.2656 1154.9966 381.21787 L 1154.9966 510.96084 C 1154.9966 519.9131 1126.9334 527.1787 1092.3555 527.1787 C 1057.7776 527.1787 1029.7144 519.9131 1029.7144 510.96084" fill="#f8e8e8"/>
+          <path d="M 1029.7144 510.96084 L 1029.7144 381.21787 C 1029.7144 372.2656 1057.7776 365 1092.3555 365 C 1126.9334 365 1154.9966 372.2656 1154.9966 381.21787 L 1154.9966 510.96084 C 1154.9966 519.9131 1126.9334 527.1787 1092.3555 527.1787 C 1057.7776 527.1787 1029.7144 519.9131 1029.7144 510.96084 M 1029.7144 381.21787 C 1029.7144 390.17014 1057.7776 397.43574 1092.3555 397.43574 C 1126.9334 397.43574 1154.9966 390.17014 1154.9966 381.21787" stroke="#e74c3c" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+        </g>
+        <g id="Group_117">
+          <g id="Graphic_59">
+            <title>Text</title>
+            <text transform="translate(1062.3901 421.771)" fill="#2c3e50">
+              <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">Database</tspan>
+            </text>
+          </g>
+          <g id="Graphic_60">
+            <title>Text</title>
+            <text transform="translate(1051.8936 441.771)" fill="#2c3e50">
+              <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">(PostgreSQL</tspan>
+            </text>
+          </g>
+          <g id="Graphic_61">
+            <title>Text</title>
+            <text transform="translate(1058.5176 461.771)" fill="#2c3e50">
+              <tspan font-family="Arial" font-size="14" fill="#2c3e50" x="0" y="13" xml:space="preserve">or MySQL)</tspan>
+            </text>
+          </g>
+        </g>
+      </g>
+      <g id="Graphic_62">
+        <line x1="175.64844" y1="260" x2="175.64844" y2="290" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_63">
+        <title>Text</title>
+        <text transform="translate(182.6621 267.7705)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">UI Events</tspan>
+        </text>
+      </g>
+      <g id="Graphic_64">
+        <line x1="175.64844" y1="370" x2="175.64844" y2="400" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_65">
+        <title>Text</title>
+        <text transform="translate(183.54346 376.88965)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Validate Forms</tspan>
+        </text>
+      </g>
+      <g id="Graphic_66">
+        <line x1="175.64844" y1="480" x2="175.64844" y2="510" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_67">
+        <title>Text</title>
+        <text transform="translate(183.54346 487.4082)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Store/Retrieve State</tspan>
+        </text>
+      </g>
+      <g id="Graphic_68">
+        <line x1="175.64844" y1="590" x2="175.64844" y2="620" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_69">
+        <title>Text</title>
+        <text transform="translate(187.59082 597.7705)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Typeahead Data</tspan>
+        </text>
+      </g>
+      <g id="Graphic_70">
+        <line x1="280.64844" y1="329.5" x2="363.1377" y2="329.5" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_71">
+        <title>Text</title>
+        <rect x="288.2285" y="311.9668" width="67.11914" height="14" fill="white"/>
+        <text transform="translate(288.2285 311.7705)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">HTTP POST</tspan>
+        </text>
+      </g>
+      <g id="Graphic_72">
+        <title>Text</title>
+        <rect x="282.43457" y="333.0332" width="78.703125" height="14" fill="white"/>
+        <text transform="translate(282.43457 332.8369)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">JSON Payload</tspan>
+        </text>
+      </g>
+      <g id="Graphic_73">
+        <line x1="420" y1="330" x2="480" y2="330" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_74">
+        <title>Text</title>
+        <text transform="translate(433.98926 298.0459)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Route</tspan>
+        </text>
+      </g>
+      <g id="Graphic_75">
+        <title>Text</title>
+        <text transform="translate(424.65234 313.34668)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Requests</tspan>
+        </text>
+      </g>
+      <g id="Graphic_76">
+        <line x1="650" y1="220" x2="713.041" y2="220" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Group_121">
+        <g id="Graphic_77">
+          <title>Text</title>
+          <text transform="translate(658.3301 187.98242)" fill="#34495e">
+            <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Serialize</tspan>
+          </text>
+        </g>
+        <g id="Graphic_78">
+          <title>Text</title>
+          <text transform="translate(654.3223 201.43945)" fill="#34495e">
+            <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Response</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Graphic_79">
+        <line x1="565" y1="260" x2="565" y2="290" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_80">
+        <title>Text</title>
+        <text transform="translate(576.65234 265.92285)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Delegate to</tspan>
+        </text>
+      </g>
+      <g id="Graphic_81">
+        <line x1="565" y1="370" x2="565" y2="400" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_82">
+        <title>Text</title>
+        <text transform="translate(579.957 376.88965)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Screen Logic</tspan>
+        </text>
+      </g>
+      <g id="Graphic_83">
+        <line x1="565" y1="480" x2="565" y2="510" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_84">
+        <title>Text</title>
+        <text transform="translate(576.65234 485.92285)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Process Request</tspan>
+        </text>
+      </g>
+      <g id="Graphic_85">
+        <line x1="565" y1="590" x2="565" y2="620" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_86">
+        <title>Text</title>
+        <text transform="translate(576.65234 597.8037)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Validate Data</tspan>
+        </text>
+      </g>
+      <g id="Graphic_87">
+        <line x1="650" y1="330" x2="710" y2="330" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_88">
+        <title>Text</title>
+        <text transform="translate(646.3262 303.3037)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Authenticate</tspan>
+        </text>
+      </g>
+      <g id="Graphic_89">
+        <title>Text</title>
+        <text transform="translate(667.2988 317.3037)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">User</tspan>
+        </text>
+      </g>
+      <g id="Graphic_90">
+        <line x1="796" y1="370" x2="796" y2="400" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_91">
+        <title>Text</title>
+        <text transform="translate(805.3027 376.88965)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Check Permissions</tspan>
+        </text>
+      </g>
+      <g id="Graphic_92">
+        <line x1="796" y1="480" x2="796" y2="510" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_93">
+        <title>Text</title>
+        <text transform="translate(805.1211 486.7871)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Track Progress</tspan>
+        </text>
+      </g>
+      <g id="Graphic_94">
+        <line x1="796" y1="590" x2="796" y2="620" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_95">
+        <title>Text</title>
+        <text transform="translate(805.1211 597.7705)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Access Data</tspan>
+        </text>
+      </g>
+      <g id="Graphic_96">
+        <line x1="868" y1="662" x2="1000.8154" y2="662" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_97">
+        <title>Text</title>
+        <text transform="translate(933.8066 630.1094)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="1.6669922" y="11" xml:space="preserve">Database </tspan>
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="6.3427734" y="25.392578" xml:space="preserve">Queries</tspan>
+        </text>
+      </g>
+      <g id="Graphic_98">
+        <title>Text</title>
+        <text transform="translate(927.0332 668.30176)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Transactions</tspan>
+        </text>
+      </g>
+      <g id="Graphic_99">
+        <path d="M 435 720 L 885 720 C 887.7614 720 890 722.2386 890 725 L 890 775 C 890 777.7614 887.7614 780 885 780 L 435 780 C 432.2386 780 430 777.7614 430 775 L 430 725 C 430 722.2386 432.2386 720 435 720 Z" stroke="#7f8c8d" stroke-linecap="butt" stroke-linejoin="round" stroke-dasharray="4.0,4.0" stroke-width="1"/>
+      </g>
+      <g id="Graphic_100">
+        <title>Text</title>
+        <text transform="translate(460 736.7378)" fill="#7f8c8d">
+          <tspan font-family="Arial" font-size="14" fill="#7f8c8d" x="0" y="13" xml:space="preserve">Module APIs:</tspan>
+        </text>
+      </g>
+      <g id="Graphic_101">
+        <title>Text</title>
+        <text transform="translate(568 736.7378)" fill="#7f8c8d">
+          <tspan font-family="Arial" font-size="14" fill="#7f8c8d" x="0" y="13" xml:space="preserve">Finance</tspan>
+        </text>
+      </g>
+      <g id="Graphic_102">
+        <title>Text</title>
+        <text transform="translate(648 736.7378)" fill="#7f8c8d">
+          <tspan font-family="Arial" font-size="14" fill="#7f8c8d" x="0" y="13" xml:space="preserve">Partner</tspan>
+        </text>
+      </g>
+      <g id="Graphic_103">
+        <title>Text</title>
+        <text transform="translate(721.4346 736.7378)" fill="#7f8c8d">
+          <tspan font-family="Arial" font-size="14" fill="#7f8c8d" x="0" y="13" xml:space="preserve">Personnel</tspan>
+        </text>
+      </g>
+      <g id="Graphic_104">
+        <title>Text</title>
+        <text transform="translate(812 736.7378)" fill="#7f8c8d">
+          <tspan font-family="Arial" font-size="14" fill="#7f8c8d" x="0" y="13" xml:space="preserve">Conference</tspan>
+        </text>
+      </g>
+      <g id="Group_119">
+        <g id="Graphic_105">
+          <rect x="420" y="829.4238" width="15" height="15" fill="#e8f4f8"/>
+          <rect x="420" y="829.4238" width="15" height="15" stroke="#3498db" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+        </g>
+        <g id="Graphic_106">
+          <title>Text</title>
+          <text transform="translate(445 829.7705)" fill="#34495e">
+            <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Client Components</tspan>
+          </text>
+        </g>
+        <g id="Graphic_107">
+          <rect x="420" y="854.4238" width="15" height="15" fill="#e8f8ef"/>
+          <rect x="420" y="854.4238" width="15" height="15" stroke="#2ecc71" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+        </g>
+        <g id="Graphic_108">
+          <title>Text</title>
+          <text transform="translate(445 854.7705)" fill="#34495e">
+            <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Server Components</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Group_120">
+        <g id="Graphic_109">
+          <rect x="572.81836" y="829.4238" width="15" height="15" fill="#f0e8f8"/>
+          <rect x="572.81836" y="829.4238" width="15" height="15" stroke="#9b59b6" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+        </g>
+        <g id="Graphic_110">
+          <title>Text</title>
+          <text transform="translate(597.81836 829.7705)" fill="#34495e">
+            <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">API Boundary</tspan>
+          </text>
+        </g>
+        <g id="Graphic_111">
+          <rect x="572.81836" y="854.4238" width="15" height="15" fill="#f8e8e8"/>
+          <rect x="572.81836" y="854.4238" width="15" height="15" stroke="#e74c3c" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+        </g>
+        <g id="Graphic_112">
+          <title>Text</title>
+          <text transform="translate(597.81836 854.7705)" fill="#34495e">
+            <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Data Storage</tspan>
+          </text>
+        </g>
+      </g>
+      <g id="Line_113">
+        <line x1="700" y1="840.8809" x2="730" y2="840.8809" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_114">
+        <title>Text</title>
+        <text transform="translate(755 829.2275)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Data Flow</tspan>
+        </text>
+      </g>
+      <g id="Line_115">
+        <line x1="700" y1="865.8809" x2="730" y2="865.8809" stroke="#34495e" stroke-linecap="butt" stroke-linejoin="round" stroke-width="2"/>
+      </g>
+      <g id="Graphic_116">
+        <title>Text</title>
+        <text transform="translate(755 854.2275)" fill="#34495e">
+          <tspan font-family="Arial" font-size="12" fill="#34495e" x="0" y="11" xml:space="preserve">Bidirectional Flow</tspan>
+        </text>
+      </g>
+    </g>
+  </g>
+</svg>

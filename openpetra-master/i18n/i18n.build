@@ -1,0 +1,262 @@
+<?xml version="1.0"?>
+<project name="OpenPetra-i18n">
+
+<include buildfile="../inc/nant/OpenPetra.common.xml" />
+
+<property name="template.pot.file" value="${dir.root}/i18n/template.pot" overwrite="false" />
+<property name="doNotTranslate.po.file" value="${dir.root}/i18n/doNotTranslate.po"/> 
+
+<target name="clean" >
+  <delete dir="${tempdir}/i18n"/>
+  <foreach item="File" property="TargetLanguage.PofileWithPath">
+    <in><items>
+          <include name="${dir.root}/i18n/*.po" />
+          <exclude name="${dir.root}/i18n/doNotTranslate.po" />
+    </items></in>
+    <do>
+      <delete dir="${dir.bin}/${path::get-file-name-without-extension(TargetLanguage.PofileWithPath)}"/>
+    </do>
+  </foreach>
+</target>
+
+<script language="C#" prefix="OPI18N" >
+  <imports>
+    <import namespace="NAnt.Core.Tasks" />
+    <import namespace="System.IO" />
+  </imports>
+  <code>
+    <![CDATA[
+    // we have a problem with mixed line endings, sometimes \r\n and sometimes \n
+    // the translation must match the original string
+    // to avoid error "'msgid' and 'msgstr' entries do not both begin with '\n'"
+    [Function("FixLineEndingsInPoFile")]
+    public static string FixLineEndingsInPoFile(string AFileName) {
+        StreamReader sr = new StreamReader(AFileName);
+        StreamWriter sw = new StreamWriter(AFileName + ".new");
+        string id_or_str = string.Empty;
+        string lineending = string.Empty;
+
+        while (!sr.EndOfStream)
+        {
+            string line = sr.ReadLine();
+
+            if (line.StartsWith("msgid"))
+            {
+                id_or_str = "id";
+                lineending = "\\n";
+            }
+            else if (line.StartsWith("msgstr"))
+            {
+                id_or_str = "str";
+            }
+
+            if (id_or_str == "id")
+            {
+                if (line.Contains("\\r\\n"))
+                {
+                    lineending = "\\r\\n";
+                }
+                else if (line.Contains("\\n"))
+                {
+                    lineending = "\\n";
+                }
+            }
+            else if (id_or_str == "str")
+            {
+                line = line.Replace("\\n", lineending).Replace("\\r\\r", "\\r");
+            }
+
+            sw.WriteLine(line);
+        }
+
+        sr.Close();
+        sw.Close();
+        File.Delete(AFileName);
+        File.Move(AFileName + ".new", AFileName);
+        return "fixed line endings in " + AFileName;
+    }
+]]>
+    </code>
+</script>
+
+<target name="compilePoFileInternal-windows" if="${platform::is-windows()}" >
+  <!-- faking csc, so that it handles path to file with slashes correctly
+       csc is only understanding backslashes. %~f6 repairs this in a batch file -->
+  <mkdir dir="${tempdir}/i18n"/>
+  <echo file="${tempdir}/i18n/csc.bat">@echo off
+SETLOCAL
+${framework::get-framework-directory(framework::get-target-framework())}\csc.exe %1 %2 %3 %4 %5 %~f6
+ENDLOCAL
+  </echo>
+</target>
+
+<target name="downloadTranslations">
+  <property name="OpenBuildService" value="false" overwrite="false"/>
+  <!-- on open build service, we cannot download any files. use the translation files from the git, or add to download _services -->
+  <if test="${OpenBuildService == 'false'}">
+   <if test="${'unix'==platform::get-name()}" >
+    <exec program="wget" commandline="https://github.com/openpetra/openpetra-i18n/archive/master.tar.gz -O i18n.tar.gz" workingdir="${tempdir}"/>
+    <exec program="bash" commandline="-c 'tar xzf i18n.tar.gz'" workingdir="${tempdir}"/>
+    <move todir="${dir.root}/i18n/">
+      <fileset basedir="${tempdir}/openpetra-i18n-master/i18n">
+        <include name="*.po" />
+      </fileset>
+    </move>
+    <delete dir="${tempdir}/translationfiles"/>
+    <move file="${dir.root}/i18n/de.po" tofile="${dir.root}/i18n/de-DE.po" overwrite="true"/>
+    <move file="${dir.root}/i18n/da.po" tofile="${dir.root}/i18n/da-DK.po" overwrite="true"/>
+    <move file="${dir.root}/i18n/es.po" tofile="${dir.root}/i18n/es-ES.po" overwrite="true"/>
+    <move file="${dir.root}/i18n/fr.po" tofile="${dir.root}/i18n/fr-FR.po" overwrite="true"/>
+    <echo message="${OPI18N::FixLineEndingsInPoFile(dir.root + '/i18n/de-DE.po')}"/>
+    <echo message="${OPI18N::FixLineEndingsInPoFile(dir.root + '/i18n/da-DK.po')}"/>
+    <echo message="${OPI18N::FixLineEndingsInPoFile(dir.root + '/i18n/es-ES.po')}"/>
+    <echo message="${OPI18N::FixLineEndingsInPoFile(dir.root + '/i18n/fr-FR.po')}"/>
+   </if>
+   <if test="${'unix'!=platform::get-name()}" >
+     <fail message="not implemented for Windows"/>
+   </if>
+  </if>
+</target>
+
+<target name="compile" depends="translation" 
+        description="compile the language file(s) for delivery"/>
+
+<target name="translation" description="compile the language file(s) for delivery"
+        depends="downloadTranslations, compilePoFileInternal-windows">
+  <mkdir dir="${tempdir}/i18n"/>
+  <foreach item="File" property="TargetLanguage.PofileWithPath">
+    <in><items>
+          <include name="${dir.root}/i18n/*.po" />
+          <exclude name="${dir.root}/i18n/doNotTranslate.po" />
+    </items></in>
+    <do>
+      <property name="currLanguageFile" value="${TargetLanguage.PofileWithPath}"/>
+      <property name="CustomLanguageFile" value="${TargetLanguage.PofileWithPath}.my"/>
+      <if test="${file::exists(CustomLanguageFile)}">
+          <!-- we want to merge the custom language file with the default language file, 
+               overwriting the default language file where the custom file contains translations -->
+          <property name="currLanguageFile" value="&quot;${tempdir}/i18n/${TargetLanguage.PofileWithPath}&quot;"/>
+          <exec program="${external.Poedit.msgcat}">
+            <arg value="&quot;${CustomLanguageFile}&quot;" />
+            <arg value="&quot;${TargetLanguage.PofileWithPath}&quot;" />
+            <arg value="--use-first" />
+            <arg value="-o" />
+            <arg value="&quot;${currLanguageFile}&quot;" />
+          </exec>
+      </if>
+      <!-- compiling for windows -->
+      <exec program="${external.Poedit.msgfmt}" if="${platform::is-windows()}">
+        <arg value="${currLanguageFile}" />
+        <arg value="-d" />
+        <arg value="&quot;${dir.bin}&quot;" />
+        <arg value="--locale=${path::get-file-name-without-extension(TargetLanguage.PofileWithPath)}" />
+        <arg value="--resource=OpenPetra" />
+        <arg value="--csharp" />
+        <environment>
+          <variable name="Path" path="${tempdir}/i18n" />
+          <variable name="GETTEXTCSHARPLIBDIR" value="${dir.bin}" />
+          <variable name="TMPDIR" value="&quot;${tempdir}&quot;" />
+        </environment>
+      </exec>
+      <!-- compiling for unix -->
+      <exec program="${external.Poedit.msgfmt}" if="${not platform::is-windows()}">
+        <arg value="${currLanguageFile}" />
+        <arg value="-d" />
+        <arg value="${dir.bin}" />
+        <arg value="--locale=${path::get-file-name-without-extension(TargetLanguage.PofileWithPath)}" />
+        <arg value="--resource=OpenPetra" />
+        <arg value="--csharp" />
+        <environment>
+          <!-- /usr/bin/msgfmt: C# compiler not found, try installing pnet
+               solution: ln -s /usr/bin/gmcs /usr/bin/mcs
+          -->
+          <variable name="PATH" path="${environment::get-variable('PATH')}:${framework::get-framework-directory(framework::get-target-framework())}" />
+          <variable name="GETTEXTCSHARPLIBDIR" value="${dir.bin}" />
+          <variable name="TMPDIR" value="${tempdir}" />
+        </environment>
+      </exec>
+    </do>
+  </foreach>
+</target>
+
+<target name="resetTemplatePot">
+  <mkdir dir="${tempdir}/i18n"/>
+  <!-- create an empty pot -->
+  <delete file="${tempdir}/i18n/template.pot" /> 
+  <touch file="${tempdir}/i18n/empty.cs" />
+  <exec program="${external.Poedit.gettext}" workingdir="${dir.root}/i18n/">
+   <arg value="--force-po" />
+   <arg value="--copyright-holder=${info.copyright.holder}" />
+   <arg value="--package-name=${info.productname}" />
+   <arg value="--msgid-bugs-address=${info.pot.msgidbugs}" />
+   <arg value="-o" />
+   <arg value="${tempdir}/i18n/template.pot" />
+   <arg value="${tempdir}/i18n/empty.cs" />
+  </exec>
+  <!-- Repair brocken charset -->
+  <copy file="${tempdir}/i18n/template.pot" tofile="${template.pot.file}" overwrite="true" outputencoding="utf-8">
+    <filterchain>
+      <replacestring from="Content-Type: text/plain; charset=CHARSET\n" to="Content-Type: text/plain; charset=UTF-8\n" />
+    </filterchain>
+  </copy>
+  <if test="${'unix'==platform::get-name()}" >
+    <!-- remove the BOM -->
+    <exec program="bash" commandline="-c 'tail --bytes=+4 ${template.pot.file} > ${template.pot.file}.new &amp;&amp; mv ${template.pot.file}.new ${template.pot.file}'" workingdir="${tempdir}"/>
+  </if>
+</target>
+
+<target name="extractMsgs" depends="resetTemplatePot">
+  <delete file="${tempdir}/i18n/sourcefile.list" /> 
+  <delete file="${tempdir}/i18n/GenerateI18N.CollectedGettext.cs" /> 
+  <echo>Generate list of sourcefiles...</echo>
+  <foreach item="File" property="sourcefile">
+    <in><items>
+          <include name="${dir.root}/csharp/ICT/Common/**.cs" />
+          <include name="${dir.root}/csharp/ICT/Petra/**.cs" />
+          <include name="${dir.root}/csharp/ICT/Petra/Definitions/UINavigation.yml" />
+    </items></in>
+    <do>
+      <echo file="${tempdir}/i18n/sourcefile.list" append="true">${sourcefile}
+</echo>
+    </do>
+  </foreach>
+  <!-- call generateI18N -->
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('ExecDotNet')}"/>  
+  <ExecDotNet program="${dir.bin}/Ict.Tools.GenerateI18N.exe" 
+    commandline="-gettext:&quot;${external.Poedit.gettext}&quot; &quot;-petraxml:${PetraXML.file}&quot; &quot;-tmpPath:${tempdir}/i18n&quot; &quot;-poFile:${template.pot.file}&quot; &quot;-filelist:${tempdir}/i18n/sourcefile.list&quot;" />
+  <!-- if GenerateI18N.CollectedGettext.cs was generated, we need to analyze it for po file -->
+  <exec program="${external.Poedit.gettext}" workingdir="${dir.root}/i18n/"
+        if="${file::exists(path::combine(tempdir,'i18n/GenerateI18N.CollectedGettext.cs'))}" >
+    <arg line="-j --add-comments=/ --add-location --from-code=UTF-8" />
+    <arg value="${tempdir}/i18n/GenerateI18N.CollectedGettext.cs" />
+    <arg value="-o" />
+    <arg value="${template.pot.file}" />
+  </exec>
+  
+  <!-- remove all strings that should not be translated: demo labels, etc -->
+  <echo>arguments: -do:removeDoNotTranslate &quot;-dntFile:${doNotTranslate.po.file}&quot;  &quot;-poFile:${template.pot.file}&quot;</echo>
+  <ExecDotNet program="${dir.bin}/Ict.Tools.GenerateI18N.exe" commandline="-do:removeDoNotTranslate &quot;-dntFile:${doNotTranslate.po.file}&quot;  &quot;-poFile:${template.pot.file}&quot;"/>
+
+  <!-- now update the po files with the new template -->
+  <if test="${'unix'!=platform::get-name()}" >
+    <fail message="this has only been tested on Linux"/>
+  </if>
+  <exec program="bash" commandline="-c 'for f in ${dir.root}/i18n/*-*.po; do echo $f; msgmerge $f ${template.pot.file} | msgattrib --no-obsolete > new.po; mv new.po $f; done'" workingdir="${tempdir}"/>
+</target>
+
+<target name="createI18NYamlFiles" depends="translation">
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('ExecDotNet')}"/>  
+  <property name="path" value="${dir.csharp}/ICT/Petra/Client" overwrite="false"/>
+  <ExecDotNet program="${dir.bin}/Ict.Tools.GenerateI18N.exe" 
+    commandline="-do:yamlfiles -language:${GUILocalisation} -path:&quot;${path}&quot; -pofile:&quot;${dir.root}/i18n/${GUILocalisation}.po&quot;" />
+</target>
+
+<target name="guidedTrans">
+  <echo>start guided Translation</echo>
+  <loadtasks assembly="${Ict.Tools.NAntTasks.DLL}" unless="${task::exists('ExecDotNet')}"/>
+  <mkdir dir="${I18NAnalysis.Output.dir}" failonerror="false"/>
+  <ExecDotNet program="${dir.bin}/Ict.Tools.GuidedTranslation.exe" commandline="-poFile:&quot;${template.pot.file}&quot; -I18NAnalysisOutputDir:&quot;${I18NAnalysis.Output.dir}&quot;"/>
+</target>
+
+
+</project>
