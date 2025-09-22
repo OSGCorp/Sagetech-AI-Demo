@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenPetra Project Overview</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --box-radius: 8px;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            text-align: center;
+            border-radius: var(--box-radius);
+            box-shadow: var(--box-shadow);
+        }
+        
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+            font-weight: 700;
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .box {
+            background-color: white;
+            border-radius: var(--box-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            transition: transform 0.3s ease;
+        }
+        
+        .box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .box-header {
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+        }
+        
+        .box-title {
+            color: var(--secondary-color);
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 600;
+        }
+        
+        .badge {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .tag-list {
+            margin-top: 10px;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: var(--dark-color);
+        }
+        
+        .info-value {
+            flex: 1;
+        }
+        
+        ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+        
+        .version-item {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .version-item:last-child {
+            border-bottom: none;
+        }
+        
+        .version-header {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .architecture-layer {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .architecture-layer:last-child {
+            border-bottom: none;
+        }
+        
+        .layer-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .domain-item {
+            margin-bottom: 15px;
+        }
+        
+        .domain-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .tech-item {
+            margin-bottom: 12px;
+        }
+        
+        .tech-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        .dir-item {
+            margin-bottom: 12px;
+        }
+        
+        .dir-name {
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>OpenPetra Project Overview</h1>
+            <div class="subtitle">A comprehensive open-source management system for non-profit organizations</div>
+        </header>
+        
+        <div class="grid">
+            <!-- Project Overview Box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Project Overview</h2>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Name:</div>
+                    <div class="info-value">OpenPetra</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Key:</div>
+                    <div class="info-value">petra</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Description:</div>
+                    <div class="info-value">
+                        Free, open-source software system that helps non-profit organizations manage administration, reduce costs, and streamline operations with features for contact management, accounting, sponsorship, publications, data export, and more.
+                    </div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Language:</div>
+                    <div class="info-value">C#</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Framework:</div>
+                    <div class="info-value">.NET/Mono</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Size:</div>
+                    <div class="info-value">572,793 lines of code across ~2,500 files</div>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">File Types:</div>
+                    <div class="info-value">
+                        <div class="tag-list">
+                            <span class="badge">.cs</span>
+                            <span class="badge">.xml</span>
+                            <span class="badge">.html</span>
+                            <span class="badge">.js</span>
+                            <span class="badge">.css</span>
+                            <span class="badge">.sql</span>
+                            <span class="badge">.yml</span>
+                            <span class="badge">.json</span>
+                            <span class="badge">.config</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Versioning Box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Versioning</h2>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Current:</div>
+                    <div class="info-value">2023.02 (February 27th, 2023)</div>
+                </div>
+                <div style="margin-top: 15px;">
+                    <strong>Version History:</strong>
+                    <div class="version-item">
+                        <div class="version-header">2023.02 (February 27th, 2023)</div>
+                        <ul>
+                            <li>Improvements to Contact screens</li>
+                            <li>Donations and memberships enhancements</li>
+                            <li>Send Annual Receipts via E-Mail option</li>
+                        </ul>
+                    </div>
+                    <div class="version-item">
+                        <div class="version-header">2022.07 (July 29th, 2022)</div>
+                        <ul>
+                            <li>Security improvements</li>
+                            <li>Recurring donation batches</li>
+                            <li>SEPA Direct Debit support</li>
+                        </ul>
+                    </div>
+                    <div class="version-item">
+                        <div class="version-header">2021.10 (October 26th, 2021)</div>
+                        <ul>
+                            <li>Improved contact search</li>
+                            <li>Accounting module enhancements</li>
+                            <li>GL Batch import/export improvements</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Architecture Box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Architecture</h2>
+                </div>
+                <div class="info-row">
+                    <div class="info-label">Style:</div>
+                    <div class="info-value">N-Tier Architecture</div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Key Layers:</strong>
+                    <div class="architecture-layer">
+                        <div class="layer-name">Presentation Layer (330 files)</div>
+                        <div>Handles user interface and presentation logic</div>
+                    </div>
+                    <div class="architecture-layer">
+                        <div class="layer-name">Application Layer (282 files)</div>
+                        <div>Contains core business logic and application processing</div>
+                    </div>
+                    <div class="architecture-layer">
+                        <div class="layer-name">Data Layer (582 files)</div>
+                        <div>Handles data access, persistence, and database interaction</div>
+                    </div>
+                    <div class="architecture-layer">
+                        <div class="layer-name">Integration Layer (152 files)</div>
+                        <div>Manages integration with external systems</div>
+                    </div>
+                    <div class="architecture-layer">
+                        <div class="layer-name">Cross-Cutting Concerns (126 files)</div>
+                        <div>Implements functionality that spans multiple layers</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Key Patterns:</strong>
+                    <div class="tag-list">
+                        <span class="badge">Multi-Tier Architecture</span>
+                        <span class="badge">MVC</span>
+                        <span class="badge">ORM</span>
+                        <span class="badge">Batch Processing</span>
+                        <span class="badge">Repository Pattern</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Business Functions Box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Business Functions</h2>
+                </div>
+                
+                <div class="domain-item">
+                    <div class="domain-name">Finance Management</div>
+                    <div>Comprehensive accounting and financial management for non-profits</div>
+                    <div class="tag-list">
+                        <span class="badge">General Ledger</span>
+                        <span class="badge">Multi-currency</span>
+                        <span class="badge">Gift Processing</span>
+                        <span class="badge">Banking</span>
+                    </div>
+                </div>
+                
+                <div class="domain-item">
+                    <div class="domain-name">CRM and Partner Management</div>
+                    <div>Contact management and relationship tracking</div>
+                    <div class="tag-list">
+                        <span class="badge">Contact Database</span>
+                        <span class="badge">Address Management</span>
+                        <span class="badge">Communication History</span>
+                    </div>
+                </div>
+                
+                <div class="domain-item">
+                    <div class="domain-name">Sponsorship Management</div>
+                    <div>Management of child sponsorship programs</div>
+                    <div class="tag-list">
+                        <span class="badge">Child Records</span>
+                        <span class="badge">Donor Management</span>
+                        <span class="badge">Program Management</span>
+                    </div>
+                </div>
+                
+                <div class="domain-item">
+                    <div class="domain-name">System Management</div>
+                    <div>Administration and configuration of the system</div>
+                    <div class="tag-list">
+                        <span class="badge">User Management</span>
+                        <span class="badge">Access Control</span>
+                        <span class="badge">Data Import/Export</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Technical Highlights Box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Technical Highlights</h2>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Storage:</div>
+                    <div class="info-value">
+                        Relational Database (PostgreSQL, MySQL/MariaDB)
+                    </div>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Integration:</div>
+                    <div class="info-value">
+                        <div class="tag-list">
+                            <span class="badge">Web Services</span>
+                            <span class="badge">CSV Import/Export</span>
+                            <span class="badge">YAML Import/Export</span>
+                            <span class="badge">CAMT/MT940 Bank Import</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Key Technologies:</strong>
+                    <div class="tech-item">
+                        <div class="tech-name">NAnt Build Scripts</div>
+                        <div>Automate the build, test, and deployment processes</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-name">Multi-Language Support</div>
+                        <div>Internationalization and localization framework</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-name">XML Reporting</div>
+                        <div>XML-based report definition and generation</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-name">Web Services</div>
+                        <div>SOAP and REST-based web services</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Deployment Box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Deployment</h2>
+                </div>
+                
+                <div class="info-row">
+                    <div class="info-label">Environments:</div>
+                    <div class="info-value">
+                        <div class="tag-list">
+                            <span class="badge">Self-Hosted</span>
+                            <span class="badge">SaaS/Cloud</span>
+                            <span class="badge">Standalone</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Infrastructure:</strong>
+                    <ul>
+                        <li><strong>Compute:</strong> .NET/Mono Runtime, Windows Server, Linux Server</li>
+                        <li><strong>Storage:</strong> PostgreSQL, MySQL/MariaDB</li>
+                        <li><strong>Networking:</strong> Web Server, HTTP/HTTPS, TCP/IP</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Deployment Patterns:</strong>
+                    <ul>
+                        <li>Linux Server Installation</li>
+                        <li>Windows Server Installation</li>
+                        <li>Docker Containers</li>
+                        <li>Standalone Client-Server</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Documentation Box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Documentation</h2>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>User Guides:</strong>
+                    <ul>
+                        <li>Setup and Installation Guide</li>
+                        <li>Configuration Guide</li>
+                        <li>User Manual</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Technical Docs:</strong>
+                    <ul>
+                        <li>Architecture Documentation</li>
+                        <li>Database Schema Documentation</li>
+                        <li>API Documentation</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Architecture Diagrams:</strong>
+                    <ul>
+                        <li>N-Tier Business Object Flow Diagram</li>
+                        <li>Data Access Layer Diagram</li>
+                        <li>RDBMS Abstraction Diagram</li>
+                        <li>Server Architecture Diagram</li>
+                        <li>Shepherd Framework UML Diagram</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Directory Structure Box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Directory Structure</h2>
+                </div>
+                
+                <div class="dir-item">
+                    <div class="dir-name">csharp/</div>
+                    <div>Main application code written in C#</div>
+                </div>
+                
+                <div class="dir-item">
+                    <div class="dir-name">db/</div>
+                    <div>Database definitions and reference data</div>
+                </div>
+                
+                <div class="dir-item">
+                    <div class="dir-name">demodata/</div>
+                    <div>Sample data for testing and demonstration</div>
+                </div>
+                
+                <div class="dir-item">
+                    <div class="dir-name">doc/</div>
+                    <div>Documentation files</div>
+                </div>
+                
+                <div class="dir-item">
+                    <div class="dir-name">i18n/</div>
+                    <div>Internationalization resources</div>
+                </div>
+                
+                <div class="dir-item">
+                    <div class="dir-name">js-client/</div>
+                    <div>JavaScript client application</div>
+                </div>
+                
+                <div class="dir-item">
+                    <div class="dir-name">setup/</div>
+                    <div>Installation and setup scripts</div>
+                </div>
+                
+                <div class="dir-item">
+                    <div class="dir-name">XmlReports/</div>
+                    <div>XML report definitions</div>
+                </div>
+            </div>
+            
+            <!-- Cross-Cutting Concerns Box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">Cross-Cutting Concerns</h2>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Security:</strong>
+                    <ul>
+                        <li><strong>Authentication:</strong> User/password with plugin support for external systems (LDAP)</li>
+                        <li><strong>Authorization:</strong> Role-based access control with module-level permissions</li>
+                        <li><strong>Data Protection:</strong> Password hashing, encryption, GDPR consent tracking</li>
+                    </ul>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Error Handling:</strong>
+                    <div>Comprehensive error handling with logging and user-friendly error messages</div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Logging:</strong>
+                    <div>Multi-level logging with user activity tracking and error management</div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Internationalization:</strong>
+                    <div>Support for multiple languages with resource-based translations and localization</div>
+                </div>
+            </div>
+            
+            <!-- API Documentation Box -->
+            <div class="box">
+                <div class="box-header">
+                    <h2 class="box-title">API Documentation</h2>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Public APIs:</strong>
+                    <div class="tech-item">
+                        <div class="tech-name">Web Services</div>
+                        <div>SOAP and REST services for client-server communication</div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 15px;">
+                    <strong>Service Interfaces:</strong>
+                    <div class="tech-item">
+                        <div class="tech-name">IDataBaseRDBMS</div>
+                        <div>Interface for database connectivity implementations</div>
+                    </div>
+                    <div class="tech-item">
+                        <div class="tech-name">ICH Services</div>
+                        <div>Services for International Clearing House operations</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
